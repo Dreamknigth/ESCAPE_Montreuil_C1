@@ -1,4 +1,4 @@
-package ESCAPE_Montreuil_C1.Modele;
+package ESCAPE_Montreuil_C1.Controleur;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -13,7 +13,7 @@ public class MapController {
 	private File fp;
 	private FileReader fpr;
 	private BufferedReader bfReader;
-	private ArrayList<ObservableList <Character>> Terrain;
+	private ArrayList<ObservableList <Character>> terrain;
 	
 	public MapController() {
 		try {
@@ -30,21 +30,27 @@ public class MapController {
 	}
 	
 	public void constructeurMap() {
+		String[] ligne;
 		try {
-			String[] ligne;
-			
-			ligne=this.bfReader.readLine().split(",");
-			System.out.println(ligne);
-			
+			int i=0;
+			System.out.println("debug1");
+			do{
+				ligne=this.bfReader.readLine().split(",");
+				System.out.println(ligne[0]);
+				System.out.println("debug1."+i);
+				for(int j=0;j<ligne.length;j++) {
+					System.out.println("debug1."+i+"."+j+".0");
+					this.terrain.add(new Ober) //TODO faire la declaration de la liste obersvable dans la liste de liste observable puis ajouter a la liste observable le caractere
+					this.terrain.get(i).add(ligne[j].charAt(0));
+					System.out.println("debug1."+i+"."+j+".1");
+				}
+				i++;
+			}while(ligne!=null);
 		}catch(IOException e) {
 			System.out.println("Erreur: le fichier introuvable");
+		}catch(NullPointerException e) {
+			System.out.println("Fin de la lecture");
 		}
-	}
-	
-	public int tailleTableaux(String[] tableau) {
-		int i=0;
-		for(i=0;tableau[i]!=null;i++) {}
-		return i;
 	}
 	
 }
