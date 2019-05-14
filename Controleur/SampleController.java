@@ -1,15 +1,20 @@
-package application;
+package ESCAPE_Montreuil_C1.Controleur;
 
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.ResourceBundle;
 
+import ESCAPE_Montreuil_C1.Modele.MapMaker;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
 
-public class SampleController {
+public class SampleController implements Initializable{
 
 
     @FXML
@@ -17,43 +22,44 @@ public class SampleController {
     
     private MapMaker mp;
 
-	@FXML
-	void testbtn(ActionEvent event) throws InterruptedException {
-		
-		/*ArrayList<Image> map = new ArrayList<Image>();
-		Image img = new Image("application/air.jpg");
-		Image img2 = new Image("application/terre.png");
-		//Image img1 = new Image("application/gif.gif");
-		for(int i = 0; i< 50; i++) {
-			map.add(img);
-		}
-		for(int i = 0; i< 50; i++) {
-			map.add(img2);
-		}
-		
-		int ligne =0;
-		int colonne=0;
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
+		// TODO Auto-generated method stub
+		this.mp=new MapMaker();
+		this.mp.constructeurMap();
+		this.mp.afficheTerrain();
+		ArrayList<ObservableList <Character>> terrain=this.mp.getTerrain();
+		 
+		Image A= new Image("ESCAPE_Montreuil_C1/Ressource/air.jpg");
+		Image T= new Image("ESCAPE_Montreuil_C1/Ressource/terre.png");
 
-	    for (int i = 1; i < map.size(); i++) {
-	    	ImageView view = new ImageView(map.get(i)) ;
-	    	view.setFitHeight(32);
-	    	view.setFitWidth(32);
-	    	if(map.size()%i==0) {
-	    		ligne++;
-	    		colonne=0;
+
+	    for (int i = 0; i < terrain.size(); i++) {
+	    	for(int j=0;j<terrain.get(i).size();j++) {
+	    		ImageView view = new ImageView() ;
+	    		if(terrain.get(i).get(j).equals('A')) {
+	    			view.setImage(A);
+	    		}
+	    		else {
+	    			view.setImage(T);
+	    		}
+		    	view.setFitHeight(32);
+		    	view.setFitWidth(32);
+		    	pane.getChildren().add(view);
+		    	view.setTranslateX(j*32);
+		    	view.setTranslateY(i*32);
+
+		    	System.out.println(i);
 	    	}
-	    		colonne++;
-	    		view.setTranslateX(colonne*32);
-	    		view.setTranslateY(ligne*32);
-	    	pane.getChildren().add(view);
-	    	
-	    	
-	    	System.out.println(i);
-	    	
 	    }
 	 
-	*/ mp=new MapMaker();
 		System.out.println(mp.getTerrain());
-	}	
+	}
+	
+	/*public Image imageDe(String s) {
+		if(s.equals"A")
+			return new Image()
+		
+	}*/
 
 }

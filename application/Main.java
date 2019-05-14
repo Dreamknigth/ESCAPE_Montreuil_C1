@@ -1,4 +1,4 @@
-package application;
+package ESCAPE_Montreuil_C1.application;
 	
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -11,8 +11,8 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			BorderPane root = (BorderPane)FXMLLoader.load(getClass().getResource("Sample.fxml"));
-			Scene scene = new Scene(root,400,400);
+			BorderPane root = (BorderPane)FXMLLoader.load(getClass().getResource("../Vue/Sample.fxml"));
+			Scene scene = new Scene(root,1000,1000);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			primaryStage.setScene(scene);
 			primaryStage.show();
