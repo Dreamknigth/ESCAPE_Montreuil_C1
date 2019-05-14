@@ -1,4 +1,4 @@
-package ESCAPE_Montreuil_C1.Modele;
+package ESCAPE_Montreuil_C1.Modele.blocks;
 
 public class fer extends ressource {
 
