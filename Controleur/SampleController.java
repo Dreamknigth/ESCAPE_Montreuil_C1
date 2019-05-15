@@ -11,15 +11,19 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
+
 
 public class SampleController implements Initializable{
 
 
     @FXML
     private Pane pane;
-    
+    @FXML
+    private ImageView perso;
     private MapMaker mp;
 
 	@Override
@@ -32,9 +36,12 @@ public class SampleController implements Initializable{
 		 
 		Image A= new Image("ESCAPE_Montreuil_C1/Ressource/air.jpg");
 		Image T= new Image("ESCAPE_Montreuil_C1/Ressource/terre.png");
-
-
-	    for (int i = 0; i < terrain.size(); i++) {
+		perso.setImage(new Image("ESCAPE_Montreuil_C1/Ressource/Joueur/Megamanx running.gif"));
+	    perso.setTranslateY(40*2.55);
+    	perso.setFitHeight(40);
+    	perso.setFitWidth(40);
+	    
+		for (int i = 0; i < terrain.size(); i++) {
 	    	for(int j=0;j<terrain.get(i).size();j++) {
 	    		ImageView view = new ImageView() ;
 	    		if(terrain.get(i).get(j).equals('A')) {
@@ -43,11 +50,12 @@ public class SampleController implements Initializable{
 	    		else {
 	    			view.setImage(T);
 	    		}
-		    	view.setFitHeight(32);
-		    	view.setFitWidth(32);
+		    	view.setFitHeight(20);
+		    	view.setFitWidth(20);
 		    	pane.getChildren().add(view);
-		    	view.setTranslateX(j*32);
-		    	view.setTranslateY(i*32);
+		    	view.setTranslateX(j*view.getFitWidth());
+		    	view.setTranslateY(i*view.getFitHeight());
+		    	
 
 		    	System.out.println(i);
 	    	}
@@ -55,6 +63,12 @@ public class SampleController implements Initializable{
 	 
 		System.out.println(mp.getTerrain());
 	}
+	@FXML
+    public void handle(KeyEvent key) {
+        if (key.getCode().equals(KeyCode.RIGHT)) {
+            perso.setX(32*2);
+        }
+    }
 	
 	/*public Image imageDe(String s) {
 		if(s.equals"A")

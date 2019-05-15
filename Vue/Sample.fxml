@@ -6,16 +6,12 @@
 <?import javafx.scene.layout.*?>
 
 <BorderPane prefHeight="200.0" prefWidth="200.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ESCAPE_Montreuil_C1.Controleur.SampleController">
-   <center>
-      <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+   <left>
+      <Pane prefHeight="198.0" prefWidth="201.0" BorderPane.alignment="CENTER">
          <children>
-            <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../../../../../../../Images/gif.gif" />
-               </image>
-            </ImageView>
-            <Pane fx:id="pane" />
+            <Pane fx:id="pane" layoutY="-1.0" prefHeight="200.0" prefWidth="201.0" />
+            <ImageView fx:id="perso" fitHeight="126.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
          </children>
       </Pane>
-   </center>
+   </left>
 </BorderPane>
