@@ -7,29 +7,41 @@ import ESCAPE_Montreuil_C1.Modele.blocks.Block;
 import javafx.collections.ObservableList;
 
 public class Joueur extends Personnage{
-	public Joueur(int x,int y,String nom,ArrayList<ObservableList <Character>> terrain) {
+	//constructeur
+	public Joueur(int x,int y,String nom,ArrayList<ObservableList <Block>> terrain) {
 		super(x,y,nom,terrain);
 		this.pv=50;
 	}
-	public boolean seDeplacerGauche() {
+	
+	//methode
+	//Gauche
+	public boolean seDeplacerGauche() { //x=j y=i
+		System.out.println("te fous pas de moi bat...");
 		//TODO verife que le joueur peut se deplacer si il peut deplacer sinon retourner faux
-		if(getX()==0) {
+		if( getX()==0 || !this.terrain.get( getY() ).get( getX()-1 ).getTraversable() ) {
 			return false;
 		}
-		char cAGauche=terrain.get(getX()-1).get(getY());
-		boolean peutTraverser=true;
-		switch(cAGauche) {
-			case 'T':peutTraverser=false;
-			break;
-			case 'P':peutTraverser=false;
-			break;
-			case 'E':peutTraverser=false;
-			break;
-			default:this.position.setLocation(this.position.getX()-1,this.position.getY());
-			break;
+		else {
+			this.position.setLocation( getY(),getX()-1 );
+			System.out.println("gauche x="+getX()+"y="+getY());
+			return true;
 		}
-		return peutTraverser;
 	}
+	//Droite
+	public boolean seDeplacerDroite() { //x=j y=i
+		//TODO verife que le joueur peut se deplacer si il peut deplacer sinon retourner faux
+		if( getX()==this.terrain.get( getY() ).size()-1 || !this.terrain.get( getY() ).get( getX()+1 ).getTraversable() ) {
+			return false;
+		}
+		else {
+			this.position.setLocation( getY(),getX()+1 );
+			System.out.println("droite");
+			return true;
+		}
+	}
+	
+	
+	//setter
 	public void setNom(String nom) {
 		this.nom=nom;
 	}

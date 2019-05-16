@@ -4,6 +4,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import ESCAPE_Montreuil_C1.Modele.MapMaker;
+import ESCAPE_Montreuil_C1.Modele.Personnage.Joueur;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -24,23 +25,25 @@ public class SampleController implements Initializable{
 	private Pane pane;
 	@FXML
 	private ImageView perso;
+	private Joueur j1;
 	private MapMaker mp;
 
 	@FXML
 	private void touche(KeyEvent e) {
 		KeyCode code = e.getCode();
 		System.out.println("click");
-		if (code == KeyCode.D || code == KeyCode.RIGHT) {
-			perso.setTranslateX(perso.getTranslateX()+2);
+		int vitesse=4;
+		if ( (code == KeyCode.D || code == KeyCode.RIGHT) && this.j1.seDeplacerDroite()) {
+			perso.setTranslateX(perso.getTranslateX()+vitesse);
 		}
-		else if(code == KeyCode.Q || code == KeyCode.LEFT) {
-			perso.setTranslateX(perso.getTranslateX()-10);
+		else if( (code == KeyCode.Q || code == KeyCode.LEFT) && this.j1.seDeplacerGauche()) {
+			perso.setTranslateX(perso.getTranslateX()-vitesse);
 		}
 		else if(code == KeyCode.Z || code == KeyCode.UP) {
-			perso.setTranslateY(perso.getTranslateY()-10);
+			perso.setTranslateY(perso.getTranslateY()-vitesse);
 		}
 		else if(code == KeyCode.S || code == KeyCode.DOWN){
-				perso.setTranslateY(perso.getTranslateY()+10);
+				perso.setTranslateY(perso.getTranslateY()+vitesse);
 			}
 		}
 	
@@ -56,12 +59,11 @@ public class SampleController implements Initializable{
 		this.mp.constructeurMap();
 		pane.setOnKeyPressed(e->touche(e));
 		this.mp.afficheTerrain();
+		
+		System.out.println("debug");
+		this.j1=new Joueur(6,11,"pseudo",mp.charToBlock());
 
 		ArrayList<ObservableList <Character>> terrain=this.mp.getTerrain();
-
-
-
-
 
 		Image A= new Image("ESCAPE_Montreuil_C1/Ressource/air.jpg");
 		Image T= new Image("ESCAPE_Montreuil_C1/Ressource/terre.png");

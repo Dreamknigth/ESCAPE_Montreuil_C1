@@ -32,6 +32,7 @@ public class MapMaker {
 			System.out.println("Erreur le fichier ne peut etre ouvert");
 		}
 		this.terrainC=new ArrayList<ObservableList <Character>>();
+		this.terrain=new ArrayList<ObservableList <Block>>();
 	}
 	
 	public void constructeurMap() {
@@ -77,6 +78,7 @@ public class MapMaker {
 				}
 			}
 		}
+
 		return this.terrain;
 	}
 	
