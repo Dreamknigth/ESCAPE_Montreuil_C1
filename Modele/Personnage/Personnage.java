@@ -31,6 +31,7 @@ abstract class Personnage {
 		this.pv=this.pv-ptDegat;
 		if(this.pv<=0) {
 			this.pv=0;
+			System.out.println("You're DEAD!");
 		}
 	}
 	

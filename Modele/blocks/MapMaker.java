@@ -1,4 +1,4 @@
-package ESCAPE_Montreuil_C1.Modele;
+package ESCAPE_Montreuil_C1.Modele.blocks;
 
 import java.io.BufferedReader;
 import java.io.File;

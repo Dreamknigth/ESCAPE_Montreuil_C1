@@ -1,10 +1,9 @@
 package ESCAPE_Montreuil_C1.Modele.blocks;
 
-public class terre extends ressource{
+public class terre extends Ressource{
 
 	public terre(int resistance, boolean estDestructible, boolean estTraversable) {
-		super(resistance, estDestructible, estTraversable);
-		// TODO Auto-generated constructor stub
+		super(10, true, false);
 	}
 
 }

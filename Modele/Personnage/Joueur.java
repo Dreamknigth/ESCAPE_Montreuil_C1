@@ -3,7 +3,7 @@ package ESCAPE_Montreuil_C1.Modele.Personnage;
 import java.awt.Point;
 import java.util.ArrayList;
 
-import ESCAPE_Montreuil_C1.Modele.blocks.block;
+import ESCAPE_Montreuil_C1.Modele.blocks.Block;
 import javafx.collections.ObservableList;
 
 public class Joueur extends Personnage{
@@ -13,9 +13,22 @@ public class Joueur extends Personnage{
 	}
 	public boolean seDeplacerGauche() {
 		//TODO verife que le joueur peut se deplacer si il peut deplacer sinon retourner faux
-		char cAGauche=terrain.get(getX()).get(getY());
-		if() {}
-		return true;
+		if(getX()==0) {
+			return false;
+		}
+		char cAGauche=terrain.get(getX()-1).get(getY());
+		boolean peutTraverser=true;
+		switch(cAGauche) {
+			case 'T':peutTraverser=false;
+			break;
+			case 'P':peutTraverser=false;
+			break;
+			case 'E':peutTraverser=false;
+			break;
+			default:this.position.setLocation(this.position.getX()-1,this.position.getY());
+			break;
+		}
+		return peutTraverser;
 	}
 	public void setNom(String nom) {
 		this.nom=nom;
