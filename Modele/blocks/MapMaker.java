@@ -1,4 +1,4 @@
-package ESCAPE_Montreuil_C1.Modele;
+package ESCAPE_Montreuil_C1.Modele.blocks;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -61,7 +61,7 @@ public class MapMaker {
 		}
 	}
 	
-	public  ArrayList<ObservableList <Block>> charToBlock() {
+	public void charToBlock() {
 		char charBlock;
 		for(int i=0;i<this.terrainC.size();i++) {
 			this.terrain.add(FXCollections.observableArrayList());
@@ -71,13 +71,9 @@ public class MapMaker {
 				case 'A':this.terrain.get(i).add(new Air(true,j,i));
 				break;
 				case 'T':this.terrain.get(i).add(new Terre(false,j,i));
-				break;
-				default:this.terrain.get(i).add(new Terre(false,j,i));
-				break;
 				}
 			}
 		}
-		return this.terrain;
 	}
 	
 	public void afficheTerrain() {
