@@ -5,10 +5,10 @@ import java.awt.Point;
 public class Pierre extends BlockDestructible{
 	
 	public Pierre(int x, int y) {
-		super(false, x, y, new Ressource(), 50);
+		super(false, x, y, new Ressource(), 50,'P');
 	}
 	public Pierre(Point position) {
-		super(false,position, new Ressource(), 50);
+		super(false,position, new Ressource(), 50,'P');
 	}
 
 }

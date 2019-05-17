@@ -46,4 +46,7 @@ abstract class Personnage {
 	public int getY() {
 		return (int)this.position.getY();
 	}
+	public Point getPosition() {
+		return this.position;
+	}
 }

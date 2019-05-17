@@ -16,7 +16,6 @@ public class Joueur extends Personnage{
 	//methode
 	//Gauche
 	public boolean seDeplacerGauche() { //x=j y=i
-		System.out.println("te fous pas de moi bat...");
 		//TODO verife que le joueur peut se deplacer si il peut deplacer sinon retourner faux
 		if( getX()==0 || !this.terrain.get( getY() ).get( getX()-1 ).getTraversable() ) {
 			return false;

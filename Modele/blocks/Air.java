@@ -5,9 +5,9 @@ import java.awt.Point;
 public class Air extends Block {
 
 	public Air(boolean estTraversable,int x,int y) {
-		super(estTraversable,new Point(x,y));
+		super(estTraversable,new Point(x,y),'A');
 	}
 	public Air(boolean estTraversable,Point position) {
-		super(estTraversable,position);
+		super(estTraversable,position,'A');
 	}
 }

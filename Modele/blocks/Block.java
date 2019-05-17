@@ -4,16 +4,14 @@ import java.awt.Point;
 
 public abstract class Block {
 	protected boolean traversable;
-	private Point position;
+	protected int x;
+	protected int y;
 	private char nom;
 	//constructeur
-	public Block(boolean traversable,Point position) {
+	public Block(boolean traversable,int x,int y,char nom) {
 		this.traversable=traversable;
-		this.position=position;
-		this.nom='A';
-	}
-	public Block(boolean traversable,int x,int y) {
-		this(traversable,new Point(x,y));
+		this.x=x;
+		this.y=y;
 	}
 	
 	//getter

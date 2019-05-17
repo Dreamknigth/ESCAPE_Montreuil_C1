@@ -101,7 +101,7 @@ public class MapMaker {
 		}
 	}
 	
-	public ArrayList<ObservableList <Character>> getTerrain(){
-		return this.terrainC;
+	public ArrayList<ObservableList <Block>> getTerrain(){
+		return this.terrain;
 	}
 }
