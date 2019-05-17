@@ -29,12 +29,11 @@ public class SampleController implements Initializable{
 	@FXML
 	private void touche(KeyEvent e) {
 		KeyCode code = e.getCode();
-		System.out.println("click");
 		if (code == KeyCode.D || code == KeyCode.RIGHT) {
-			perso.setTranslateX(perso.getTranslateX()+2);
+				perso.setTranslateX(perso.getTranslateX()+5);
 		}
 		else if(code == KeyCode.Q || code == KeyCode.LEFT) {
-			perso.setTranslateX(perso.getTranslateX()-10);
+				perso.setTranslateX(perso.getTranslateX()-5);
 		}
 		else if(code == KeyCode.Z || code == KeyCode.UP) {
 			perso.setTranslateY(perso.getTranslateY()-10);
@@ -64,7 +63,8 @@ public class SampleController implements Initializable{
 
 
 		Image A= new Image("ESCAPE_Montreuil_C1/Ressource/air.jpg");
-		Image T= new Image("ESCAPE_Montreuil_C1/Ressource/terre.png");
+		Image T= new Image("ESCAPE_Montreuil_C1/Ressource/terre.jpg");
+		
 		perso.setImage(new Image("ESCAPE_Montreuil_C1/Ressource/Joueur/Megamanx running.gif"));
 		perso.setTranslateY(40*2.55);
 		perso.setTranslateX(32);

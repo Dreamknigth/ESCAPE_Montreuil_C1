@@ -18,7 +18,7 @@ public class MapMaker {
 	
 	public MapMaker() {
 		try {
-			this.fp = new File("src/ESCAPE_Montreuil_C1/Ressource/terrain.csv");
+			this.fp = new File("src/ESCAPE_Montreuil_C1/Ressource/map4.csv");
 			this.fpr = new FileReader(this.fp);
 			this.bfReader = new BufferedReader(this.fpr);
 		}catch(FileNotFoundException e1) {

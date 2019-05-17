@@ -1,6 +1,19 @@
 package ESCAPE_Montreuil_C1.Modele;
 
-public class Clavier {
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javafx.scene.input.KeyEvent;
+
+public class Clavier implements ActionListener{
+
+
+	@Override
+	public void actionPerformed(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 	
 }
