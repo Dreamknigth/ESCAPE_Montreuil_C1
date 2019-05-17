@@ -7,6 +7,9 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import ESCAPE_Montreuil_C1.Modele.blocks.Air;
+import ESCAPE_Montreuil_C1.Modele.blocks.Block;
+import ESCAPE_Montreuil_C1.Modele.blocks.Terre;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -14,7 +17,8 @@ public class MapMaker {
 	private File fp;
 	private FileReader fpr;
 	private BufferedReader bfReader;
-	private ArrayList<ObservableList <Character>> terrain;
+	private ArrayList<ObservableList <Character>> terrainC;
+	private ArrayList<ObservableList <Block>> terrain;
 	
 	public MapMaker() {
 		try {
@@ -27,7 +31,8 @@ public class MapMaker {
 		catch(IOException e) {
 			System.out.println("Erreur le fichier ne peut etre ouvert");
 		}
-		this.terrain=new ArrayList<ObservableList <Character>>();
+		this.terrainC=new ArrayList<ObservableList <Character>>();
+		this.terrain=new ArrayList<ObservableList <Block>>();
 	}
 	
 	public void constructeurMap() {
@@ -47,38 +52,56 @@ public class MapMaker {
 		}catch(NullPointerException e) {
 			System.out.println("Fin de la lecture");
 		}
-		
 	}
-	
 	public void lireLigne(int i, String [] ligne) {
 		int j=0;
 		//la declaration de la liste obersvable dans la liste de liste observable puis ajouter a la liste observable le caractere
-		this.terrain.add(FXCollections.observableArrayList());
+		this.terrainC.add(FXCollections.observableArrayList());
 		for(j=0;j<ligne.length;j++) {
-			this.terrain.get(i).add(ligne[j].charAt(0));
+			this.terrainC.get(i).add(ligne[j].charAt(0));
 		}
+	}
+	
+	public  ArrayList<ObservableList <Block>> charToBlock() {
+		char charBlock;
+		for(int i=0;i<this.terrainC.size();i++) {
+			this.terrain.add(FXCollections.observableArrayList());
+			for(int j=0;j<this.terrainC.get(i).size();j++) {
+				charBlock=this.terrainC.get(i).get(j);
+				switch(charBlock) {
+				case 'A':this.terrain.get(i).add(new Air(j,i));
+				break;
+				case 'T':this.terrain.get(i).add(new Terre(j,i));
+				break;
+				default:this.terrain.get(i).add(new Terre(j,i));
+				break;
+				}
+			}
+		}
+
+		return this.terrain;
 	}
 	
 	public void afficheTerrain() {
 		System.out.print("-");
-		for(int i=0;i<this.terrain.get(0).size();i++) {
+		for(int i=0;i<this.terrainC.get(0).size();i++) {
 			System.out.print("--");
 		}
 		System.out.print("\n");
-		for(int i=0;i<this.terrain.size();i++) {
+		for(int i=0;i<this.terrainC.size();i++) {
 			System.out.print("|");
-			for(int j=0;j<this.terrain.get(i).size();j++) {
-				System.out.print(this.terrain.get(i).get(j)+"|");
+			for(int j=0;j<this.terrainC.get(i).size();j++) {
+				System.out.print(this.terrainC.get(i).get(j)+"|");
 			}
 			System.out.print("\n-");
-			for(int k=0;k<this.terrain.get(i).size();k++) {
+			for(int k=0;k<this.terrainC.get(i).size();k++) {
 				System.out.print("--");
 			}
 			System.out.print("\n");
 		}
 	}
 	
-	public ArrayList<ObservableList <Character>> getTerrain(){
+	public ArrayList<ObservableList <Block>> getTerrain(){
 		return this.terrain;
 	}
 }

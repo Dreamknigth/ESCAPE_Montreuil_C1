@@ -4,6 +4,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import ESCAPE_Montreuil_C1.Modele.MapMaker;
+import ESCAPE_Montreuil_C1.Modele.Personnage.Joueur;
+import ESCAPE_Montreuil_C1.Modele.blocks.Block;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -24,22 +26,28 @@ public class SampleController implements Initializable{
 	private Pane pane;
 	@FXML
 	private ImageView perso;
+	private Joueur j1;
 	private MapMaker mp;
 
 	@FXML
 	private void touche(KeyEvent e) {
 		KeyCode code = e.getCode();
-		if (code == KeyCode.D || code == KeyCode.RIGHT) {
-				perso.setTranslateX(perso.getTranslateX()+5);
+
+		System.out.println("click");
+		System.out.println(this.j1.getX().getValue()+" "+this.j1.getY().getValue());
+		int vitesse=4;
+		if ( (code == KeyCode.Z || code == KeyCode.UP)  ) {
+			j1.seDeplacerHaut();
+			System.out.println("droite");
 		}
-		else if(code == KeyCode.Q || code == KeyCode.LEFT) {
-				perso.setTranslateX(perso.getTranslateX()-5);
+		if( (code == KeyCode.D || code == KeyCode.RIGHT) ) {
+			j1.seDeplacerDroite();
 		}
-		else if(code == KeyCode.Z || code == KeyCode.UP) {
-			perso.setTranslateY(perso.getTranslateY()-10);
+		if(code == KeyCode.Q || code == KeyCode.LEFT) {
+			j1.seDeplacerGauche();
 		}
-		else if(code == KeyCode.S || code == KeyCode.DOWN){
-				perso.setTranslateY(perso.getTranslateY()+10);
+		if(code == KeyCode.S || code == KeyCode.DOWN){
+			j1.seDeplacerBas();
 			}
 		}
 	
@@ -55,30 +63,32 @@ public class SampleController implements Initializable{
 		this.mp.constructeurMap();
 		pane.setOnKeyPressed(e->touche(e));
 		this.mp.afficheTerrain();
+		
+		this.j1=new Joueur(0,0,"pseudo",mp.charToBlock());
 
-		ArrayList<ObservableList <Character>> terrain=this.mp.getTerrain();
-
-
-
-
+		ArrayList<ObservableList <Block>> terrain=this.mp.getTerrain();
 
 		Image A= new Image("ESCAPE_Montreuil_C1/Ressource/air.jpg");
 		Image T= new Image("ESCAPE_Montreuil_C1/Ressource/terre.jpg");
 		
 		perso.setImage(new Image("ESCAPE_Montreuil_C1/Ressource/Joueur/Megamanx running.gif"));
-		perso.setTranslateY(40*2.55);
-		perso.setTranslateX(32);
+		perso.translateXProperty().bind(j1.getX().multiply(32));
+		perso.translateYProperty().bind(j1.getY().multiply(32));
+
 
 		perso.setFitHeight(40);
 		perso.setFitWidth(40);
 
+		
+		
 		for (int i = 0; i < terrain.size(); i++) {
 			for(int j=0;j<terrain.get(i).size();j++) {
 				ImageView view = new ImageView() ;
-				if(terrain.get(i).get(j).equals('A')) {
+				System.out.println(terrain.get(i).get(j).getTraversable());
+				if(terrain.get(i).get(j).getTraversable()) {
 					view.setImage(A);
 				}
-				else {
+				else{
 					view.setImage(T);
 				}
 				view.setFitHeight(20);
@@ -86,7 +96,6 @@ public class SampleController implements Initializable{
 				pane.getChildren().add(view);
 				view.setTranslateX(j*view.getFitWidth());
 				view.setTranslateY(i*view.getFitHeight());
-
 
 			}
 		}
