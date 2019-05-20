@@ -1,4 +1,4 @@
-package ESCAPE_Montreuil_C1.Modele;
+package ESCAPE_Montreuil_C1.Modele.map;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -13,15 +13,15 @@ import ESCAPE_Montreuil_C1.Modele.blocks.Terre;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-public class MapMaker {
+public class MapReader {
 	private File fp;
 	private FileReader fpr;
 	private BufferedReader bfReader;
 	private ArrayList<ObservableList <Block>> terrain;
 
-	public MapMaker() {
+	public MapReader() {
 		try {
-			this.fp = new File("src/ESCAPE_Montreuil_C1/Ressource/test.csv");
+			this.fp = new File("src/ESCAPE_Montreuil_C1/Ressource/terrain.csv");
 			this.fpr = new FileReader(this.fp);
 			this.bfReader = new BufferedReader(this.fpr);
 		}catch(FileNotFoundException e1) {
