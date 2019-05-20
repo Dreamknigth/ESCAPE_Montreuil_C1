@@ -1,4 +1,4 @@
-package ESCAPE_Montreuil_C1.Modele;
+package ESCAPE_Montreuil_C1.Modele.map;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -9,19 +9,25 @@ import java.util.ArrayList;
 
 import ESCAPE_Montreuil_C1.Modele.blocks.Air;
 import ESCAPE_Montreuil_C1.Modele.blocks.Block;
+import ESCAPE_Montreuil_C1.Modele.blocks.Sol;
 import ESCAPE_Montreuil_C1.Modele.blocks.Terre;
+import ESCAPE_Montreuil_C1.Modele.blocks.bois;
+import ESCAPE_Montreuil_C1.Modele.blocks.feuille;
+import ESCAPE_Montreuil_C1.Modele.blocks.tronc;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-public class MapMaker {
+public class MapReader {
 	private File fp;
 	private FileReader fpr;
 	private BufferedReader bfReader;
 	private ArrayList<ObservableList <Block>> terrain;
 
-	public MapMaker() {
+	public MapReader() {
 		try {
+
 			this.fp = new File("src/ESCAPE_Montreuil_C1/Ressource/map5.csv");
+
 			this.fpr = new FileReader(this.fp);
 			this.bfReader = new BufferedReader(this.fpr);
 		}catch(FileNotFoundException e1) {
@@ -63,7 +69,11 @@ public class MapMaker {
 			break;
 			case 'T':this.terrain.get(i).add(new Terre());
 			break;
-			default:this.terrain.get(i).add(new Terre());
+			case 'f':this.terrain.get(i).add(new feuille());
+			break;
+			case 'F':this.terrain.get(i).add(new tronc());
+			break;
+			default:this.terrain.get(i).add(new Sol());
 			break;
 			}
 		}

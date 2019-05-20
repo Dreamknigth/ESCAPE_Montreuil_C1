@@ -3,9 +3,10 @@ package ESCAPE_Montreuil_C1.Controleur;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-import ESCAPE_Montreuil_C1.Modele.MapMaker;
+
 import ESCAPE_Montreuil_C1.Modele.Personnage.Joueur;
 import ESCAPE_Montreuil_C1.Modele.blocks.Block;
+import ESCAPE_Montreuil_C1.Modele.map.MapReader;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -27,9 +28,6 @@ public class SampleController implements Initializable{
 	@FXML
 	private ImageView perso;
 	private Joueur j1;
-	private MapMaker mp;
-	//Debug
-	private ArrayList<ObservableList <Block>> terrain;
 
 	@FXML
 	private void touche(KeyEvent e) {
@@ -65,17 +63,17 @@ public class SampleController implements Initializable{
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		this.mp=new MapMaker();
-		this.mp.constructeurMap();
-		pane.setOnKeyPressed(e->touche(e));
-		this.mp.afficheTerrain();
+		this.j1=new Joueur(0,0,"pseudo");
 		
-		this.j1=new Joueur(0,0,"pseudo",mp.getTerrain());
-
-		ArrayList<ObservableList <Block>> terrain=this.mp.getTerrain();
+		MapReader mr = new MapReader();
+		mr.constructeurMap();
+		ArrayList<ObservableList <Block>> terrain=mr.getTerrain();
 
 		Image A= new Image("ESCAPE_Montreuil_C1/Ressource/air.jpg");
-		Image T= new Image("ESCAPE_Montreuil_C1/Ressource/terre.jpg");
+		Image T= new Image("ESCAPE_Montreuil_C1/Ressource/solpetit.jpg");
+		Image t = new Image("ESCAPE_Montreuil_C1/Ressource/terre.jpg");
+		Image f= new Image("ESCAPE_Montreuil_C1/Ressource/feuille.jpg");
+		Image F= new Image("ESCAPE_Montreuil_C1/Ressource/tronc.jpg");
 		
 		perso.setImage(new Image("ESCAPE_Montreuil_C1/Ressource/Joueur/Megamanx running.gif"));
 		perso.translateXProperty().bind(j1.getX().multiply(32));
@@ -92,7 +90,16 @@ public class SampleController implements Initializable{
 				if(terrain.get(i).get(j).getNom()=='A') {
 					view.setImage(A);
 				}
-				else{
+				else if(terrain.get(i).get(j).getNom()=='f'){
+					view.setImage(f);
+				}
+				else if (terrain.get(i).get(j).getNom() == 'F') {
+					view.setImage(F);
+				}
+				else if (terrain.get(i).get(j).getNom() == 't'){
+					view.setImage(t);
+				}
+				else if (terrain.get(i).get(j).getNom() == 'T') {
 					view.setImage(T);
 				}
 				view.setFitHeight(32);
@@ -103,6 +110,6 @@ public class SampleController implements Initializable{
 
 			}
 		}
-		this.j1.getX().addListener(evt->graviter((Event) evt));
+		
 	}
 }
