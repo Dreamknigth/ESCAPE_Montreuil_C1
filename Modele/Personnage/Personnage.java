@@ -10,7 +10,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 
 abstract class Personnage {
-	protected IntegerProperty x,y; //coordonnée
+	protected IntegerProperty x,y; //coordonnee
 	protected String nom;
 	protected int pv;
 	private int ptAttaque;
@@ -32,6 +32,7 @@ abstract class Personnage {
 	public Personnage(ArrayList<ObservableList <Block>> terrain) {
 		this(" ",terrain);
 	}
+	
 	
 	//Methodes
 	public void prendDegat(int ptDegat) {

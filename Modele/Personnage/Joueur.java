@@ -12,7 +12,6 @@ public class Joueur extends Personnage{ //Rappel: i=y x=j
 		this.pv=50;
 	}
 	
-	
 	//methode
 	//saut
 	public void seDeplacerSaut() {
@@ -29,8 +28,6 @@ public class Joueur extends Personnage{ //Rappel: i=y x=j
 			this.seDeplacerGraviter();
 		}
 	}
-	
-	
 	//setter
 	public void setNom(String nom) {
 		this.nom=nom;
