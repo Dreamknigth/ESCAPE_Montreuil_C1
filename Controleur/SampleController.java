@@ -98,6 +98,7 @@ public class SampleController implements Initializable{
 
 			}
 		}
-		
+		// https://docs.oracle.com/javafx/2/api/javafx/beans/value/ObservableValue.html
+		// void addListener(ChangeListener<? super T> listener)
 	}
 }
