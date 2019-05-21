@@ -6,12 +6,12 @@
 <?import javafx.scene.layout.*?>
 
 <BorderPane focusTraversable="true" onKeyPressed="#touche" onMouseClicked="#mouseClicked" prefHeight="200.0" prefWidth="200.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ESCAPE_Montreuil_C1.Controleur.SampleController">
-   <left>
-      <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+   <center>
+      <Pane fx:id="monde" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <Pane fx:id="pane" focusTraversable="true" prefHeight="200.0" prefWidth="201.0" />
+            <Pane fx:id="map" focusTraversable="true" prefHeight="200.0" prefWidth="201.0" />
             <ImageView fx:id="perso" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
          </children>
       </Pane>
-   </left>
+   </center>
 </BorderPane>

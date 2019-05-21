@@ -7,8 +7,8 @@ import javafx.collections.ObservableList;
 
 public class Joueur extends Personnage{ //Rappel: i=y x=j
 	//constructeur
-	public Joueur(int x,int y,String nom,ArrayList<ObservableList <Block>> terrain) {
-		super(x,y,nom,terrain);
+	public Joueur(int x,int y,String nom) {
+		super(x,y,nom);
 		this.pv=50;
 	}
 	
@@ -16,9 +16,9 @@ public class Joueur extends Personnage{ //Rappel: i=y x=j
 	//saut
 	public void seDeplacerSaut() throws InterruptedException {
 		int i=0;
-		int hauteurSaut=3;
+		int hauteurSaut=2;
+		this.seDeplacerHaut();
 		while(i<=hauteurSaut) {
-			this.seDeplacerHaut();
 			i++;
 		}
 	}
