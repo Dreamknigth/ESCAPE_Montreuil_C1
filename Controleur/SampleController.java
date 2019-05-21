@@ -32,7 +32,7 @@ public class SampleController implements Initializable{
 	private ArrayList<ObservableList <Block>> terrain;
 
 	@FXML
-	private void touche(KeyEvent e) {
+	private void touche(KeyEvent e) throws InterruptedException {
 		KeyCode code = e.getCode();
 		System.out.println("Debug:");
 		System.out.println(this.j1.getY().getValue()+" "+this.j1.getX().getValue());
@@ -67,7 +67,14 @@ public class SampleController implements Initializable{
 	public void initialize(URL location, ResourceBundle resources) {
 		this.mp=new MapMaker();
 		this.mp.constructeurMap();
-		pane.setOnKeyPressed(e->touche(e));
+		pane.setOnKeyPressed(e->{
+			try {
+				touche(e);
+			} catch (InterruptedException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		});
 		this.mp.afficheTerrain();
 		
 		this.j1=new Joueur(0,0,"pseudo",mp.getTerrain());
@@ -79,6 +86,7 @@ public class SampleController implements Initializable{
 		
 		perso.setImage(new Image("ESCAPE_Montreuil_C1/Ressource/Joueur/Megamanx running.gif"));
 		perso.translateXProperty().bind(j1.getX().multiply(32));
+		//pane.scroll
 		perso.translateYProperty().bind(j1.getY().multiply(32));
 
 
@@ -103,6 +111,6 @@ public class SampleController implements Initializable{
 
 			}
 		}
-		this.j1.getX().addListener(evt->graviter((Event) evt));
+		
 	}
 }

@@ -14,7 +14,7 @@ public class Joueur extends Personnage{ //Rappel: i=y x=j
 	
 	//methode
 	//saut
-	public void seDeplacerSaut() {
+	public void seDeplacerSaut() throws InterruptedException {
 		int i=0;
 		int hauteurSaut=3;
 		while(i<=hauteurSaut) {
