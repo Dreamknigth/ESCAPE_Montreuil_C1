@@ -70,7 +70,10 @@ public class SampleController implements Initializable{
 		ArrayList<ObservableList <Block>> terrain=mr.getTerrain();
 
 		Image A= new Image("ESCAPE_Montreuil_C1/Ressource/air.jpg");
-		Image T= new Image("ESCAPE_Montreuil_C1/Ressource/terre.jpg");
+		Image T= new Image("ESCAPE_Montreuil_C1/Ressource/solpetit.jpg");
+		Image t = new Image("ESCAPE_Montreuil_C1/Ressource/terre.jpg");
+		Image f= new Image("ESCAPE_Montreuil_C1/Ressource/feuille.jpg");
+		Image F= new Image("ESCAPE_Montreuil_C1/Ressource/tronc.jpg");
 		
 		perso.setImage(new Image("ESCAPE_Montreuil_C1/Ressource/Joueur/Megamanx running.gif"));
 		perso.translateXProperty().bind(j1.getX().multiply(32));
@@ -87,7 +90,16 @@ public class SampleController implements Initializable{
 				if(terrain.get(i).get(j).getNom()=='A') {
 					view.setImage(A);
 				}
-				else{
+				else if(terrain.get(i).get(j).getNom()=='f'){
+					view.setImage(f);
+				}
+				else if (terrain.get(i).get(j).getNom() == 'F') {
+					view.setImage(F);
+				}
+				else if (terrain.get(i).get(j).getNom() == 't'){
+					view.setImage(t);
+				}
+				else if (terrain.get(i).get(j).getNom() == 'T') {
 					view.setImage(T);
 				}
 				view.setFitHeight(32);
