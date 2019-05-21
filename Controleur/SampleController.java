@@ -7,15 +7,12 @@ import java.util.ResourceBundle;
 import ESCAPE_Montreuil_C1.Modele.Personnage.Joueur;
 import ESCAPE_Montreuil_C1.Modele.blocks.Block;
 import ESCAPE_Montreuil_C1.Modele.map.MapReader;
-import javafx.beans.property.IntegerProperty;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.InputEvent;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
 import javafx.scene.input.KeyEvent;
@@ -32,7 +29,7 @@ public class SampleController implements Initializable{
 	@FXML
 	private ImageView perso;
 	
-	private IntegerProperty xMonde , yMonde;
+	
 	
 	private Joueur j1;
 	private MapReader mp;
@@ -40,23 +37,17 @@ public class SampleController implements Initializable{
 	@FXML
 	private void touche(KeyEvent e) throws InterruptedException {
 		KeyCode code = e.getCode();
-		System.out.println("Debug:");
-		System.out.println(this.j1.getY().getValue()+" "+this.j1.getX().getValue());
-		int vitesse=4;
+		//System.out.println(this.j1.getY().getValue()+" "+this.j1.getX().getValue());
 		if ( (code == KeyCode.Z || code == KeyCode.UP)  ) {
-			this.yMonde.subtract(1);
 			j1.seDeplacerSaut();
 		}
 		if( (code == KeyCode.D || code == KeyCode.RIGHT) ) {
-			this.xMonde.subtract(1);
 			j1.seDeplacerDroite();
 		}
 		if(code == KeyCode.Q || code == KeyCode.LEFT) {
-			this.xMonde.add(1);
 			j1.seDeplacerGauche();
 		}
 		if(code == KeyCode.S || code == KeyCode.DOWN){
-			this.yMonde.add(1);
 			j1.seDeplacerGraviter();
 		}
 		System.out.println(this.j1.getY().getValue()+" "+this.j1.getX().getValue()+"\n");
@@ -130,17 +121,17 @@ public class SampleController implements Initializable{
 		 */
 		this.j1=new Joueur(0,0,"pseudo");
 		perso.setImage(new Image("ESCAPE_Montreuil_C1/Ressource/Joueur/Megamanx running.gif"));
-		this.xMonde.set(0);
-		this.yMonde.set(0);
+		
 		// Deplacement Joueur
 		
 		j1.seDeplacerGraviter();
 		
+		
 		perso.translateXProperty().bind(j1.getX().multiply(32));
 		perso.translateYProperty().bind(j1.getY().multiply(32));
 
-		monde.translateXProperty().bind(this.xMonde.multiply(-32));
-		monde.translateYProperty().bind(this.yMonde.multiply(-32));
+		monde.translateXProperty().bind(j1.getX().multiply(-24));
+		monde.translateYProperty().bind(j1.getY().multiply(-16));
 
 		perso.setFitHeight(40);
 		perso.setFitWidth(40);

@@ -14,7 +14,7 @@ public class Joueur extends Personnage{ //Rappel: i=y x=j
 	
 	//methode
 	//saut
-	public void seDeplacerSaut() throws InterruptedException {
+	public void seDeplacerSaut() {
 		int i=0;
 		int hauteurSaut=2;
 		this.seDeplacerHaut();

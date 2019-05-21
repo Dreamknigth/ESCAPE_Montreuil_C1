@@ -1,16 +1,11 @@
 package ESCAPE_Montreuil_C1.Modele.Personnage;
 
-import java.awt.Point;
-import java.util.ArrayList;
 
-import ESCAPE_Montreuil_C1.Modele.blocks.Block;
 import ESCAPE_Montreuil_C1.Modele.map.Terrain;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.value.ObservableValue;
-import javafx.collections.ObservableList;
 
-abstract class Personnage {
+public abstract class Personnage {
 	protected IntegerProperty x,y; //coordonnee
 	protected String nom;
 	protected int pv;
