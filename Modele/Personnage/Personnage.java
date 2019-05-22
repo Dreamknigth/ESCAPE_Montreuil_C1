@@ -45,22 +45,30 @@ abstract class Personnage {
 	}
 	
 	//Gauche
-	public void seDeplacerGauche() { //y=i x=j
+	public boolean seDeplacerGauche() { //y=i x=j
 		if(this.x.getValue()>=1 && this.leTerrain.getTerrain().get( this.y.getValue() ).get( this.x.getValue()-1 ).getTraversable()) {
 			this.x.setValue(this.x.get()-1);
+			seDeplacerGraviter();
+			return true;
 		}
+		return false;
 	}
 	//Droite
-	public void seDeplacerDroite() { //y=i x=j
+	public boolean seDeplacerDroite() { //y=i x=j
 		if(this.x.getValue()<this.leTerrain.getTerrain().get( this.y.getValue() ).size()-1 &&  this.leTerrain.getTerrain().get( this.y.getValue() ).get( this.x.getValue()+1 ).getTraversable()) {
 			this.x.setValue(this.x.get()+1);
+			seDeplacerGraviter();
+			return true;
 		}
+		return false;
 	}
 	//haut
-	protected void seDeplacerHaut() {
+	protected boolean seDeplacerHaut() {
 		if(this.y.getValue()>=1 && this.leTerrain.getTerrain().get( this.y.getValue()-1 ).get( this.x.getValue() ).getTraversable()) {
 			this.y.setValue(this.y.get()-1);
+			return true;
 		}
+		return false;
 	}
 	//bas
 	protected boolean seDeplacerBas() {
@@ -70,7 +78,12 @@ abstract class Personnage {
 		}
 		return false;
 	}
-	
+	//graviter
+	public void seDeplacerGraviter() {
+		if(this.seDeplacerBas()) {
+			this.seDeplacerGraviter();
+		}
+	}
 	
 	//getter
 	public String getNom() {

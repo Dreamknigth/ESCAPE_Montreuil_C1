@@ -22,12 +22,7 @@ public class Joueur extends Personnage{ //Rappel: i=y x=j
 			i++;
 		}
 	}
-	//graviter TODO
-	public void seDeplacerGraviter() {
-		if(this.seDeplacerBas()) {
-			this.seDeplacerGraviter();
-		}
-	}
+	
 	//setter
 	public void setNom(String nom) {
 		this.nom=nom;

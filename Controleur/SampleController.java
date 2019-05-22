@@ -4,9 +4,12 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+import com.sun.glass.ui.Application.EventHandler;
+
 import ESCAPE_Montreuil_C1.Modele.Personnage.Joueur;
 import ESCAPE_Montreuil_C1.Modele.blocks.Block;
 import ESCAPE_Montreuil_C1.Modele.map.MapReader;
+import ESCAPE_Montreuil_C1.Vue.Player;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -26,7 +29,8 @@ public class SampleController implements Initializable{
 	@FXML
 	private Pane pane;
 	@FXML
-	private ImageView perso;
+	private ImageView cadre;
+	private Player j;
 	private Joueur j1;
 
 	@FXML
@@ -54,11 +58,6 @@ public class SampleController implements Initializable{
 	void mouseClicked(MouseEvent event) {
 		System.out.println("yes yes ");
 	}
-	
-	@FXML
-	void graviter(Event event) {
-		j1.seDeplacerGraviter();
-	}
 
 
 	@Override
@@ -69,19 +68,27 @@ public class SampleController implements Initializable{
 		mr.constructeurMap();
 		ArrayList<ObservableList <Block>> terrain=mr.getTerrain();
 
-		Image A= new Image("ESCAPE_Montreuil_C1/Ressource/air.jpg");
-		Image T= new Image("ESCAPE_Montreuil_C1/Ressource/solpetit.jpg");
-		Image t = new Image("ESCAPE_Montreuil_C1/Ressource/terre.jpg");
-		Image f= new Image("ESCAPE_Montreuil_C1/Ressource/feuille.jpg");
-		Image F= new Image("ESCAPE_Montreuil_C1/Ressource/tronc.jpg");
+		Image A= new Image("ESCAPE_Montreuil_C1/source/air.jpg");
+		Image T= new Image("ESCAPE_Montreuil_C1/source/solpetit.jpg");
+		Image t = new Image("ESCAPE_Montreuil_C1/source/terre.jpg");
+		Image f= new Image("ESCAPE_Montreuil_C1/source/feuille.jpg");
+		Image F= new Image("ESCAPE_Montreuil_C1/source/tronc.jpg");
 		
-		perso.setImage(new Image("ESCAPE_Montreuil_C1/Ressource/Joueur/Megamanx running.gif"));
-		perso.translateXProperty().bind(j1.getX().multiply(32));
-		perso.translateYProperty().bind(j1.getY().multiply(32));
+		System.out.println("le debug de la vie!");
+		cadre.translateXProperty().bind( j1.getX() );
+		cadre.translateYProperty().bind( j1.getX() );
+		this.j=new Player( this.j1, this.cadre);
+		//j=new Player();
+//		cadre.setImage(new Image("ESCAPE_Montreuil_C1/source/Joueur/Megamanx running.gif"));
+//		cadre.setFitHeight(40);
+//		cadre.setFitWidth(40);
+//		cadre.translateXProperty().bind( j1.getX() );
+//		cadre.translateYProperty().bind( j1.getX() );
+		System.out.println("le debug de la mort!");
+		
+		
 
-
-		perso.setFitHeight(40);
-		perso.setFitWidth(40);
+		
 
 		
 		for (int i = 0; i < terrain.size(); i++) {
