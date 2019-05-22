@@ -25,8 +25,8 @@ public class MapReader {
 
 	public MapReader() {
 		try {
-			this.fp = new File("src/ESCAPE_Montreuil_C1/Ressource/terrain.csv");
-			this.fp = new File("src/ESCAPE_Montreuil_C1/Ressource/map5.csv");
+			this.fp = new File("src/ESCAPE_Montreuil_C1/source/terrain.csv");
+			this.fp = new File("src/ESCAPE_Montreuil_C1/source/map5.csv");
 
 			this.fpr = new FileReader(this.fp);
 			this.bfReader = new BufferedReader(this.fpr);
