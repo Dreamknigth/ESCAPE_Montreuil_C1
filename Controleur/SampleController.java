@@ -56,6 +56,7 @@ public class SampleController implements Initializable{
 	@FXML
 	void mouseClicked(MouseEvent event) {
 		System.out.println("yes yes ");
+		
 	}
 	
 	@FXML
@@ -80,15 +81,16 @@ public class SampleController implements Initializable{
 				e1.printStackTrace();
 			}
 		});
+		map.setOnMousePressed(e -> mouseClicked(e));
 		MapReader mr = new MapReader();
 		mr.constructeurMap();
 		ArrayList<ObservableList <Block>> terrain=mr.getTerrain();
 		this.mp.afficheTerrain();
-		Image A= new Image("ESCAPE_Montreuil_C1/Ressource/air.jpg");
-		Image T= new Image("ESCAPE_Montreuil_C1/Ressource/solpetit.jpg");
-		Image t = new Image("ESCAPE_Montreuil_C1/Ressource/terre.jpg");
-		Image f= new Image("ESCAPE_Montreuil_C1/Ressource/feuille.jpg");
-		Image F= new Image("ESCAPE_Montreuil_C1/Ressource/tronc.jpg");
+		Image A= new Image("ESCAPE_Montreuil_C1/source/air.jpg");
+		Image T= new Image("ESCAPE_Montreuil_C1/source/solpetit.jpg");
+		Image t = new Image("ESCAPE_Montreuil_C1/source/terre.jpg");
+		Image f= new Image("ESCAPE_Montreuil_C1/source/feuille.jpg");
+		Image F= new Image("ESCAPE_Montreuil_C1/source/tronc.jpg");
 		for (int i = 0; i < terrain.size(); i++) {
 			for(int j=0;j<terrain.get(i).size();j++) {
 				ImageView view = new ImageView() ;
@@ -120,7 +122,7 @@ public class SampleController implements Initializable{
 		 * Creation du Joueur
 		 */
 		this.j1=new Joueur(0,0,"pseudo");
-		perso.setImage(new Image("ESCAPE_Montreuil_C1/Ressource/Joueur/Megamanx running.gif"));
+		perso.setImage(new Image("ESCAPE_Montreuil_C1/source/Joueur/Megamanx running.gif"));
 		
 		// Deplacement Joueur
 		
