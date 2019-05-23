@@ -21,13 +21,26 @@ import javafx.scene.input.MouseEvent;
 
 public class SampleController implements Initializable{
 	
-    @FXML
-    private Pane monde;
+	 	@FXML
+	    private Pane monde;
 
-    @FXML
-    private Pane map;
-	@FXML
-	private ImageView perso;
+	    @FXML
+	    private Pane map;
+
+	    @FXML
+	    private ImageView perso;
+
+	    @FXML
+	    private ImageView RessourceBois;
+
+	    @FXML
+	    private ImageView RessourceFer;
+
+	    @FXML
+	    private ImageView RessourceTerre;
+
+	    @FXML
+	    private ImageView RessourceElixir;
 	
 	
 	
@@ -91,6 +104,8 @@ public class SampleController implements Initializable{
 		Image t = new Image("ESCAPE_Montreuil_C1/source/terre.jpg");
 		Image f= new Image("ESCAPE_Montreuil_C1/source/feuille.jpg");
 		Image F= new Image("ESCAPE_Montreuil_C1/source/tronc.jpg");
+		Image Fer= new Image("ESCAPE_Montreuil_C1/source/Fer.jpg");
+		Image elixir= new Image("ESCAPE_Montreuil_C1/source/elixir.png");
 		for (int i = 0; i < terrain.size(); i++) {
 			for(int j=0;j<terrain.get(i).size();j++) {
 				ImageView view = new ImageView() ;
@@ -122,22 +137,27 @@ public class SampleController implements Initializable{
 		 * Creation du Joueur
 		 */
 		this.j1=new Joueur(0,0,"pseudo");
-		perso.setImage(new Image("ESCAPE_Montreuil_C1/source/Joueur/Megamanx running.gif"));
+		this.perso.setImage(new Image("ESCAPE_Montreuil_C1/source/Joueur/Megamanx running.gif"));
 		
-		// Deplacement Joueur
+		/**
+		 * Deplacement Joueur
+		 */
 		
 		j1.seDeplacerGraviter();
 		
 		
-		perso.translateXProperty().bind(j1.getX().multiply(32));
-		perso.translateYProperty().bind(j1.getY().multiply(32));
+		this.perso.translateXProperty().bind(j1.getX().multiply(32));
+		this.perso.translateYProperty().bind(j1.getY().multiply(32));
 
-		monde.translateXProperty().bind(j1.getX().multiply(-24));
-		monde.translateYProperty().bind(j1.getY().multiply(-16));
+		this.monde.translateXProperty().bind(j1.getX().multiply(-32).add(512));
+		this.monde.translateYProperty().bind(j1.getY().multiply(-16));
 
-		perso.setFitHeight(40);
-		perso.setFitWidth(40);
-
+		this.perso.setFitHeight(40);
+		this.perso.setFitWidth(40);
+		
+		/**
+		 * Initialisation des Ressources
+		 */
 		
 		
 		// https://docs.oracle.com/javafx/2/api/javafx/beans/value/ObservableValue.html
