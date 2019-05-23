@@ -4,7 +4,7 @@ public class bois extends Ressource{
 
 	public bois() {
 		super("bois");
-		// TODO Auto-generated constructor stub
+
 	}
 
 }
