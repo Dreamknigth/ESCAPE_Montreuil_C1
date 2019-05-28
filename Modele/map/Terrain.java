@@ -6,17 +6,15 @@ import ESCAPE_Montreuil_C1.Modele.blocks.Block;
 import javafx.collections.ObservableList;
 
 public class Terrain {
-	private ArrayList<ObservableList <Block>> terrain;
+	private ArrayList<ObservableList <Block>> tableTerrain;
 	
 	//Constructeur
-	public Terrain() {
-		MapReader mr=new MapReader();
-		mr.constructeurMap();
-		this.terrain=mr.getTerrain();
+	public Terrain(ArrayList<ObservableList <Block>> leTerrain) {
+		this.tableTerrain=leTerrain;
 	}
 	
 	//getter
-	public ArrayList<ObservableList <Block>> getTerrain() {
-		return this.terrain;
+	public ArrayList<ObservableList <Block>> getTableTerrain() {
+		return this.tableTerrain;
 	}
 }
