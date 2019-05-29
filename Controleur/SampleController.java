@@ -3,8 +3,6 @@ package ESCAPE_Montreuil_C1.Controleur;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import javax.naming.NamingException;
-
 import ESCAPE_Montreuil_C1.Modele.map.Monde;
 import ESCAPE_Montreuil_C1.Modele.blocks.Air;
 import ESCAPE_Montreuil_C1.Vue.Player;
@@ -113,7 +111,6 @@ public class SampleController implements Initializable{
 				try {
 					touche(e);
 				} catch (InterruptedException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 				});
