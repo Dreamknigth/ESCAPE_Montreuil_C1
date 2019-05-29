@@ -17,6 +17,6 @@
       </Pane>
    </center>
    <top>
-      <HBox fx:id="inventaire" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+      <HBox fx:id="inventaireVue" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
    </top>
 </BorderPane>
