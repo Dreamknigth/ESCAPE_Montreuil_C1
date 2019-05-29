@@ -9,9 +9,9 @@ import com.sun.glass.ui.Application.EventHandler;
 import ESCAPE_Montreuil_C1.Modele.Monde;
 import ESCAPE_Montreuil_C1.Modele.Personnage.Joueur;
 import ESCAPE_Montreuil_C1.Modele.blocks.Block;
-import ESCAPE_Montreuil_C1.Modele.map.MapReader;
-import ESCAPE_Montreuil_C1.Modele.map.Terrain;
 import ESCAPE_Montreuil_C1.Vue.Player;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
@@ -23,11 +23,14 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.util.Duration;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 
 
 public class SampleController implements Initializable{
+	
+	private Timeline gameLoop=new Timeline();
 	
 	private Monde monde;
 	private Player lePlayer;
@@ -64,7 +67,7 @@ public class SampleController implements Initializable{
 			System.out.println("debug");
 		}
 		if(code == KeyCode.S || code == KeyCode.DOWN){
-			this.monde.getJoueur().seDeplacerGraviter();
+			this.monde.getJoueur().seDeplacerBas();
 		}
 		System.out.println(this.monde.getJoueur().getEtat().getValue()+" "+this.monde.getJoueur().getVersDroite().getValue());
 		System.out.println(this.monde.getJoueur().getY().getValue()+" "+this.monde.getJoueur().getX().getValue()+"\n");
@@ -73,8 +76,20 @@ public class SampleController implements Initializable{
 	@FXML
 	void mouseClicked(MouseEvent event) {
 		System.out.println("yes yes ");
+		
 	}
 
+	private void initGameLoop() {
+		gameLoop.setCycleCount(Timeline.INDEFINITE);
+		System.out.println("test deb annimation");
+		KeyFrame kfGraviter = new KeyFrame(Duration.seconds(0.400),(ev ->{
+			System.out.println("test deb loop kfGraviter");
+			this.monde.getJoueur().seDeplacerBas();
+		}));
+		gameLoop.getKeyFrames().add(kfGraviter);
+		System.out.println("test fin annimation:"+gameLoop.getKeyFrames());
+	}
+	
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -86,8 +101,8 @@ public class SampleController implements Initializable{
 		//bind les positions du player(imageview) avec les positions du joueur
 		this.lePlayer.translateXProperty().bind(this.monde.getJoueur().getX().multiply(32));
 		this.lePlayer.translateYProperty().bind(this.monde.getJoueur().getY().multiply(32));
-		this.lePlayer.setFitHeight(50);
-		this.lePlayer.setFitWidth(50);
+		this.lePlayer.setFitHeight(64);
+		this.lePlayer.setFitWidth(64);
 		//bind les positions de la vue avec les positions du joueur
 		this.map.translateXProperty().bind(this.monde.getJoueur().getX().multiply(-32).add(512));
 		this.map.translateYProperty().bind(this.monde.getJoueur().getY().multiply(-16));
@@ -116,26 +131,17 @@ public class SampleController implements Initializable{
 		System.out.println("le debug de la vie!");
 		System.out.println("test "+this.monde.getJoueur().getNom());
 	
-		//j=new Player();
-//		cadre.setImage(new Image("ESCAPE_Montreuil_C1/source/Joueur/Megamanx running.gif"));
-//		cadre.setFitHeight(40);
-//		cadre.setFitWidth(40);
-//		cadre.translateXProperty().bind( j1.getX() );
-//		cadre.translateYProperty().bind( j1.getX() );
 		System.out.println("le debug de la mort!");
-		
-		
-		
-		/**
-		 * Deplacement Joueur
-		 */
-		
 		//monde.getJoueur().seDeplacerGraviter();
-
-		
 		// https://docs.oracle.com/javafx/2/api/javafx/beans/value/ObservableValue.html
 		// void addListener(ChangeListener<? super T> listener)
+		
+		//Init du jeu
+		initGameLoop();
+		//Lancer leanimationJeu JEU!
+		gameLoop.play();
 	}
+	
 	public void creerVueTerrain() {
 		
 		Image A= new Image("ESCAPE_Montreuil_C1/source/air.jpg");

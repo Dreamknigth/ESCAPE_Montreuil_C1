@@ -1,9 +1,14 @@
 package ESCAPE_Montreuil_C1.Modele.blocks;
 
-public abstract class bois extends BlockDestructible {
+//import ESCAPE_Montreuil_C1.Modele.Objet.bois;
 
-	public bois(boolean estTraversable, Ressource drop, int solidite, char nom) {
-		super(estTraversable, drop, solidite, nom);
+public class bois extends BlockDestructible {
+	
+//	private bois = new bois();
+
+	public bois() {
+		super(true,10,'B');
 	}
+
 
 }
