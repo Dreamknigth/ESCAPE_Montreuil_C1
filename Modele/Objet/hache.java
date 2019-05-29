@@ -11,6 +11,9 @@ public class hache extends Arme{
 
 	@Override
 	public int getatt() { return this.durabilité;}
+	
+	@Override
+	public String getNom() { return this.nom; }
 
 	@Override
 	public int getdura(){return this.ptsattaque;}

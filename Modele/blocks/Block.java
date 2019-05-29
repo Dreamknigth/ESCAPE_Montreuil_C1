@@ -1,7 +1,5 @@
 package ESCAPE_Montreuil_C1.Modele.blocks;
 
-import java.awt.Point;
-
 public abstract class Block {
 	protected boolean traversable;
 	private char nom;

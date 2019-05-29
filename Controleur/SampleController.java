@@ -1,8 +1,6 @@
 package ESCAPE_Montreuil_C1.Controleur;
 
-import java.awt.peer.LabelPeer;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -10,10 +8,13 @@ import java.util.ResourceBundle;
 
 import ESCAPE_Montreuil_C1.Modele.Inventaire.Inventaire;
 import ESCAPE_Montreuil_C1.Modele.Personnage.Joueur;
-import ESCAPE_Montreuil_C1.Modele.blocks.Block;
 import ESCAPE_Montreuil_C1.Modele.map.MapReader;
-import javafx.collections.ObservableList;
 import javafx.event.Event;
+
+
+import ESCAPE_Montreuil_C1.Modele.map.Monde;
+import ESCAPE_Montreuil_C1.Modele.blocks.Air;
+import ESCAPE_Montreuil_C1.Vue.Player;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -23,7 +24,6 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 
@@ -31,10 +31,7 @@ import javafx.scene.input.MouseEvent;
 public class SampleController implements Initializable{
 
 	@FXML
-	private Pane monde;
-
-	@FXML
-	private Pane map;
+	private Pane vue;
 
 	@FXML
 	private ImageView perso;
@@ -45,57 +42,108 @@ public class SampleController implements Initializable{
 
 	private Inventaire iventaireModele=new Inventaire();
 
-	private Map<String, ImageView> dictionnaireImage; 
+	private Map<String, Image> dictionnaireImage; 
 
 
-	private Joueur j1;
-	private MapReader mp;
+
+
+
+	private Monde monde;
+	private Player lePlayer;
+
 
 	@FXML
 	private void touche(KeyEvent e) throws InterruptedException {
 		KeyCode code = e.getCode();
 		//System.out.println(this.j1.getY().getValue()+" "+this.j1.getX().getValue());
 		if ( (code == KeyCode.Z || code == KeyCode.UP)  ) {
-			j1.seDeplacerSaut();
+			this.monde.getJoueur().seDeplacerSaut();
 		}
-		if( (code == KeyCode.D || code == KeyCode.RIGHT) ) {
-			j1.seDeplacerDroite();
+		else if( (code == KeyCode.D || code == KeyCode.RIGHT) ) {
+			this.monde.getJoueur().seDeplacerDroite();
 		}
-		if(code == KeyCode.Q || code == KeyCode.LEFT) {
-			j1.seDeplacerGauche();
+		else if(code == KeyCode.Q || code == KeyCode.LEFT) {
+			this.monde.getJoueur().seDeplacerGauche();
 		}
-		if(code == KeyCode.S || code == KeyCode.DOWN){
-			j1.seDeplacerGraviter();
+		else if(code == KeyCode.S || code == KeyCode.DOWN){
+			this.monde.getJoueur().seDeplacerGraviter();
 		}
 	}
+
 
 	@FXML
 	void mouseClicked(MouseEvent event) {
-		System.out.println("yes yes ");
+		//		System.out.println(event.getSource()); 
+		int x =((int)event.getX()/32);
+		int y =((int)event.getY()/32);
+		Air a = new Air();
+		System.out.println(x+";"+y);
+		Image i = new Image("ESCAPE_Montreuil_C1/source/air.jpg");
+		ImageView l = (ImageView) vue.lookup('#'+""+y+'9'+x);
+
+		l.setImage(i);
+		this.monde.getTerrain2().setTerrain(a, y, x);
 
 	}
 
-	@FXML
-	void graviter(Event event) {
-		j1.seDeplacerGraviter();
-	}
 
-	
+
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		dictionnaireImage = new HashMap< String,ImageView>(); 
-		dictionnaireImage.put("Terre", new ImageView("ESCAPE_Montreuil_C1/source/terre.jpg")); 
-		dictionnaireImage.put("bois", new ImageView("ESCAPE_Montreuil_C1/source/tronc.jpg"));
-		dictionnaireImage.put("Fer", new ImageView("ESCAPE_Montreuil_C1/source/Fer.png"));
+		dictionnaireImage = new HashMap< String,Image>(); 
+		dictionnaireImage.put("Air",new Image("ESCAPE_Montreuil_C1/source/air.jpg" ));
+		dictionnaireImage.put("Terre", new Image("ESCAPE_Montreuil_C1/source/terre.jpg")); 
+		dictionnaireImage.put("bois", new Image("ESCAPE_Montreuil_C1/source/tronc.jpg"));
+		dictionnaireImage.put("Fer", new Image("ESCAPE_Montreuil_C1/source/Fer.png"));
+		dictionnaireImage.put("solAvecHerbe",new Image("ESCAPE_Montreuil_C1/source/solpetit.jpg"));
+		dictionnaireImage.put("Feuille",new Image("ESCAPE_Montreuil_C1/source/feuille.jpg"));
+		dictionnaireImage.put("tronc",new Image("ESCAPE_Montreuil_C1/source/tronc.jpg"));
+		//Image Fer= new Image("ESCAPE_Montreuil_C1/source/Fer.jpg");
+		//Image elixir= new Image("ESCAPE_Montreuil_C1/source/elixir.png");
 
-		
 		/**
 		 * Creation de la map
 		 */
 
-		this.mp=new MapReader();
-		this.mp.constructeurMap();
-		map.setOnKeyPressed(e->{
+
+		MapReader mr = new MapReader();
+		mr.constructeurMap();
+		
+		/**
+		 * Initialisation des Variables
+		 */
+		
+		this.monde=new Monde();
+		creerVueTerrain();
+		this.lePlayer=new Player();
+		this.vue.getChildren().add(this.lePlayer);
+
+
+		/**
+		 * bind les positions du player(imageview) avec les positions du joueur
+		 */
+		
+		this.lePlayer.translateXProperty().bind(this.monde.getJoueur().getX().multiply(32));
+		this.lePlayer.translateYProperty().bind(this.monde.getJoueur().getY().multiply(32));
+		this.lePlayer.setFitHeight(50);
+		this.lePlayer.setFitWidth(50);
+		
+		/**
+		 * bind les positions de la vue avec les positions du joueur
+		 */
+		
+		this.vue.translateXProperty().bind(this.monde.getJoueur().getX().multiply(-32).add(512));
+		this.vue.translateYProperty().bind(this.monde.getJoueur().getY().multiply(-16));
+		
+		/**
+		 * bind les comportement du joueur avec les comportement du player(qui gere les images)
+		 */
+		
+		this.lePlayer.getVersDroite().bind( this.monde.getJoueur().getVersDroite() );
+		this.lePlayer.getEtat().bind( this.monde.getJoueur().getEtat() );
+
+		vue.setOnKeyPressed(e->{
 			try {
 				touche(e);
 			} catch (InterruptedException e1) {
@@ -103,66 +151,7 @@ public class SampleController implements Initializable{
 				e1.printStackTrace();
 			}
 		});
-		map.setOnMousePressed(e -> mouseClicked(e));
-		MapReader mr = new MapReader();
-		mr.constructeurMap();
-		ArrayList<ObservableList <Block>> terrain=mr.getTerrain();
-		//this.mp.afficheTerrain();
-		Image A= new Image("ESCAPE_Montreuil_C1/source/air.jpg");
-		Image T= new Image("ESCAPE_Montreuil_C1/source/solpetit.jpg");
-		Image t = new Image("ESCAPE_Montreuil_C1/source/terre.jpg");
-		Image f= new Image("ESCAPE_Montreuil_C1/source/feuille.jpg");
-		Image F= new Image("ESCAPE_Montreuil_C1/source/tronc.jpg");
-		//Image Fer= new Image("ESCAPE_Montreuil_C1/source/Fer.jpg");
-		//Image elixir= new Image("ESCAPE_Montreuil_C1/source/elixir.png");
-		for (int i = 0; i < terrain.size(); i++) {
-			for(int j=0;j<terrain.get(i).size();j++) {
-				ImageView view = new ImageView() ;
-				if(terrain.get(i).get(j).getNom()=='A') {
-					view.setImage(A);
-				}
-				else if(terrain.get(i).get(j).getNom()=='f'){
-					view.setImage(f);
-				}
-				else if (terrain.get(i).get(j).getNom() == 'F') {
-					view.setImage(F);
-				}
-				else if (terrain.get(i).get(j).getNom() == 't'){
-					view.setImage(t);
-				}
-				else if (terrain.get(i).get(j).getNom() == 'T') {
-					view.setImage(T);
-				}
-				view.setFitHeight(32);
-				view.setFitWidth(32);
-				map.getChildren().add(view);
-				view.setTranslateX(j*view.getFitWidth());
-				view.setTranslateY(i*view.getFitHeight());
 
-			}
-		}
-
-		/**
-		 * Creation du Joueur
-		 */
-		this.j1=new Joueur(0,0,"pseudo");
-		this.perso.setImage(new Image("ESCAPE_Montreuil_C1/source/Joueur/Megamanx running.gif"));
-
-		/**
-		 * Deplacement Joueur
-		 */
-
-		j1.seDeplacerGraviter();
-
-
-		this.perso.translateXProperty().bind(j1.getX().multiply(32));
-		this.perso.translateYProperty().bind(j1.getY().multiply(32));
-
-		this.monde.translateXProperty().bind(j1.getX().multiply(-32).add(512));
-		this.monde.translateYProperty().bind(j1.getY().multiply(-16));
-
-		this.perso.setFitHeight(40);
-		this.perso.setFitWidth(40);
 
 		/**
 		 * Initialisation des Ressources
@@ -170,17 +159,63 @@ public class SampleController implements Initializable{
 		for (int i = 0 ;i<this.iventaireModele.getListeInventaire().size();i++ ) {
 			VBox elementInventaire = new VBox();
 			Label valeurRessource = new Label();
-			ImageView Image = dictionnaireImage.get(this.iventaireModele.getListeInventaire().get(i).getNom());
-			Image.setFitHeight(32);
-			Image.setFitWidth(32);
+			ImageView Image = new ImageView(dictionnaireImage.get(this.iventaireModele.getListeInventaire().get(i).getNom()));
+			Image.setFitHeight(80);
+			Image.setFitWidth(Image.getFitHeight());
 			valeurRessource.textProperty().bind(this.iventaireModele.getListeInventaire().get(i).getValeur().asString());
 			elementInventaire.getChildren().add(Image);
 			elementInventaire.getChildren().add(valeurRessource);
-			
-			
-			elementInventaire.setTranslateX(i*20);
+
+
+			elementInventaire.setTranslateX(i*60);
 			inventaireVue.getChildren().add(elementInventaire);
 		}
-	
+
 	}
+
+	public void creerVueTerrain() {
+
+		
+		for (int i = 0; i < this.monde.getTerrain().size(); i++) {
+			for(int j=0;j<this.monde.getTerrain().get(i).size();j++) {
+				ImageView view = new ImageView() ;
+				if(this.monde.getTerrain().get(i).get(j).getNom()=='A') {
+					view.setImage(this.dictionnaireImage.get("Air"));
+				}
+				else if(this.monde.getTerrain().get(i).get(j).getNom()=='f'){
+					view.setImage(this.dictionnaireImage.get("Feuille"));
+				}
+				else if (this.monde.getTerrain().get(i).get(j).getNom() == 'F') {
+					view.setImage(this.dictionnaireImage.get("tronc"));
+				}
+				else if (this.monde.getTerrain().get(i).get(j).getNom() == 't'){
+					view.setImage(this.dictionnaireImage.get("Terre"));
+				}
+				else if (this.monde.getTerrain().get(i).get(j).getNom() == 'T') {
+					view.setImage(this.dictionnaireImage.get("solAvecHerbe"));
+				}
+
+				view.setFitHeight(32);
+				view.setFitWidth(32);
+				String s = i+"9"+j;
+				view.setId(s);
+				vue.getChildren().add(view);
+				view.setTranslateX(j*view.getFitWidth());
+				view.setTranslateY(i*view.getFitHeight());
+
+			}
+		}
+	}
+
 }
+
+
+
+
+
+
+
+
+
+
+

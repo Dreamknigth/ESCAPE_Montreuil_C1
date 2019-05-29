@@ -12,5 +12,7 @@ public class épée extends Arme{
 	@Override
 	public int getdura() { return this.durabilité; }
 	@Override
+	public String getNom() { return this.nom; }
+	@Override
 	public int getatt() { return this.ptsattaque; }
 }

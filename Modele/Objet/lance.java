@@ -14,5 +14,7 @@ public class lance extends Arme{
 
 	@Override
 	public int getdura() { return this.durabilité;}
+	@Override
+	public String getNom() { return this.nom; }
 
 }
