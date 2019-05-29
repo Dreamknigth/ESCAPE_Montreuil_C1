@@ -1,12 +1,11 @@
 package ESCAPE_Montreuil_C1.Controleur;
 
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import com.sun.glass.ui.Application.EventHandler;
 
-import ESCAPE_Montreuil_C1.Modele.Monde;
+import ESCAPE_Montreuil_C1.Modele.map.Monde;
 import ESCAPE_Montreuil_C1.Modele.Personnage.Joueur;
 import ESCAPE_Montreuil_C1.Modele.blocks.Block;
 import ESCAPE_Montreuil_C1.Vue.Player;
@@ -16,6 +15,9 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
+import javax.naming.NamingException;
+import ESCAPE_Montreuil_C1.Modele.map.Monde;
+import ESCAPE_Montreuil_C1.Modele.blocks.Air;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.image.Image;
@@ -69,25 +71,31 @@ public class SampleController implements Initializable{
 		if(code == KeyCode.S || code == KeyCode.DOWN){
 			this.monde.getJoueur().seDeplacerBas();
 		}
-		System.out.println(this.monde.getJoueur().getEtat().getValue()+" "+this.monde.getJoueur().getVersDroite().getValue());
-		System.out.println(this.monde.getJoueur().getY().getValue()+" "+this.monde.getJoueur().getX().getValue()+"\n");
 	}
 	
 	@FXML
 	void mouseClicked(MouseEvent event) {
-		System.out.println("yes yes ");
+		
+		int x =(int)event.getX()/32;
+		int y =(int)event.getY()/32;
+		System.out.println(x+";"+y);
+		if (this.monde.getJoueur().modifPossible(y, x)) {
+			Air a = new Air();
+			Image i = new Image("ESCAPE_Montreuil_C1/source/air.jpg");
+				ImageView l = (ImageView) vue.lookup('#'+""+y+'9'+x);
+				l.setImage(i);
+				this.monde.getTerrain().setTerrain(a, y, x);
+		}
+		
 		
 	}
 
 	private void initGameLoop() {
 		gameLoop.setCycleCount(Timeline.INDEFINITE);
-		System.out.println("test deb annimation");
 		KeyFrame kfGraviter = new KeyFrame(Duration.seconds(0.400),(ev ->{
-			System.out.println("test deb loop kfGraviter");
 			this.monde.getJoueur().seDeplacerBas();
 		}));
 		gameLoop.getKeyFrames().add(kfGraviter);
-		System.out.println("test fin annimation:"+gameLoop.getKeyFrames());
 	}
 	
 
@@ -97,15 +105,15 @@ public class SampleController implements Initializable{
 		this.monde=new Monde();
 		creerVueTerrain();
 		this.lePlayer=new Player();
-		this.map.getChildren().add(this.lePlayer);
+		this.vue.getChildren().add(this.lePlayer);
 		//bind les positions du player(imageview) avec les positions du joueur
 		this.lePlayer.translateXProperty().bind(this.monde.getJoueur().getX().multiply(32));
 		this.lePlayer.translateYProperty().bind(this.monde.getJoueur().getY().multiply(32));
 		this.lePlayer.setFitHeight(64);
-		this.lePlayer.setFitWidth(64);
+		this.lePlayer.setFitWidth(32);
 		//bind les positions de la vue avec les positions du joueur
-		this.map.translateXProperty().bind(this.monde.getJoueur().getX().multiply(-32).add(512));
-		this.map.translateYProperty().bind(this.monde.getJoueur().getY().multiply(-16));
+		this.vue.translateXProperty().bind(this.monde.getJoueur().getX().multiply(-32).add(512));
+		this.vue.translateYProperty().bind(this.monde.getJoueur().getY().multiply(-16));
 		//mettre un listener sur les variables etat et versDroite du Joueur
 		this.monde.getJoueur().getEtat().addListener(new ChangeListener<Number>() {
 			@Override
@@ -123,7 +131,6 @@ public class SampleController implements Initializable{
 		try {
 			touche(e);
 		} catch (InterruptedException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		});
@@ -150,27 +157,29 @@ public class SampleController implements Initializable{
 		Image f= new Image("ESCAPE_Montreuil_C1/source/feuille.jpg");
 		Image F= new Image("ESCAPE_Montreuil_C1/source/tronc.jpg");
 		
-		for (int i = 0; i < this.monde.getTerrain().size(); i++) {
-			for(int j=0;j<this.monde.getTerrain().get(i).size();j++) {
+		for (int i = 0; i < this.monde.getTerrain().getTableTerrain().size(); i++) {
+			for(int j=0;j<this.monde.getTerrain().getTableTerrain().get(i).size();j++) {
 				ImageView view = new ImageView() ;
-				if(this.monde.getTerrain().get(i).get(j).getNom()=='A') {
+				if(this.monde.getTerrain().getTableTerrain().get(i).get(j).getNom()=='A') {
 					view.setImage(A);
 				}
-				else if(this.monde.getTerrain().get(i).get(j).getNom()=='f'){
+				else if(this.monde.getTerrain().getTableTerrain().get(i).get(j).getNom()=='f'){
 					view.setImage(f);
 				}
-				else if (this.monde.getTerrain().get(i).get(j).getNom() == 'F') {
+				else if (this.monde.getTerrain().getTableTerrain().get(i).get(j).getNom() == 'F') {
 					view.setImage(F);
 				}
-				else if (this.monde.getTerrain().get(i).get(j).getNom() == 't'){
+				else if (this.monde.getTerrain().getTableTerrain().get(i).get(j).getNom() == 't'){
 					view.setImage(t);
 				}
-				else if (this.monde.getTerrain().get(i).get(j).getNom() == 'T') {
+				else if (this.monde.getTerrain().getTableTerrain().get(i).get(j).getNom() == 'T') {
 					view.setImage(T);
 				}
 				
 				view.setFitHeight(32);
 				view.setFitWidth(32);
+				String s = i+"9"+j;
+				view.setId(s);
 				vue.getChildren().add(view);
 				view.setTranslateX(j*view.getFitWidth());
 				view.setTranslateY(i*view.getFitHeight());
@@ -179,3 +188,15 @@ public class SampleController implements Initializable{
 		}
 	}
 }
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				

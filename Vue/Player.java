@@ -12,6 +12,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 public class Player extends ImageView {
+	private IntegerProperty etat;
+	private BooleanProperty versDroite;
 	//R=Rien S=Saut T=Tomber C=Courrir
 	//D=Droite G=Gauche
 	
@@ -28,6 +30,8 @@ public class Player extends ImageView {
 	//constructeur
 	public Player(){
 		super(new Image("ESCAPE_Montreuil_C1/source/Joueur_gif/Joueur_Rien_Droite.gif"));
+		this.etat = new SimpleIntegerProperty(0);
+		this.versDroite = new SimpleBooleanProperty(true);
 		//debug
 		this.persoTD=this.persoRD;
 		this.persoRG=this.persoRD;

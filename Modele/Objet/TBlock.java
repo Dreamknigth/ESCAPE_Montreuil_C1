@@ -1,8 +1,8 @@
 package ESCAPE_Montreuil_C1.Modele.Objet;
 
-public class Terre extends Ressource{
+public class TBlock extends Ressource{
 
-	public Terre() {
+	public TBlock() {
 		super("Terre");
 	}
 

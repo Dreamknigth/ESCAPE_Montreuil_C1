@@ -1,14 +1,14 @@
 package ESCAPE_Montreuil_C1.Modele.blocks;
 
-import ESCAPE_Montreuil_C1.Modele.Objet.Terre;
+import ESCAPE_Montreuil_C1.Modele.Objet.TBlock;
 
 public class Sol extends BlockDestructible{
 	
-	private Terre  t;
+	private TBlock  t;
 
 	public Sol() {
 		super(false, 10, 't');
-		this.t = new Terre(); 
+		this.t = new TBlock(); 
 	}
 
 }

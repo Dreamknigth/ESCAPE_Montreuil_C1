@@ -22,9 +22,19 @@ public class Joueur extends Personnage{ //Rappel: i=y x=j
 			i++;
 		}
 	}
-	
 	//setter
 	public void setNom(String nom) {
 		this.nom=nom;
+	}
+	
+	public boolean modifPossible(int a, int b) {// a=y souris b=x souris
+		if ( ((a == (this.y.getValue())+2) || (a == (this.y.getValue())+1) || (a == (this.y.getValue())) || (a == (this.y.getValue())-1)) && 
+				((b == this.x.getValue())|| (b == this.x.getValue()+1) || (b == this.x.getValue()-1)) ) {
+			System.out.println("OUI");
+			
+			return true;
+			
+		}
+		return false;
 	}
 }

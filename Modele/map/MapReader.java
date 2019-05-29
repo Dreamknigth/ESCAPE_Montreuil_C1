@@ -58,7 +58,7 @@ public class MapReader {
 	private void lireLigne(int i, String [] ligne) {
 		int j=0;
 		char charBlock;
-		//la declaration de la liste obersvable dans la liste de liste observable puis ajouter a la liste observable le caractere
+		//la declaration de la liste observable dans la liste de liste observable puis ajouter a la liste observable le caractere
 		this.terrain.add(FXCollections.observableArrayList());
 		for(j=0;j<ligne.length;j++) {
 			charBlock=ligne[j].charAt(0);
@@ -88,7 +88,7 @@ public class MapReader {
 			for(int j=0;j<this.terrain.get(i).size();j++) {
 				System.out.print(this.terrain.get(i).get(j).getNom()+"|");
 			}
-			System.out.print("\n-");
+			System.out.print("\n");
 			for(int k=0;k<this.terrain.get(i).size();k++) {
 				System.out.print("--");
 			}
