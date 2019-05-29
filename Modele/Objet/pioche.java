@@ -14,5 +14,8 @@ public class pioche extends Arme{
 
 	@Override
 	public int getdura(){return this.ptsattaque;}
+	
+	@Override
+	public String getNom() { return this.nom; }
 
 }

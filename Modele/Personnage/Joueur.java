@@ -3,12 +3,13 @@ package ESCAPE_Montreuil_C1.Modele.Personnage;
 import java.util.ArrayList;
 
 import ESCAPE_Montreuil_C1.Modele.blocks.Block;
+import ESCAPE_Montreuil_C1.Modele.map.Terrain;
 import javafx.collections.ObservableList;
 
 public class Joueur extends Personnage{ //Rappel: i=y x=j
 	//constructeur
-	public Joueur(int x,int y,String nom) {
-		super(x,y,nom);
+	public Joueur(int x,int y,String nom, Terrain t) {
+		super(x,y,nom,t);
 		this.pv=50;
 	}
 	
@@ -20,12 +21,6 @@ public class Joueur extends Personnage{ //Rappel: i=y x=j
 		this.seDeplacerHaut();
 		while(i<=hauteurSaut) {
 			i++;
-		}
-	}
-	//graviter TODO
-	public void seDeplacerGraviter() {
-		if(this.seDeplacerBas()) {
-			this.seDeplacerGraviter();
 		}
 	}
 	//setter
