@@ -65,24 +65,19 @@ public class SampleController implements Initializable{
 		System.out.println(lePlayer);
 	}
 	
-	@SuppressWarnings("deprecation")
 	@FXML
 	void mouseClicked(MouseEvent event) {
-//		System.out.println(event.getSource()); 
+
 		int x =(int)event.getX()/32;
 		int y =(int)event.getY()/32;
-		Air a = new Air();
-		System.out.println(x+";"+y);
-		Image i = new Image("ESCAPE_Montreuil_C1/source/air.jpg");
-			ImageView l = (ImageView) vue.lookup('#'+""+y+'9'+x);
-//			System.out.println(vue.lookup("#090"));
-//			System.out.println(vue.lookup('#'+""+y+'9'+x));
-			l.setImage(i);
-			this.monde.getTerrain2().setTerrain(a, y, x);
-
-//			System.out.println(monde.getTerrain2().getTableTerrain().get(y).get(x).getNom());
-
-//		System.out.println(l.getImage().impl_getUrl());
+		if (this.monde.getJoueur().modifPossible(y, x)) {
+			Air a = new Air();
+			System.out.println(x+";"+y);
+			Image i = new Image("ESCAPE_Montreuil_C1/source/air.jpg");
+				ImageView l = (ImageView) vue.lookup('#'+""+y+'9'+x);
+				l.setImage(i);
+				this.monde.getTerrain2().setTerrain(a, y, x);
+		}
 		
 		
 	}
@@ -108,8 +103,8 @@ public class SampleController implements Initializable{
 				this.lePlayer.setFitHeight(50);
 				this.lePlayer.setFitWidth(50);
 				//bind les positions de la vue avec les positions du joueur
-				this.map.translateXProperty().bind(this.monde.getJoueur().getX().multiply(-32).add(512));
-				this.map.translateYProperty().bind(this.monde.getJoueur().getY().multiply(-16));
+				this.vue.translateXProperty().bind(this.monde.getJoueur().getX().multiply(-32).add(512));
+				this.vue.translateYProperty().bind(this.monde.getJoueur().getY().multiply(-16));
 				//bind les comportement du joueur avec les comportement du player(qui gere les images)
 				this.lePlayer.getVersDroite().bind( this.monde.getJoueur().getVersDroite() );
 				this.lePlayer.getEtat().bind( this.monde.getJoueur().getEtat() );
