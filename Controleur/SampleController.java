@@ -7,6 +7,7 @@ import java.util.ResourceBundle;
 
 
 import ESCAPE_Montreuil_C1.Modele.Inventaire.Inventaire;
+import ESCAPE_Montreuil_C1.Modele.Objet.Objet;
 import ESCAPE_Montreuil_C1.Modele.Personnage.Joueur;
 import ESCAPE_Montreuil_C1.Modele.map.MapReader;
 import javafx.event.Event;
@@ -14,6 +15,7 @@ import javafx.event.Event;
 
 import ESCAPE_Montreuil_C1.Modele.map.Monde;
 import ESCAPE_Montreuil_C1.Modele.blocks.Air;
+import ESCAPE_Montreuil_C1.Modele.blocks.Terre;
 import ESCAPE_Montreuil_C1.Vue.Player;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -25,6 +27,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 
 
@@ -45,7 +48,7 @@ public class SampleController implements Initializable{
 	private Map<String, Image> dictionnaireImage; 
 
 
-
+	private Objet objetRessource;
 
 
 	private Monde monde;
@@ -69,20 +72,50 @@ public class SampleController implements Initializable{
 			this.monde.getJoueur().seDeplacerGraviter();
 		}
 	}
-
+	public Image choixImage(int a , int b) {
+		if(this.iventaireModele.transforme_Char_En_String(this.monde.getTerrain2().getTableTerrain().get(b).get(a).getNom()).equals("Terre") || this.iventaireModele.transforme_Char_En_String(this.monde.getTerrain2().getTableTerrain().get(b).get(a).getNom()).equals("bois") || this.iventaireModele.transforme_Char_En_String(this.monde.getTerrain2().getTableTerrain().get(b).get(a).getNom()).equals("Fer")){				
+			return dictionnaireImage.get("Terre");
+		}
+		return null;
+		}
 
 	@FXML
 	void mouseClicked(MouseEvent event) {
-		//		System.out.println(event.getSource()); 
-		int x =((int)event.getX()/32);
-		int y =((int)event.getY()/32);
-		Air a = new Air();
+		/**
+		 * Recuperation des coordonnées du click
+		 */
+		int x =(int)event.getX()/32;
+		int y =(int)event.getY()/32;
+		
+		MouseButton Button = event.getButton();
 		System.out.println(x+";"+y);
-		Image i = new Image("ESCAPE_Montreuil_C1/source/air.jpg");
+		Image i = choixImage(x ,y);
 		ImageView l = (ImageView) vue.lookup('#'+""+y+'9'+x);
+		String nomRessource = this.iventaireModele.transforme_Char_En_String(this.monde.getTerrain2().getTableTerrain().get(y).get(x).getNom());
+		this.objetRessource=this.iventaireModele.chercher(nomRessource);
+		
+		
+		if(Button==MouseButton.PRIMARY){
+			if (this.monde.getJoueur().modifPossible(y, x) && this.iventaireModele.minerPossible(objetRessource)) {
+					l.setImage(dictionnaireImage.get("Air"));
+					this.monde.getTerrain2().setTerrain(new Air(), y, x);
+			}
+        }
+		else if(Button==MouseButton.SECONDARY){
+        	if (this.monde.getJoueur().modifPossible(y, x) && this.iventaireModele.creerPossible(objetRessource)) {
+    				l.setImage(i);
+    				System.out.println("ok");
+    				this.monde.getTerrain2().setTerrain(new Terre(), y, x);
+    		}
+        }
+        else if(Button==MouseButton.MIDDLE){
+        }
+    
 
-		l.setImage(i);
-		this.monde.getTerrain2().setTerrain(a, y, x);
+		
+		//System.out.println(this.iventaireModele.chercher(this.monde.getTerrain2().getTableTerrain().get(x).get(y).getClass().getName()));
+		//		System.out.println("ok");
+	
 
 	}
 
@@ -109,11 +142,11 @@ public class SampleController implements Initializable{
 
 		MapReader mr = new MapReader();
 		mr.constructeurMap();
-		
-		/**
+
+		/**onKeyPressed="#touche"
 		 * Initialisation des Variables
 		 */
-		
+
 		this.monde=new Monde();
 		creerVueTerrain();
 		this.lePlayer=new Player();
@@ -123,23 +156,23 @@ public class SampleController implements Initializable{
 		/**
 		 * bind les positions du player(imageview) avec les positions du joueur
 		 */
-		
+
 		this.lePlayer.translateXProperty().bind(this.monde.getJoueur().getX().multiply(32));
 		this.lePlayer.translateYProperty().bind(this.monde.getJoueur().getY().multiply(32));
 		this.lePlayer.setFitHeight(50);
 		this.lePlayer.setFitWidth(50);
-		
+
 		/**
 		 * bind les positions de la vue avec les positions du joueur
 		 */
-		
+
 		this.vue.translateXProperty().bind(this.monde.getJoueur().getX().multiply(-32).add(512));
 		this.vue.translateYProperty().bind(this.monde.getJoueur().getY().multiply(-16));
-		
+
 		/**
 		 * bind les comportement du joueur avec les comportement du player(qui gere les images)
 		 */
-		
+
 		this.lePlayer.getVersDroite().bind( this.monde.getJoueur().getVersDroite() );
 		this.lePlayer.getEtat().bind( this.monde.getJoueur().getEtat() );
 
@@ -156,7 +189,7 @@ public class SampleController implements Initializable{
 		/**
 		 * Initialisation des Ressources
 		 */
-		for (int i = 0 ;i<this.iventaireModele.getListeInventaire().size();i++ ) {
+		for (int i = 1 ;i<this.iventaireModele.getListeInventaire().size();i++ ) {
 			VBox elementInventaire = new VBox();
 			Label valeurRessource = new Label();
 			ImageView Image = new ImageView(dictionnaireImage.get(this.iventaireModele.getListeInventaire().get(i).getNom()));
@@ -170,12 +203,12 @@ public class SampleController implements Initializable{
 			elementInventaire.setTranslateX(i*60);
 			inventaireVue.getChildren().add(elementInventaire);
 		}
-
 	}
+
 
 	public void creerVueTerrain() {
 
-		
+
 		for (int i = 0; i < this.monde.getTerrain().size(); i++) {
 			for(int j=0;j<this.monde.getTerrain().get(i).size();j++) {
 				ImageView view = new ImageView() ;

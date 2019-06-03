@@ -3,7 +3,7 @@ package ESCAPE_Montreuil_C1.Modele.Objet;
 public class Ressource extends Objet{
 
 	public Ressource(String nom) {
-		super(nom, 0);
+		super(nom);
 	}
 
 	@Override
@@ -18,7 +18,9 @@ public class Ressource extends Objet{
 	}
 	
 	@Override
-	public String getNom() { return this.nom; }
+	public String getNom() { 
+		return this.nom;
+		}
 	
 	
 

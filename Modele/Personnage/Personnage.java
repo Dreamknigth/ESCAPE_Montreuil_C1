@@ -107,6 +107,7 @@ public abstract class Personnage {
 	public BooleanProperty getVersDroite() {
 		return this.versDroite;
 	}
+	
 	//setter
 	public void setX(int a) {
 		this.x.set(a);

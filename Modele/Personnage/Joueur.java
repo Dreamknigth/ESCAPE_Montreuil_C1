@@ -27,4 +27,14 @@ public class Joueur extends Personnage{ //Rappel: i=y x=j
 	public void setNom(String nom) {
 		this.nom=nom;
 	}
+	
+	public boolean modifPossible(int a, int b) {	
+		
+		if (((a == (this.y.get())+1) || (a == (this.y.get())) || (a == (this.y.get())-1)) && 
+				((b == this.x.getValue())|| (b == this.x.getValue()+1) || (b == this.x.getValue()-1))) {
+			return true;
+			
+		}
+		return false;
+	}
 }

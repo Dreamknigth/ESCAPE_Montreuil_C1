@@ -9,10 +9,9 @@ public abstract class Objet {
 	private IntegerProperty valeur;
 	protected int nb;
 	
-	public Objet(String nom, int nb) {
+	public Objet(String nom) {
 		this.nom = nom;
 		valeur  = new SimpleIntegerProperty(0);
-		this.nb = nb;
 	}
 	
 	public IntegerProperty getValeur() {
@@ -30,6 +29,7 @@ public abstract class Objet {
 	public void setnb(int i) {
 		this.nb=i;
 	}
+
 	
 	
 	
