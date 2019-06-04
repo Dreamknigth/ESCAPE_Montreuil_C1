@@ -6,6 +6,7 @@ import ESCAPE_Montreuil_C1.Modele.Objet.Fer;
 import ESCAPE_Montreuil_C1.Modele.Objet.Objet;
 import ESCAPE_Montreuil_C1.Modele.Objet.Terre;
 import ESCAPE_Montreuil_C1.Modele.Objet.bois;
+import ESCAPE_Montreuil_C1.Modele.blocks.Block;
 import ESCAPE_Montreuil_C1.Modele.map.MapReader;
 import ESCAPE_Montreuil_C1.Modele.map.Terrain;
 import javafx.collections.FXCollections;
@@ -34,25 +35,6 @@ public class Inventaire {
 		return this.ob;
 	}
 
-	public String transforme_Char_En_String(char a){
-		if(a=='A') {
-			return "Air";
-		}
-		else if(a=='f'){
-			return "bois";
-		}
-		else if (a== 'F') {
-			return "bois";
-		}
-		else if (a == 't'){
-			return "Terre";
-		}
-		else if (a == 'T') {
-			return "Terre";
-		}
-		return null;
-
-	}
 	public Objet chercher(String a) {
 		int i =0;
 		while(i<this.ob.size()) {
@@ -64,7 +46,8 @@ public class Inventaire {
 		}
 		return null;
 	}
-	public boolean minerPossible(Objet o) {
+	public boolean minerPossible(Block b) {
+		Objet o =transforme_Block_en_Objet(b);
 		if(o!=null && o.getValeur().get()+1<=10) {
 			o.getValeur().set(o.getValeur().get()+1);
 			System.out.println("minerPossible "+o.getNom());
@@ -73,13 +56,25 @@ public class Inventaire {
 		return false;
 	}
 
-	public boolean creerPossible(Objet o) {
+	public boolean creerPossible(String a) {
+		Objet o = chercher(a);
 		if(o!=null && o.getValeur().get()-1>=0) {
 			o.getValeur().set(o.getValeur().get()-1);
 			System.out.println("creerPossible "+o.getNom());
 			return true;
 		}
 		return false;
+	}
+	
+	public Objet transforme_Block_en_Objet(Block b) {
+		if(b.getNom()=='t' || b.getNom()=='T') {
+				return this.ob.get(1);
+		}
+		else if(b.getNom()=='f' || b.getNom()=='F') {
+			return this.ob.get(2);
+		}
+		return null;
+		
 	}
 
 

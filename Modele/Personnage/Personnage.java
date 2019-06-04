@@ -3,25 +3,28 @@ package ESCAPE_Montreuil_C1.Modele.Personnage;
 
 import ESCAPE_Montreuil_C1.Modele.map.Terrain;
 import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 
 public abstract class Personnage {
-	protected IntegerProperty x,y; //coordonnee
+	protected DoubleProperty x,y; //coordonnee
 	protected String nom;
 	protected int pv;
 	private int ptAttaque;
-	//private Block[][] inventaire;
+	//private Inventaire lInventaire;
 	private BooleanProperty versDroite;//etat vas permettre de definir la direction
 	private IntegerProperty etat;//etat vas permettre de definir l'etat
 	protected Terrain leTerrain;//terrain qui possedent une observable liste
+	private double lePas=1.0;
 	
 	
 	//Constructeur
 	public Personnage(int x,int y,String nom,Terrain leTerrain) {
-		this.x = new SimpleIntegerProperty(x);
-		this.y = new SimpleIntegerProperty(y);
+		this.x = new SimpleDoubleProperty(x);
+		this.y = new SimpleDoubleProperty(y);
 		this.etat = new SimpleIntegerProperty(0); //0=rien 1=sauter 2=tomber 3=courrir
 		this.versDroite = new SimpleBooleanProperty(true); //true=va a Droite false=va a gauche
 
@@ -47,9 +50,9 @@ public abstract class Personnage {
 	
 	//Gauche
 	public boolean seDeplacerGauche() { //y=i x=j
-		this.versDroite.set(false);
-		if(this.x.getValue()>=1 && this.leTerrain.getTableTerrain().get( this.y.getValue() ).get( this.x.getValue()-1 ).getTraversable()) {
-			this.x.setValue(this.x.get()-1);
+		this.versDroite.setValue(false);
+		if(this.x.getValue()>=1  &&  this.leTerrain.getTableTerrain().get( (int)(double)(this.y.getValue()) ).get( (int)(double)(this.x.getValue()-lePas) ).getTraversable()  &&  this.leTerrain.getTableTerrain().get( (int)(double)(this.y.getValue()+1) ).get( (int)(double)(this.x.getValue()-lePas) ).getTraversable()) {
+			this.x.setValue(this.x.get()-lePas);
 			this.etat.set(3);
 			return true;
 		}
@@ -57,9 +60,9 @@ public abstract class Personnage {
 	}
 	//Droite
 	public boolean seDeplacerDroite() { //y=i x=j
-		this.versDroite.set(true);
-		if(this.x.getValue()<this.leTerrain.getTableTerrain().get( this.y.getValue() ).size()-1 &&  this.leTerrain.getTableTerrain().get( this.y.getValue() ).get( this.x.getValue()+1 ).getTraversable()) {
-			this.x.setValue(this.x.get()+1);
+		this.versDroite.setValue(true);
+		if(this.x.getValue()<this.leTerrain.getTableTerrain().get( (int)(double)(this.y.getValue()) ).size()-1  &&  this.leTerrain.getTableTerrain().get( (int)(double)(this.y.getValue()) ).get( (int)(double)(this.x.getValue()+lePas) ).getTraversable()  &&  this.leTerrain.getTableTerrain().get( (int)(double)(this.y.getValue()+1) ).get( (int)(double)(this.x.getValue()+lePas) ).getTraversable()) {
+			this.x.setValue(this.x.get()+lePas);
 			this.etat.set(3);
 			return true;
 		}
@@ -67,17 +70,17 @@ public abstract class Personnage {
 	}
 	//haut
 	protected boolean seDeplacerHaut() {
-		if(this.y.getValue()>=1 && this.leTerrain.getTableTerrain().get( this.y.getValue()-1 ).get( this.x.getValue() ).getTraversable()) {
-			this.y.setValue(this.y.get()-1);
+		if(this.y.getValue()>=2 && this.leTerrain.getTableTerrain().get( (int)(double)(this.y.getValue()-lePas) ).get( (int)(double)(this.x.getValue()) ).getTraversable()) {
+			this.y.setValue(this.y.get()-lePas);
 			this.etat.set(1);
 			return true;
 		}
 		return false;
 	}
 	//bas
-	protected boolean seDeplacerBas() {
-		if(this.y.getValue()<this.leTerrain.getTableTerrain().size()-1 && this.leTerrain.getTableTerrain().get( this.y.getValue()+1 ).get( this.x.getValue() ).getTraversable()) {
-			this.y.setValue(this.y.get()+1);
+	public boolean seDeplacerBas() {
+		if(this.y.getValue()<this.leTerrain.getTableTerrain().size()-2 && this.leTerrain.getTableTerrain().get( (int)(double)(this.y.getValue()+1+lePas) ).get( (int)(double)(this.x.getValue()) ).getTraversable()) {
+			this.y.setValue(this.y.get()+lePas);
 			this.etat.set(2);
 			return true;
 		}
@@ -95,10 +98,10 @@ public abstract class Personnage {
 	public String getNom() {
 		return this.nom;
 	}
-	public IntegerProperty getX() {
+	public DoubleProperty getX() {
 		return x;
 	}
-	public IntegerProperty getY() {
+	public DoubleProperty getY() {
 		return y;
 	}
 	public IntegerProperty getEtat() {
@@ -107,7 +110,6 @@ public abstract class Personnage {
 	public BooleanProperty getVersDroite() {
 		return this.versDroite;
 	}
-	
 	//setter
 	public void setX(int a) {
 		this.x.set(a);

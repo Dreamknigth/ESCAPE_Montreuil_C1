@@ -1,4 +1,4 @@
-package ESCAPE_Montreuil_C1.Modele.map;
+package ESCAPE_Montreuil_C1.Modele;
 
 import java.util.ArrayList;
 
@@ -23,8 +23,8 @@ public class Monde {
 	//methode
 	
 	//getter
-	public Terrain getTerrain() {
-		return this.leTerrain;
+	public ArrayList<ObservableList <Block>> getTerrain() {
+		return this.leTerrain.getTableTerrain();
 	}
 	public Joueur getJoueur() {
 		return this.leJoueur;

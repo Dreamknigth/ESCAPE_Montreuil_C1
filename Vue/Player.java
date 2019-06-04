@@ -41,41 +41,35 @@ public class Player extends ImageView {
 	//TODO bind le player avec une variable a ajouter dans le modele.joueur qui definis sont état 
 	
 	//setter
-	private void setCadre() {
-		if(this.versDroite.getValue()) {
-			switch(this.etat.getValue()) {
+	public void setCadre(boolean versDroite,int etat) {
+		etat=etat%4;
+		if(versDroite) {
+			switch(etat) {
 			case 0:this.setImage(persoRD);
 			break;
-			case 1:this.setImage(persoCD);
+			case 1:this.setImage(persoSD);
 			break;
-			case 2:this.setImage(persoSD);
+			case 2:this.setImage(persoTD);
 			break;
-			case 3:this.setImage(persoTD);
+			case 3:this.setImage(persoCD);
 			break;
 			default:this.setImage(persoRD);
 			break;
 			}
 		}
 		else {
-			switch(this.etat.getValue()) {
+			switch(etat) {
 			case 0:this.setImage(persoRG);
 			break;
-			case 1:this.setImage(persoCG);
+			case 1:this.setImage(persoSG);
 			break;
-			case 2:this.setImage(persoSG);
+			case 2:this.setImage(persoTG);
 			break;
-			case 3:this.setImage(persoTG);
+			case 3:this.setImage(persoCG);
 			break;
 			default:this.setImage(persoRG);
 			break;
 			}
 		}
-	}
-	//getter
-	public IntegerProperty getEtat() {
-		return this.etat;
-	}
-	public BooleanProperty getVersDroite() {
-		return this.versDroite;
 	}
 }
