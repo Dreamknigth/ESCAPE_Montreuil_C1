@@ -1,19 +1,16 @@
-package ESCAPE_Montreuil_C1.Modele.map;
+package ESCAPE_Montreuil_C1.Modele;
 
 import java.util.ArrayList;
 
 import ESCAPE_Montreuil_C1.Modele.Personnage.Joueur;
-import ESCAPE_Montreuil_C1.Modele.Personnage.Personnage;
 import ESCAPE_Montreuil_C1.Modele.blocks.Block;
 import ESCAPE_Montreuil_C1.Modele.map.MapReader;
 import ESCAPE_Montreuil_C1.Modele.map.Terrain;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 public class Monde {
 	private Terrain leTerrain;
 	private Joueur leJoueur;
-	private ObservableList<Personnage> Ennemi;
 	
 	//constructeur
 	public Monde() {
@@ -21,19 +18,15 @@ public class Monde {
 		mr.constructeurMap();
 		this.leTerrain=new Terrain(mr.getTerrain());
 		this.leJoueur=new Joueur(0,0,"pseudo",this.leTerrain);
-		this.Ennemi = FXCollections.observableArrayList();
 	}
 	
 	//methode
 	
 	//getter
-	public Terrain getTerrain() {
-		return this.leTerrain;
+	public ArrayList<ObservableList <Block>> getTerrain() {
+		return this.leTerrain.getTableTerrain();
 	}
 	public Joueur getJoueur() {
 		return this.leJoueur;
-	}
-	public ObservableList<Personnage> getEnnemiList(){
-		return this.Ennemi;
 	}
 }
