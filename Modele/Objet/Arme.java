@@ -6,7 +6,7 @@ public abstract class Arme extends Objet{
 	protected int durabilité;
 
 	public Arme(String nom, int ptatt, int dura) {
-		super(nom, 0);
+		super(nom);
 		this.ptsattaque = ptatt;
 		this.durabilité = dura;
 	}

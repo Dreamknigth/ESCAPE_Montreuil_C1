@@ -1,37 +1,89 @@
 package ESCAPE_Montreuil_C1.Modele.Inventaire;
 
 
+import ESCAPE_Montreuil_C1.Modele.Objet.Air;
+import ESCAPE_Montreuil_C1.Modele.Objet.Fer;
 import ESCAPE_Montreuil_C1.Modele.Objet.Objet;
+import ESCAPE_Montreuil_C1.Modele.Objet.Terre;
+import ESCAPE_Montreuil_C1.Modele.Objet.bois;
+import ESCAPE_Montreuil_C1.Modele.blocks.Block;
+import ESCAPE_Montreuil_C1.Modele.map.MapReader;
+import ESCAPE_Montreuil_C1.Modele.map.Terrain;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 public class Inventaire {
-	
+
 	private ObservableList<Objet> ob ;
+	private Terrain a;
 	
-	public Inventaire(){
+	public Inventaire() {
+		MapReader mr=new MapReader();
+		mr.constructeurMap();
+		this.a=new Terrain(mr.getTerrain());
 		this.ob = FXCollections.observableArrayList();
+		this.ob.add(new Air());
+		this.ob.add(new Terre());
+		this.ob.add(new bois());
+		this.ob.add(new Fer());
+		/*this.ob.add(new pioche());
+		this.ob.add(new hache());
+		this.ob.add(new lance());
+		this.ob.add(new épée());*/
 	}
-	
-	public void InAdd(Objet e) {
-		this.ob.add(e);
+	public ObservableList<Objet> getListeInventaire () {
+		return this.ob;
 	}
-	
-	public Objet getObjet(String e) {
-		int i = 0;
-		while ((i < this.ob.size() && !this.ob.get(i).getNom().equals(e))){	
+
+	public Objet chercher(String a) {
+		int i =0;
+		while(i<this.ob.size()) {
+			if(this.ob.get(i).getNom()!=null && this.ob.get(i).getNom().equals(a)) {
+				System.out.println("recherche " + a);
+				return this.ob.get(i);
+			}
 			i++;
 		}
-		return this.ob.get(i);
+		return null;
+	}
+	public boolean minerPossible(Block b) {
+		Objet o =transforme_Block_en_Objet(b);
+		if(o!=null && o.getValeur().get()+1<=10) {
+			o.getValeur().set(o.getValeur().get()+1);
+			System.out.println("minerPossible "+o.getNom());
+			return true;
+		}
+		return false;
+	}
+
+	public boolean creerPossible(String a) {
+		Objet o = chercher(a);
+		if(o!=null && o.getValeur().get()-1>=0) {
+			o.getValeur().set(o.getValeur().get()-1);
+			System.out.println("creerPossible "+o.getNom());
+			return true;
+		}
+		return false;
 	}
 	
-	public int getnbObjet(Objet e) {
-		int nb = 0;
-		for (int i=0; i < this.ob.size(); i++) {
-			if (this.ob.get(i).equals(e)) {
-				nb = nb+this.ob.get(i).getnb();
-			}
+	public Objet transforme_Block_en_Objet(Block b) {
+		if(b.getNom()=='t' || b.getNom()=='T') {
+				return this.ob.get(1);
 		}
-		return nb;
+		else if(b.getNom()=='f' || b.getNom()=='F') {
+			return this.ob.get(2);
+		}
+		return null;
+		
 	}
+
+
+
+
+
+
 }
+
+
+
+

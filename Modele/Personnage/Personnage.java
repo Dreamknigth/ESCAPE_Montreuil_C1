@@ -14,7 +14,7 @@ public abstract class Personnage {
 	protected String nom;
 	protected int pv;
 	private int ptAttaque;
-	//private Block[][] inventaire;
+	//private Inventaire lInventaire;
 	private BooleanProperty versDroite;//etat vas permettre de definir la direction
 	private IntegerProperty etat;//etat vas permettre de definir l'etat
 	protected Terrain leTerrain;//terrain qui possedent une observable liste
