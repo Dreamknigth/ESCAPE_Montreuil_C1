@@ -2,14 +2,19 @@ package ESCAPE_Montreuil_C1.Modele.Personnage;
 
 import java.util.ArrayList;
 
+import ESCAPE_Montreuil_C1.Modele.Inventaire.Inventaire;
 import ESCAPE_Montreuil_C1.Modele.blocks.Block;
 import ESCAPE_Montreuil_C1.Modele.map.Terrain;
 import javafx.collections.ObservableList;
 
 public class Joueur extends Personnage{ //Rappel: i=y x=j
+	
+	private Inventaire lInventaire;
+	
 	//constructeur
 	public Joueur(int x,int y,String nom,Terrain leTerrain) {
 		super(x,y,nom,leTerrain);
+		this.lInventaire = new Inventaire();
 	}
 	
 	//methode
