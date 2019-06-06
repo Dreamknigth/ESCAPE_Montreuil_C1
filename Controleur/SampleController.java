@@ -97,13 +97,9 @@ import javafx.scene.input.MouseEvent;
 			if(code == KeyCode.F2) {
 				this.EtatInventaire=new bois();
 			}
-<<<<<<< HEAD
-=======
 			/*if(code == KeyCode.F3) {
 				this.EtatInventaire=new ();
 			}*/
-			
->>>>>>> d8ceeb0040216ef6b2d37f9af1c06d0664da7a6c
 		}
 
 		@FXML
