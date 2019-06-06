@@ -42,7 +42,7 @@ import javafx.scene.input.MouseEvent;
 		@FXML
 		private ImageView perso;
 		
-		private String EtatInventaire= "Air";
+		private Block EtatInventaire=  new Air();
 	
 		@FXML
 		private HBox inventaireVue = new HBox();
@@ -92,14 +92,18 @@ import javafx.scene.input.MouseEvent;
 			}
 			
 			if(code == KeyCode.F1) {
-				this.EtatInventaire="Terre";
+				this.EtatInventaire= new Terre();
 			}
 			if(code == KeyCode.F2) {
-				this.EtatInventaire="bois";
+				this.EtatInventaire=new bois();
 			}
-			if(code == KeyCode.F3) {
-				this.EtatInventaire="Fer";
-			}
+<<<<<<< HEAD
+=======
+			/*if(code == KeyCode.F3) {
+				this.EtatInventaire=new ();
+			}*/
+			
+>>>>>>> d8ceeb0040216ef6b2d37f9af1c06d0664da7a6c
 		}
 
 		@FXML
@@ -111,37 +115,27 @@ import javafx.scene.input.MouseEvent;
 			int y =(int)event.getY()/32;
 			MouseButton Button = event.getButton();
 			System.out.println(x+";"+y);
-			Block a;
-			Image i;
 			ImageView l= (ImageView) vue.lookup('#'+""+y+'9'+x);
-			if (Button==MouseButton.PRIMARY && this.monde.getJoueur().modifPossible(y, x) && this.iventaireModele.minerPossible(this.monde.getTerrain().getTableTerrain().get(y).get(x))) {
-				a = new Air();
-				i = this.dictionnaireImage.get("Air");
-				l.setImage(i);
-				this.monde.getTerrain().setTerrain(a, y, x);
-
+			/**
+			 * Changement
+			 */
+			if(this.monde.getJoueur().modifPossible(y, x)) {
+				if (Button==MouseButton.PRIMARY  && this.iventaireModele.minerPossible(EtatInventaire)) { // rendre Main
+						this.monde.getTerrain().setTerrain(new Air(), y, x);
+	 
+					}
+					else if (Button==MouseButton.SECONDARY && this.iventaireModele.creerPossible(EtatInventaire)) {
+						this.monde.getTerrain().setTerrain(EtatInventaire, y, x);
+					}
+				l.setImage(this.dictionnaireImage.get(this.iventaireModele.transforme_Block_en_Objet(EtatInventaire).getNom()));
+					
 				}
-			else if (this.EtatInventaire.equals("Terre") && this.iventaireModele.creerPossible("Terre") && Button==MouseButton.SECONDARY && this.monde.getJoueur().modifPossible(y, x)) {
-				a = new Terre();
-				i = this.dictionnaireImage.get(EtatInventaire);
-				l.setImage(i);
-				this.monde.getTerrain().setTerrain(a, y, x);
-			}
-			else if (this.EtatInventaire.equals("bois") && this.iventaireModele.creerPossible("bois") &&Button==MouseButton.SECONDARY && this.monde.getJoueur().modifPossible(y, x)) {
-				a = new bois();
-				i = this.dictionnaireImage.get(EtatInventaire);
-				l.setImage(i);
-				this.monde.getTerrain().setTerrain(a, y, x);
-			}
-			/*else if (this.EtatInventaire.equals("Fer") && this.iventaireModele.creerPossible("Fer") &&Button==MouseButton.SECONDARY && this.monde.getJoueur().modifPossible(y, x)) {
-				a = new Pierre();
-				i = this.dictionnaireImage.get(EtatInventaire);
-				l.setImage(i);
-				this.monde.getTerrain().setTerrain(a, y, x);
-			}*/
-			this.EtatInventaire="Air";
+			this.EtatInventaire = new Air();
 			System.out.println("ok");
 		}
+		
+		
+		
 		
 		private void initGameLoop() {
 			gameLoop.setCycleCount(Timeline.INDEFINITE);
