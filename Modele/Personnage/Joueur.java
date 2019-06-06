@@ -18,15 +18,7 @@ public class Joueur extends Personnage{ //Rappel: i=y x=j
 	}
 	
 	//methode
-	//saut
-	public void seDeplacerSaut() {
-		int i=0;
-		int hauteurSaut=2;
-		this.seDeplacerHaut();
-		while(i<=hauteurSaut) {
-			i++;
-		}
-	}
+	
 	//setter
 	public void setNom(String nom) {
 		this.nom=nom;

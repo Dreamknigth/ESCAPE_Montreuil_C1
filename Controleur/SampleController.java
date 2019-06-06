@@ -90,9 +90,6 @@ import javafx.scene.input.MouseEvent;
 			if(code == KeyCode.S || code == KeyCode.DOWN){
 				this.monde.getJoueur().getEtat().setValue(2);
 			}
-			System.out.println( "test: etat "+this.monde.getJoueur().getEtat()
-					+" versDroite"+this.monde.getJoueur().getEtat()
-					+" etatSaut"+this.monde.getJoueur().getEtatSaut() );
 			
 			if(code == KeyCode.F1) {
 				this.EtatInventaire="Terre";
@@ -150,9 +147,6 @@ import javafx.scene.input.MouseEvent;
 			gameLoop.setCycleCount(Timeline.INDEFINITE);
 			KeyFrame kfDeplacement = new KeyFrame(Duration.seconds(0.3),(ev ->{
 				this.monde.getJoueur().seDeplacer();
-				System.out.println( "test: etat "+this.monde.getJoueur().getEtat()
-						+" versDroite"+this.monde.getJoueur().getEtat()
-						+" etatSaut"+this.monde.getJoueur().getEtatSaut() );
 				this.monde.getJoueur().getEtat().setValue(0);
 			}));
 			gameLoop.getKeyFrames().add(kfDeplacement);
@@ -181,28 +175,10 @@ import javafx.scene.input.MouseEvent;
 			this.lePlayer=new Player();
 			this.vue.getChildren().add(this.lePlayer);
 	
-	
-			/**
-			 * bind les positions du player(imageview) avec les positions du joueur
-			 */
-	
-			this.lePlayer.translateXProperty().bind(this.monde.getJoueur().getX().multiply(32));
-			this.lePlayer.translateYProperty().bind(this.monde.getJoueur().getY().multiply(32));
-	
-			/**
-			 * bind les positions de la vue avec les positions du joueur
-			 */
-	
-			this.vue.translateXProperty().bind(this.monde.getJoueur().getX().multiply(-32).add(512));
-			this.vue.translateYProperty().bind(this.monde.getJoueur().getY().multiply(-16));
-	
 			/**
 			 * Initialisation des Ressources Dans Inventaire
 			 */
 			creationInventaire();
-			
-	
-	
 	
 			/**
 			 * bind les positions du player(imageview) avec les positions du joueur
