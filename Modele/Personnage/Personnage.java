@@ -51,7 +51,9 @@ public abstract class Personnage {
 	//Gauche
 	public boolean seDeplacerGauche() { //y=i x=j
 		this.versDroite.setValue(false);
-		if(this.x.getValue()>=1  &&  this.leTerrain.getTableTerrain().get( (int)(double)(this.y.getValue()) ).get( (int)(double)(this.x.getValue()-lePas) ).getTraversable()  &&  this.leTerrain.getTableTerrain().get( (int)(double)(this.y.getValue()+1) ).get( (int)(double)(this.x.getValue()-lePas) ).getTraversable()) {
+		if(this.x.getValue()>=1  &&  this.leTerrain.getTableTerrain().get( (int)(double)(this.y.getValue()) )
+				.get( (int)(double)(this.x.getValue()-lePas) ).getTraversable()  &&  this.leTerrain.getTableTerrain()
+				.get( (int)(double)(this.y.getValue()+1) ).get( (int)(double)(this.x.getValue()-lePas) ).getTraversable()) {
 			this.x.setValue(this.x.get()-lePas);
 			this.etat.set(3);
 			return true;
@@ -61,7 +63,10 @@ public abstract class Personnage {
 	//Droite
 	public boolean seDeplacerDroite() { //y=i x=j
 		this.versDroite.setValue(true);
-		if(this.x.getValue()<this.leTerrain.getTableTerrain().get( (int)(double)(this.y.getValue()) ).size()-1  &&  this.leTerrain.getTableTerrain().get( (int)(double)(this.y.getValue()) ).get( (int)(double)(this.x.getValue()+lePas) ).getTraversable()  &&  this.leTerrain.getTableTerrain().get( (int)(double)(this.y.getValue()+1) ).get( (int)(double)(this.x.getValue()+lePas) ).getTraversable()) {
+		if(this.x.getValue()<this.leTerrain.getTableTerrain().get( (int)(double)(this.y.getValue()) )
+				.size()-1  &&  this.leTerrain.getTableTerrain().get( (int)(double)(this.y.getValue()) )
+				.get( (int)(double)(this.x.getValue()+lePas) ).getTraversable()  &&  this.leTerrain.getTableTerrain()
+				.get( (int)(double)(this.y.getValue()+1) ).get( (int)(double)(this.x.getValue()+lePas) ).getTraversable()) {
 			this.x.setValue(this.x.get()+lePas);
 			this.etat.set(3);
 			return true;
@@ -70,7 +75,8 @@ public abstract class Personnage {
 	}
 	//haut
 	protected boolean seDeplacerHaut() {
-		if(this.y.getValue()>=2 && this.leTerrain.getTableTerrain().get( (int)(double)(this.y.getValue()-lePas) ).get( (int)(double)(this.x.getValue()) ).getTraversable()) {
+		if(this.y.getValue()>=2 && this.leTerrain.getTableTerrain().get( (int)(double)(this.y.getValue()-lePas) )
+				.get( (int)(double)(this.x.getValue()) ).getTraversable()) {
 			this.y.setValue(this.y.get()-lePas);
 			this.etat.set(1);
 			return true;
@@ -80,7 +86,8 @@ public abstract class Personnage {
 	//bas
 	public boolean seDeplacerBas() {
 		if(this.y.getValue()<this.leTerrain.getTableTerrain().size()-2 && 
-				this.leTerrain.getTableTerrain().get( (int)(double)(this.y.getValue()+1+lePas) ).get( (int)(double)(this.x.getValue()) ).getTraversable()) {
+				this.leTerrain.getTableTerrain().get( (int)(double)(this.y.getValue()+1+lePas) )
+				.get( (int)(double)(this.x.getValue()) ).getTraversable()) {
 			this.y.setValue(this.y.get()+1.0);
 			this.etat.set(2);
 			return true;
@@ -94,6 +101,8 @@ public abstract class Personnage {
 //			this.seDeplacerGraviter();
 		}
 	}
+	
+	public abstract void seDeplacer();
 	
 	//getter
 	public String getNom() {

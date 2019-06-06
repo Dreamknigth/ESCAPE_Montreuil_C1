@@ -37,4 +37,10 @@ public class Joueur extends Personnage{ //Rappel: i=y x=j
 		}
 		return false;
 	}
+
+	@Override
+	public void seDeplacer() {
+		// TODO Auto-generated method stub
+		
+	}
 }

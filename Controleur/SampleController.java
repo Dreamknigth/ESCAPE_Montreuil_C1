@@ -1,6 +1,8 @@
 	package ESCAPE_Montreuil_C1.Controleur;
 	
 	import java.net.URL;
+	import java.util.ArrayList;
+	import java.util.Collection;
 	import java.util.HashMap;
 	import java.util.Map;
 	import java.util.ResourceBundle;
@@ -8,16 +10,20 @@
 	
 	import ESCAPE_Montreuil_C1.Modele.Inventaire.Inventaire;
 	import ESCAPE_Montreuil_C1.Modele.Objet.Fer;
+	import ESCAPE_Montreuil_C1.Modele.Personnage.Cannibale;
+	import ESCAPE_Montreuil_C1.Modele.Personnage.Personnage;
 	import ESCAPE_Montreuil_C1.Modele.map.Monde;
 	import ESCAPE_Montreuil_C1.Modele.blocks.Air;
 	import ESCAPE_Montreuil_C1.Modele.blocks.Terre;
 	import ESCAPE_Montreuil_C1.Modele.blocks.bois;
 	import ESCAPE_Montreuil_C1.Modele.blocks.Block;
 	import ESCAPE_Montreuil_C1.Vue.Player;
+	import ESCAPE_Montreuil_C1.Vue.Ennemi;
 	import javafx.animation.KeyFrame;
 	import javafx.animation.Timeline;
 	import javafx.beans.value.ChangeListener;
 	import javafx.beans.value.ObservableValue;
+	import javafx.collections.ListChangeListener;
 	import javafx.fxml.FXML;
 	import javafx.fxml.Initializable;
 	import javafx.scene.control.Label;
@@ -40,20 +46,21 @@
 		@FXML
 		private ImageView perso;
 		
-		private String EtatInventaire= "Air";
+		private Block EtatInventaire=  new Air();
 	
 		@FXML
 		private HBox inventaireVue = new HBox();
 	
 		private Inventaire iventaireModele=new Inventaire();
 	
-		private Map<String, Image> dictionnaireImage; 		
+		private Map<String, Image> dictionnaireImage = new HashMap< String,Image>();  		
 	
 	
 		private Timeline gameLoop=new Timeline();
 	
 		private Monde monde;
 		private Player lePlayer;
+		private ArrayList<Ennemi> e = new ArrayList<>();
 	
 		@FXML
 		private Pane map;
@@ -88,69 +95,66 @@
 				this.monde.getJoueur().seDeplacerBas();
 			}
 			if(code == KeyCode.F1) {
-				this.EtatInventaire="Terre";
+				this.EtatInventaire= new Terre();
 			}
 			if(code == KeyCode.F2) {
-				this.EtatInventaire="bois";
+				this.EtatInventaire=new bois();
 			}
-			if(code == KeyCode.F3) {
-				this.EtatInventaire="Fer";
-			}
+			/*if(code == KeyCode.F3) {
+				this.EtatInventaire=new ();
+			}*/
 			
 		}
 
-		
-	private void initGameLoop() {
-		gameLoop.setCycleCount(Timeline.INDEFINITE);
-		KeyFrame kfGraviter = new KeyFrame(Duration.seconds(0.200),(ev ->{
-			this.monde.getJoueur().seDeplacerBas();
-		}));
-		gameLoop.getKeyFrames().add(kfGraviter);
-		
-	}
 	
 
-	@FXML
-	void mouseClicked(MouseEvent event) {
-		/**
-		 * Recuperation des coordonnées du click
-		 */
-		int x =(int)event.getX()/32;
-		int y =(int)event.getY()/32;
-		MouseButton Button = event.getButton();
-		System.out.println(x+";"+y);
-		Block a;
-		Image i;
-		ImageView l= (ImageView) vue.lookup('#'+""+y+'9'+x);
-		if (Button==MouseButton.PRIMARY && this.monde.getJoueur().modifPossible(y, x) && this.iventaireModele.minerPossible(this.monde.getTerrain().getTableTerrain().get(y).get(x))) {
-			a = new Air();
-			i = this.dictionnaireImage.get("Air");
-			l.setImage(i);
-			this.monde.getTerrain().setTerrain(a, y, x);
-
-			}
-		else if (this.EtatInventaire.equals("Terre") && this.iventaireModele.creerPossible("Terre") && Button==MouseButton.SECONDARY && this.monde.getJoueur().modifPossible(y, x)) {
-			a = new Terre();
-			i = this.dictionnaireImage.get(EtatInventaire);
-			l.setImage(i);
-			this.monde.getTerrain().setTerrain(a, y, x);
+		@FXML
+		void mouseClicked(MouseEvent event) {
+			/**
+			 * Recuperation des coordonnées du click
+			 */
+			int x =(int)event.getX()/32;
+			int y =(int)event.getY()/32;
+			MouseButton Button = event.getButton();
+			System.out.println(x+";"+y);
+//			ImageView l = (ImageView) vue.lookup('#'+""+y+"9"+x);
+			/**
+			 * Changement
+			 */
+			if(this.monde.getJoueur().modifPossible(y, x)) {
+				if (Button==MouseButton.PRIMARY  && this.iventaireModele.minerPossible(EtatInventaire)) { // rendre Main
+					System.out.println(this.monde.getTerrain().getTableTerrain().get(y).get(x).getID());
+						this.monde.getTerrain().setTerrain(new Air(), y, x);
+						System.out.println(this.monde.getTerrain().getTableTerrain().get(y).get(x));
+						System.out.println(this.monde.getTerrain().getTableTerrain().get(y).get(x).getID());
+	 
+				}
+				else if (Button==MouseButton.SECONDARY && this.iventaireModele.creerPossible(EtatInventaire)) {
+					this.monde.getTerrain().setTerrain(EtatInventaire, y, x);
+					System.out.println(this.monde.getTerrain().getTableTerrain().get(y).get(x));
+				}
+				
+//				l.setImage(dictionnaireImage.get(iventaireModele.transforme_Block_en_Objet(EtatInventaire).getNom()));
+				
+					
+				}
+			this.EtatInventaire = new Air();
+			System.out.println("ok");
 		}
-		else if (this.EtatInventaire.equals("bois") && this.iventaireModele.creerPossible("bois") &&Button==MouseButton.SECONDARY && this.monde.getJoueur().modifPossible(y, x)) {
-			a = new bois();
-			i = this.dictionnaireImage.get(EtatInventaire);
-			l.setImage(i);
-			this.monde.getTerrain().setTerrain(a, y, x);
+		
+		
+		
+		
+		private void initGameLoop() {
+			gameLoop.setCycleCount(Timeline.INDEFINITE);
+			KeyFrame kfGraviter = new KeyFrame(Duration.seconds(0.4),(ev ->{
+				this.monde.getJoueur().seDeplacerBas();
+				this.monde.graviterEnnemi();
+				this.monde.DepEnnemi();
+			}));
+			gameLoop.getKeyFrames().add(kfGraviter);
 		}
-		/*else if (this.EtatInventaire.equals("Fer") && this.iventaireModele.creerPossible("Fer") &&Button==MouseButton.SECONDARY && this.monde.getJoueur().modifPossible(y, x)) {
-			a = new Pierre();
-			i = this.dictionnaireImage.get(EtatInventaire);
-			l.setImage(i);
-			this.monde.getTerrain().setTerrain(a, y, x);
-		}*/
-		this.EtatInventaire="Air";
-		System.out.println("ok");
-	}
-	
+		
 		@Override
 		public void initialize(URL location, ResourceBundle resources) {
 			//Declaration et Initialisation 
@@ -158,7 +162,6 @@
 			/**
 			 * Creation de la map
 			 */
-			dictionnaireImage = new HashMap< String,Image>(); 
 			dictionnaireImage.put("Air",new Image("ESCAPE_Montreuil_C1/source/air.jpg" ));
 			dictionnaireImage.put("Terre", new Image("ESCAPE_Montreuil_C1/source/terre.jpg")); 
 			dictionnaireImage.put("bois", new Image("ESCAPE_Montreuil_C1/source/tronc.jpg"));
@@ -171,17 +174,34 @@
 			this.monde=new Monde();
 			creerVueTerrain();
 			this.lePlayer=new Player();
+			
 			this.vue.getChildren().add(this.lePlayer);
-	
-	
+			
 			/**
-			 * bind les positions du player(imageview) avec les positions du joueur
+			 * Les ennemis
 			 */
-	
-			this.lePlayer.translateXProperty().bind(this.monde.getJoueur().getX().multiply(32));
-			this.lePlayer.translateYProperty().bind(this.monde.getJoueur().getY().multiply(32));
-			this.lePlayer.setFitHeight(50);
-			this.lePlayer.setFitWidth(50);
+			
+			this.monde.getEnnemiList().add(new Cannibale(1, 23, this.monde.getTerrain()));
+			this.monde.getEnnemiList().add(new Cannibale(2, 23, this.monde.getTerrain()));
+			this.monde.getEnnemiList().add(new Cannibale(3, 23, this.monde.getTerrain()));
+			this.monde.getEnnemiList().add(new Cannibale(0, 23, this.monde.getTerrain()));
+			System.out.println(this.monde.getEnnemiList());
+			
+			for (int i = 0; i<this.monde.getEnnemiList().size()-1;i++) {
+				Ennemi Ennemi;
+				Ennemi = new Ennemi();
+				this.e.add(Ennemi);
+				this.vue.getChildren().add(Ennemi);
+			}
+			
+			/**
+			 * position ennemis
+			 */
+			
+			for (int i = 0; i<this.monde.getEnnemiList().size()-1;i++) {
+				this.e.get(i).translateXProperty().bind(this.monde.getEnnemiList().get(i).getX().multiply(32));
+				this.e.get(i).translateYProperty().bind(this.monde.getEnnemiList().get(i).getY().multiply(32));
+			}
 	
 			/**
 			 * bind les positions de la vue avec les positions du joueur
@@ -190,20 +210,7 @@
 			this.vue.translateXProperty().bind(this.monde.getJoueur().getX().multiply(-32).add(512));
 			this.vue.translateYProperty().bind(this.monde.getJoueur().getY().multiply(-16));
 	
-			/**
-			 * bind les comportement du joueur avec les comportement du player(qui gere les images)
-			 */
-	
-	
-			vue.setOnKeyPressed(e->{
-				try {
-					touche(e);
-				} catch (InterruptedException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-			});
-	
+			
 	
 			/**
 			 * Initialisation des Ressources Dans Inventaire
@@ -240,18 +247,31 @@
 					lePlayer.setCadre( monde.getJoueur().getVersDroite().getValue(), monde.getJoueur().getEtat().getValue() );
 				}
 			});
-			vue.setOnKeyPressed(e->{
-				try {
-					touche(e);
-				} catch (InterruptedException e1) {
-					e1.printStackTrace();
-				}
-			});
+			
 	
 			System.out.println("le debug de la vie!");
 			System.out.println("test "+this.monde.getJoueur().getNom());
 	
 			System.out.println("le debug de la mort!");
+			
+			for(int y=0;y<this.monde.getTerrain().getTableTerrain().size();y++) {
+				this.monde.getTerrain().getTableTerrain().get(y).addListener(new ListChangeListener<Block>() {
+
+					@Override
+					public void onChanged(Change<? extends Block> c) {
+						while (c.next()) {
+							if (c.wasReplaced()) {
+								for (Block b : c.getRemoved()) {
+									ImageView l = (ImageView) vue.lookup('#'+b.getID());
+									l.setImage(dictionnaireImage.get(iventaireModele.transforme_Block_en_Objet(EtatInventaire).getNom()));
+									System.out.println("do");
+								}
+							}
+						}
+					}
+				});
+			}
+			
 			//monde.getJoueur().seDeplacerGraviter();
 			// https://docs.oracle.com/javafx/2/api/javafx/beans/value/ObservableValue.html
 			// void addListener(ChangeListener<? super T> listener)

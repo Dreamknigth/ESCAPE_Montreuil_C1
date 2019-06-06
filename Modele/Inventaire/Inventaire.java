@@ -48,7 +48,7 @@ public class Inventaire {
 	}
 	public boolean minerPossible(Block b) {
 		Objet o =transforme_Block_en_Objet(b);
-		if(o!=null && o.getValeur().get()+1<=10) {
+		if(o!=null && o.getValeur().get()+1<=200000000) {
 			o.getValeur().set(o.getValeur().get()+1);
 			System.out.println("minerPossible "+o.getNom());
 			return true;
@@ -56,9 +56,9 @@ public class Inventaire {
 		return false;
 	}
 
-	public boolean creerPossible(String a) {
-		Objet o = chercher(a);
-		if(o!=null && o.getValeur().get()-1>=0) {
+	public boolean creerPossible(Block b) {
+		Objet o = transforme_Block_en_Objet(b);
+		if(o!=null && o.getValeur().get()-1>=-30) {
 			o.getValeur().set(o.getValeur().get()-1);
 			System.out.println("creerPossible "+o.getNom());
 			return true;
@@ -67,10 +67,13 @@ public class Inventaire {
 	}
 	
 	public Objet transforme_Block_en_Objet(Block b) {
-		if(b.getNom()=='t' || b.getNom()=='T') {
+		if(b.getNom()=='A') {
+			return this.ob.get(0);
+		}
+		else if(b.getNom()=='t' || b.getNom()=='T') {
 				return this.ob.get(1);
 		}
-		else if(b.getNom()=='f' || b.getNom()=='F') {
+		else if(b.getNom()=='f' || b.getNom()=='F'|| b.getNom()=='B') {
 			return this.ob.get(2);
 		}
 		return null;

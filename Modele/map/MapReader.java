@@ -66,14 +66,19 @@ public class MapReader {
 			charBlock=ligne[j].charAt(0);
 			switch(charBlock) {
 			case 'A':this.terrain.get(i).add(new Air());
+					this.terrain.get(i).get(j).setID(""+i+"9"+j);
 			break;
 			case 'T':this.terrain.get(i).add(new Terre());
+					this.terrain.get(i).get(j).setID(""+i+"9"+j);
 			break;
 			case 'f':this.terrain.get(i).add(new feuille());
+					this.terrain.get(i).get(j).setID(""+i+"9"+j);
 			break;
 			case 'F':this.terrain.get(i).add(new tronc());
+					this.terrain.get(i).get(j).setID(""+i+"9"+j);
 			break;
 			default:this.terrain.get(i).add(new Sol());
+					this.terrain.get(i).get(j).setID(""+i+"9"+j);
 			break;
 			}
 		}
