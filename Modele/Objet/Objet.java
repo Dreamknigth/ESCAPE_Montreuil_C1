@@ -1,18 +1,35 @@
 package ESCAPE_Montreuil_C1.Modele.Objet;
 
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+
 public abstract class Objet {
 	
 	protected String nom;
+	private IntegerProperty valeur;
 	protected int nb;
 	
-	public Objet(String nom, int nb) {
+	public Objet(String nom) {
 		this.nom = nom;
-		this.nb = nb;
+		valeur  = new SimpleIntegerProperty(0);
 	}
 	
-	public abstract int getnb();
-	public abstract String getNom();
-	public abstract void setnb(int i);
+	public IntegerProperty getValeur() {
+		return this.valeur;
+	}
+
+	
+	public String getNom() {
+		return this.nom;
+	}
+	
+	public int getnb() {
+		return this.nb;
+	}
+	public void setnb(int i) {
+		this.nb=i;
+	}
+
 	
 	
 	
