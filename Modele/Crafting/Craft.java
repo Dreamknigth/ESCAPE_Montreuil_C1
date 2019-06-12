@@ -2,15 +2,15 @@ package ESCAPE_Montreuil_C1.Modele.Crafting;
 
 import ESCAPE_Montreuil_C1.Modele.Inventaire.Inventaire;
 import ESCAPE_Montreuil_C1.Modele.Objet.Objet;
-import ESCAPE_Montreuil_C1.Modele.Objet.hache;
-import ESCAPE_Montreuil_C1.Modele.Objet.lance;
-import ESCAPE_Montreuil_C1.Modele.Objet.pioche;
+import ESCAPE_Montreuil_C1.Modele.Objet.hacheObjet;
+import ESCAPE_Montreuil_C1.Modele.Objet.lanceObjet;
+import ESCAPE_Montreuil_C1.Modele.Objet.piocheObjet;
 
 public class Craft {
 	
 	public void craftingépée (Objet o, Inventaire in) {
 		if (in.getnbObjet(in.getObjet("Fer")) > 0 && in.getnbObjet(in.getObjet("bois")) > 0) {
-			lance ep = new lance();
+			lanceObjet ep = new lanceObjet();
 			ep.setnb(1);
 			in.getObjet("Fer").setnb(-10);
 			in.getObjet("bois").setnb(-10);
@@ -24,7 +24,7 @@ public class Craft {
 	
 	public void craftinghache (Objet o, Inventaire in) {
 		if (in.getnbObjet(in.getObjet("Fer")) > 0 && in.getnbObjet(in.getObjet("bois")) > 0) {
-			hache hc = new hache();
+			hacheObjet hc = new hacheObjet();
 			hc.setnb(1);
 			in.getObjet("Fer").setnb(-10);
 			in.getObjet("bois").setnb(-10);
@@ -38,7 +38,7 @@ public class Craft {
 	
 	public void craftinglance (Objet o, Inventaire in) {
 		if (in.getnbObjet(in.getObjet("Fer")) > 0 && in.getnbObjet(in.getObjet("bois")) > 0) {
-			lance lc = new lance();
+			lanceObjet lc = new lanceObjet();
 			lc.setnb(1);
 			in.getObjet("Fer").setnb(-10);
 			in.getObjet("bois").setnb(-10);
@@ -52,7 +52,7 @@ public class Craft {
 	
 	public void craftingpioche (Objet o, Inventaire in) {
 		if (in.getnbObjet(in.getObjet("Fer")) > 0 && in.getnbObjet(in.getObjet("bois")) > 0) {
-			pioche pc = new pioche();
+			piocheObjet pc = new piocheObjet();
 			pc.setnb(1);
 			in.getObjet("Fer").setnb(-10);
 			in.getObjet("bois").setnb(-10);

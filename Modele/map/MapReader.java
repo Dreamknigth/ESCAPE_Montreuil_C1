@@ -7,13 +7,11 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import ESCAPE_Montreuil_C1.Modele.blocks.Air;
+import ESCAPE_Montreuil_C1.Modele.blocks.AirBlock;
 import ESCAPE_Montreuil_C1.Modele.blocks.Block;
-import ESCAPE_Montreuil_C1.Modele.blocks.Sol;
-import ESCAPE_Montreuil_C1.Modele.blocks.Terre;
-import ESCAPE_Montreuil_C1.Modele.blocks.bois;
-import ESCAPE_Montreuil_C1.Modele.blocks.feuille;
-import ESCAPE_Montreuil_C1.Modele.blocks.tronc;
+import ESCAPE_Montreuil_C1.Modele.blocks.TerreBlock;
+import ESCAPE_Montreuil_C1.Modele.blocks.feuilleBlock;
+import ESCAPE_Montreuil_C1.Modele.blocks.troncBlock;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -64,16 +62,17 @@ public class MapReader {
 		this.terrain.add(FXCollections.observableArrayList());
 		for(j=0;j<ligne.length;j++) {
 			charBlock=ligne[j].charAt(0);
-			switch(charBlock) {
-			case 'A':this.terrain.get(i).add(new Air());
+			String a = charBlock+"";
+			switch(a) {
+			case "A":this.terrain.get(i).add(new AirBlock());
 			break;
-			case 'T':this.terrain.get(i).add(new Terre());
+			case "T":this.terrain.get(i).add(new TerreBlock());
 			break;
-			case 'f':this.terrain.get(i).add(new feuille());
+			case "f":this.terrain.get(i).add(new feuilleBlock());
 			break;
-			case 'F':this.terrain.get(i).add(new tronc());
+			case "F":this.terrain.get(i).add(new troncBlock());
 			break;
-			default:this.terrain.get(i).add(new Sol());
+			default:this.terrain.get(i).add(new TerreBlock());
 			break;
 			}
 		}

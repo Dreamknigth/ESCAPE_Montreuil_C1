@@ -1,6 +1,7 @@
 package ESCAPE_Montreuil_C1.Modele.Personnage;
 
 
+import ESCAPE_Montreuil_C1.Modele.Inventaire.Inventaire;
 import ESCAPE_Montreuil_C1.Modele.map.Terrain;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.DoubleProperty;
@@ -117,4 +118,5 @@ public abstract class Personnage {
 	public void setY(int a) {
 		this.y.set(a);
 	}
+	
 }

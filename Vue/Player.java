@@ -14,7 +14,6 @@ import javafx.scene.image.ImageView;
 public class Player extends ImageView {
 	private IntegerProperty etat;
 	private BooleanProperty versDroite;
-	//private Objet
 	//R=Rien S=Saut T=Tomber C=Courrir
 	//D=Droite G=Gauche
 	

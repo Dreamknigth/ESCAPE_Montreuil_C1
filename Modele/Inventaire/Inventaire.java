@@ -1,86 +1,88 @@
 package ESCAPE_Montreuil_C1.Modele.Inventaire;
 
 
-import ESCAPE_Montreuil_C1.Modele.Objet.Air;
-import ESCAPE_Montreuil_C1.Modele.Objet.Fer;
+import java.beans.FeatureDescriptor;
+
 import ESCAPE_Montreuil_C1.Modele.Objet.Objet;
-import ESCAPE_Montreuil_C1.Modele.Objet.Terre;
-import ESCAPE_Montreuil_C1.Modele.Objet.bois;
+
+import ESCAPE_Montreuil_C1.Modele.Objet.hacheObjet;
+import ESCAPE_Montreuil_C1.Modele.Objet.lanceObjet;
+import ESCAPE_Montreuil_C1.Modele.Objet.piocheObjet;
+import ESCAPE_Montreuil_C1.Modele.Objet.épéeObjet;
+import ESCAPE_Montreuil_C1.Modele.blocks.AirBlock;
 import ESCAPE_Montreuil_C1.Modele.blocks.Block;
-import ESCAPE_Montreuil_C1.Modele.map.MapReader;
-import ESCAPE_Montreuil_C1.Modele.map.Terrain;
+import ESCAPE_Montreuil_C1.Modele.blocks.TerreBlock;
+import ESCAPE_Montreuil_C1.Modele.blocks.boisBlock;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 public class Inventaire {
 
-	private ObservableList<Objet> ob ;
-	private Terrain a;
+	private ObservableList< ObservableList<Objet> > sac ;
+	private int limiteNbTasSac=10;	//le nombre de tas d'objet dans le sac
+	private int limiteNbObjetSac=20;//le nombre d'objet dans une partie du sac
 	
 	public Inventaire() {
-		MapReader mr=new MapReader();
+		/*MapReader mr=new MapReader();
 		mr.constructeurMap();
-		this.a=new Terrain(mr.getTerrain());
-		this.ob = FXCollections.observableArrayList();
-		this.ob.add(new Air());
-		this.ob.add(new Terre());
-		this.ob.add(new bois());
-		this.ob.add(new Fer());
-		/*this.ob.add(new pioche());
-		this.ob.add(new hache());
-		this.ob.add(new lance());
-		this.ob.add(new épée());*/
+		*/this.sac = FXCollections.observableArrayList();
+		//this.ob.add(new AirBlock());
 	}
-	public ObservableList<Objet> getListeInventaire () {
-		return this.ob;
+	public ObservableList< ObservableList<Objet> > getListeInventaire () {
+		return this.sac;
 	}
-
-	public Objet chercher(String a) {
-		int i =0;
-		while(i<this.ob.size()) {
-			if(this.ob.get(i).getNom()!=null && this.ob.get(i).getNom().equals(a)) {
-				System.out.println("recherche " + a);
-				return this.ob.get(i);
+	
+	public boolean ajouterBlock(Block leBlock) {
+		if(blockEstPresent(leBlock)<=0) {
+			if(this.sac.get( blockEstPresent(leBlock) ).size()<this.limiteNbObjetSac) {
+				this.sac.get( blockEstPresent(leBlock) ).add(leBlock);
+				return true;
 			}
-			i++;
+			else {
+				throw new Error("Vous ne pouvez pas avoir plus de "+this.sac.get( blockEstPresent(leBlock) ).get(0).getNom() );
+			}
 		}
-		return null;
-	}
-	public boolean minerPossible(Block b) {
-		Objet o =transforme_Block_en_Objet(b);
-		if(o!=null && o.getValeur().get()+1<=20) {
-			o.getValeur().set(o.getValeur().get()+1);
-			System.out.println("minerPossible "+o.getNom());
-			return true;
+		else {
+			if(this.sac.size() < limiteNbTasSac) {
+				this.sac.add( FXCollections.observableArrayList() );
+				this.sac.get( this.sac.size()-1 ).add(leBlock);
+				return true;
+			}
+			else {
+				throw new Error("Different objet comble votre inventaire");
+			}
 		}
-		return false;
 	}
-
-	public boolean creerPossible(Block b) {
-		Objet o = transforme_Block_en_Objet(b);
-		if(o!=null && o.getValeur().get()-1>=0) {
-			o.getValeur().set(o.getValeur().get()-1);
-			System.out.println("creerPossible "+o.getNom());
+	
+	public int blockEstPresent(Block leBlock) {
+		for(int i=0;i<this.sac.size();i++) {
+			if (leBlock.egaux(this.sac.get(i).get(0))) {
+				return i;
+			}
+		}
+		return -1;
+	}
+	public boolean supprimerBlock(Block exampleASupr) {
+		if( blockEstPresent(exampleASupr)>=0 ) {
+			this.sac.get( blockEstPresent(exampleASupr) ).remove(0);
 			return true;
 		}
 		return false;
 	}
 	
-	public Objet transforme_Block_en_Objet(Block b) {
-		if(b.getNom()=='A') {
-			return this.ob.get(0);
+	/*public Objet chercher(Objet unObjet) {
+		if (unObjet.getNom().equals("T") || unObjet.getNom().equals("t")) {
+			return this.sac.get(0);
 		}
-		else if(b.getNom()=='t' || b.getNom()=='T') {
-				return this.ob.get(1);
+		if (unObjet.getNom().equals("B") || unObjet.getNom().equals("Bois") || unObjet.getNom().equals("F") || unObjet.getNom().equals("f")) {
+			return this.sac.get(1);
 		}
-		else if(b.getNom()=='f' || b.getNom()=='F'|| b.getNom()=='B') {
-			return this.ob.get(2);
+		if (unObjet.getNom().equals("p")) {
+			return this.sac.get(2);
 		}
-		return null;
+		return new AirBlock();
 		
-	}
-
-
+	}*/
 
 
 

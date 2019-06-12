@@ -1,10 +1,14 @@
 package ESCAPE_Montreuil_C1.Modele.blocks;
 
-public abstract class Block {
+import ESCAPE_Montreuil_C1.Modele.Objet.Objet;
+import ESCAPE_Montreuil_C1.Modele.map.Monde;
+
+public abstract class Block extends Objet {
 	protected boolean traversable;
-	private char nom;
+	private String nom;
 	//constructeur
-	public Block(boolean traversable,char nom) {
+	public Block(boolean traversable,String nom) {
+		super(nom);
 		this.traversable=traversable;
 		this.nom=nom;
 	}
@@ -13,7 +17,10 @@ public abstract class Block {
 	public boolean getTraversable() {
 		return this.traversable;
 	}
-	public char getNom() {
+	public String getNom() {
 		return this.nom;
 	}
+	
+	abstract public Block faculté(Monde t, int x, int y) ;
+	
 }

@@ -25,4 +25,7 @@ public class Terrain {
 		this.tableTerrain.get(i).set( j, b);
 		//System.out.println(this.tableTerrain.get(i).get(j));
 	}
+	public Block getBlockTerrain(int i,int j) {
+		return this.tableTerrain.get(i).get(j);
+	}
 }

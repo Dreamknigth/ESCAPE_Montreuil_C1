@@ -1,10 +1,13 @@
 package ESCAPE_Montreuil_C1.Modele.Objet;
 
-public class lance extends Arme{
+import ESCAPE_Montreuil_C1.Modele.map.Monde;
+import ESCAPE_Montreuil_C1.Modele.map.Terrain;
 
-	public lance() {
+public class lanceObjet extends ArmeObjet{
+
+	public lanceObjet() {
 		super("lance", 25, 100);
-		this.nom = "lance";
+		this.nom = "L";
 		this.ptsattaque = 25;
 		this.durabilité = 100;
 	}
@@ -16,5 +19,15 @@ public class lance extends Arme{
 	public int getdura() { return this.durabilité;}
 	@Override
 	public String getNom() { return this.nom; }
+
+	@Override
+	public void faculté(Monde t, int x, int y) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	
+
+	
 
 }

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.BorderPane?>
+
+<BorderPane xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ESCAPE_Montreuil_C1.Controleur.controleurAccueil">
+   <center>
+      <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
+            <Button layoutX="71.0" layoutY="43.0" mnemonicParsing="false" onAction="#play" text="Play" />
+            <Button layoutX="71.0" layoutY="118.0" mnemonicParsing="false" onAction="#quit" text="Quit" />
+         </children>
+      </Pane>
+   </center>
+</BorderPane>

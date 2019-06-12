@@ -4,15 +4,12 @@
 	import java.util.HashMap;
 	import java.util.Map;
 	import java.util.ResourceBundle;
-	
-	
-	import ESCAPE_Montreuil_C1.Modele.Inventaire.Inventaire;
-import ESCAPE_Montreuil_C1.Modele.Objet.Fer;
-import ESCAPE_Montreuil_C1.Modele.map.Monde;
-	import ESCAPE_Montreuil_C1.Modele.blocks.Air;
-	import ESCAPE_Montreuil_C1.Modele.blocks.Terre;
-import ESCAPE_Montreuil_C1.Modele.blocks.bois;
+
+import ESCAPE_Montreuil_C1.Modele.Objet.Objet;
 import ESCAPE_Montreuil_C1.Modele.blocks.Block;
+import ESCAPE_Montreuil_C1.Modele.map.Monde;
+	import ESCAPE_Montreuil_C1.Modele.map.Terrain;
+	
 	import ESCAPE_Montreuil_C1.Vue.Player;
 	import javafx.animation.KeyFrame;
 	import javafx.animation.Timeline;
@@ -39,13 +36,11 @@ import ESCAPE_Montreuil_C1.Modele.blocks.Block;
 	
 		@FXML
 		private ImageView perso;
-		
-		private Block EtatInventaire=  new Air();
+	
 	
 		@FXML
 		private HBox inventaireVue = new HBox();
 	
-		private Inventaire iventaireModele=new Inventaire();
 	
 		private Map<String, Image> dictionnaireImage; 		
 	
@@ -54,7 +49,6 @@ import ESCAPE_Montreuil_C1.Modele.blocks.Block;
 	
 		private Monde monde;
 		private Player lePlayer;
-	
 		@FXML
 		private Pane map;
 		@FXML
@@ -87,18 +81,27 @@ import ESCAPE_Montreuil_C1.Modele.blocks.Block;
 			if(code == KeyCode.S || code == KeyCode.DOWN){
 				this.monde.getJoueur().seDeplacerBas();
 			}
-			if(code == KeyCode.F1) {
-				this.EtatInventaire= new Terre();
+			/*if(code == KeyCode.F1) {
+				this.monde.getJoueur().setObjetDansLaMain(this.monde.getJoueur().getInventaire().getListeInventaire().get(0));
 			}
 			if(code == KeyCode.F2) {
-				this.EtatInventaire=new bois();
+				this.monde.getJoueur().setObjetDansLaMain(this.monde.getJoueur().getInventaire().getListeInventaire().get(1));
+			}
+			if(code == KeyCode.F3) {
+				this.monde.getJoueur().setObjetDansLaMain(this.monde.getJoueur().getInventaire().getListeInventaire().get(2));
+			}
+			if(code == KeyCode.F4) {
+				this.monde.getJoueur().setObjetDansLaMain(this.monde.getJoueur().getInventaire().getListeInventaire().get(3));
+			}
+			if(code == KeyCode.F5) {
+				this.monde.getJoueur().setObjetDansLaMain(this.monde.getJoueur().getInventaire().getListeInventaire().get(4));
 			}
 			/*if(code == KeyCode.F3) {
-				this.EtatInventaire=new ();
-			}*/
-			
+					this.EtatInventaire=new ();
+				}*/
+	
 		}
-
+	
 		@FXML
 		void mouseClicked(MouseEvent event) {
 			/**
@@ -107,29 +110,29 @@ import ESCAPE_Montreuil_C1.Modele.blocks.Block;
 			int x =(int)event.getX()/32;
 			int y =(int)event.getY()/32;
 			MouseButton Button = event.getButton();
-			System.out.println(x+";"+y);
+			//System.out.println(x+";"+y);
 			ImageView l= (ImageView) vue.lookup('#'+""+y+'9'+x);
 			/**
 			 * Changement
 			 */
+			Monde t= this.monde;
 			if(this.monde.getJoueur().modifPossible(y, x)) {
-				if (Button==MouseButton.PRIMARY  && this.iventaireModele.minerPossible(EtatInventaire)) { // rendre Main
-						this.monde.getTerrain().setTerrain(new Air(), y, x);
-	 
-					}
-					else if (Button==MouseButton.SECONDARY && this.iventaireModele.creerPossible(EtatInventaire)) {
-						this.monde.getTerrain().setTerrain(EtatInventaire, y, x);
-					}
-				l.setImage(this.dictionnaireImage.get(this.iventaireModele.transforme_Block_en_Objet(EtatInventaire).getNom()));
-					
+				if (Button==MouseButton.PRIMARY  ) { // rendre Main
+					String nomObjetDansLaMain=this.monde.getJoueur().getObjetDansLaMain().faculté(t,x,y).getNom();
+					System.out.println(this.monde.getTerrain().getTableTerrain().get(y).get(x).getNom());
+					System.out.println(this.monde.getJoueur().getObjetDansLaMain().getNom());
+					l.setImage(this.dictionnaireImage.get(nomObjetDansLaMain));
 				}
-			this.EtatInventaire = new Air();
-			System.out.println("ok");
+				/*else if (Button==MouseButton.SECONDARY && this.monde.getJoueur().creerPossible(ObjetDans)){
+							this.monde.getTerrain().setTerrain(ObjetDans, y, x);
+						}*/
+	
+			}
 		}
-		
-		
-		
-		
+	
+	
+	
+	
 		private void initGameLoop() {
 			gameLoop.setCycleCount(Timeline.INDEFINITE);
 			KeyFrame kfGraviter = new KeyFrame(Duration.seconds(0.4),(ev ->{
@@ -147,13 +150,17 @@ import ESCAPE_Montreuil_C1.Modele.blocks.Block;
 			 * Creation de la map
 			 */
 			dictionnaireImage = new HashMap< String,Image>(); 
-			dictionnaireImage.put("Air",new Image("ESCAPE_Montreuil_C1/source/air.jpg" ));
-			dictionnaireImage.put("Terre", new Image("ESCAPE_Montreuil_C1/source/terre.jpg")); 
-			dictionnaireImage.put("bois", new Image("ESCAPE_Montreuil_C1/source/tronc.jpg"));
-			dictionnaireImage.put("Fer", new Image("ESCAPE_Montreuil_C1/source/Fer.png"));
-			dictionnaireImage.put("solAvecHerbe",new Image("ESCAPE_Montreuil_C1/source/solpetit.jpg"));
-			dictionnaireImage.put("Feuille",new Image("ESCAPE_Montreuil_C1/source/feuille.jpg"));
-			dictionnaireImage.put("tronc",new Image("ESCAPE_Montreuil_C1/source/tronc.jpg"));
+			dictionnaireImage.put("A",new Image("ESCAPE_Montreuil_C1/source/air.jpg" ));
+			dictionnaireImage.put("t", new Image("ESCAPE_Montreuil_C1/source/terre.jpg")); 
+			//dictionnaireImage.put("bois", new Image("ESCAPE_Montreuil_C1/source/tronc.jpg"));
+			dictionnaireImage.put("B", new Image("ESCAPE_Montreuil_C1/source/tronc.jpg"));
+			dictionnaireImage.put("p", new Image("ESCAPE_Montreuil_C1/source/Fer.png"));
+			dictionnaireImage.put("T",new Image("ESCAPE_Montreuil_C1/source/solpetit.jpg"));
+			dictionnaireImage.put("f",new Image("ESCAPE_Montreuil_C1/source/feuille.jpg"));
+			dictionnaireImage.put("F",new Image("ESCAPE_Montreuil_C1/source/tronc.jpg"));
+			dictionnaireImage.put("P",new Image("ESCAPE_Montreuil_C1/source/pioche.jpeg"));
+			dictionnaireImage.put("H",new Image("ESCAPE_Montreuil_C1/source/hache.jpg"));
+
 			//Image Fer= new Image("ESCAPE_Montreuil_C1/source/Fer.jpg");
 			//Image elixir= new Image("ESCAPE_Montreuil_C1/source/elixir.png");
 			this.monde=new Monde();
@@ -161,7 +168,7 @@ import ESCAPE_Montreuil_C1.Modele.blocks.Block;
 			this.lePlayer=new Player();
 			this.vue.getChildren().add(this.lePlayer);
 	
-	
+			System.out.println("ok");
 			/**
 			 * bind les positions du player(imageview) avec les positions du joueur
 			 */
@@ -197,7 +204,7 @@ import ESCAPE_Montreuil_C1.Modele.blocks.Block;
 			 * Initialisation des Ressources Dans Inventaire
 			 */
 			creationInventaire();
-			
+	
 	
 	
 	
@@ -236,10 +243,7 @@ import ESCAPE_Montreuil_C1.Modele.blocks.Block;
 				}
 			});
 	
-			System.out.println("le debug de la vie!");
-			System.out.println("test "+this.monde.getJoueur().getNom());
 	
-			System.out.println("le debug de la mort!");
 			//monde.getJoueur().seDeplacerGraviter();
 			// https://docs.oracle.com/javafx/2/api/javafx/beans/value/ObservableValue.html
 			// void addListener(ChangeListener<? super T> listener)
@@ -250,18 +254,19 @@ import ESCAPE_Montreuil_C1.Modele.blocks.Block;
 			gameLoop.play();
 		}
 		private void creationInventaire() {
-			for (int i = 1 ;i<this.iventaireModele.getListeInventaire().size();i++ ) {
+			for (int i = 0 ;i<this.monde.getJoueur().getInventaire().getListeInventaire().size();i++ ) {
 				VBox elementInventaire = new VBox();
 				Label valeurRessource = new Label();
-				ImageView Image = new ImageView(dictionnaireImage.get(this.iventaireModele.getListeInventaire().get(i).getNom()));
+				String nomObjet = this.monde.getJoueur().getInventaire().getListeInventaire().get(i).get(0).getNom();
+				ImageView Image = new ImageView(dictionnaireImage.get(nomObjet));
 				Image.setFitHeight(80);
 				Image.setFitWidth(Image.getFitHeight());
-				valeurRessource.textProperty().bind(this.iventaireModele.getListeInventaire().get(i).getValeur().asString());
+				valeurRessource.textProperty().bind(this.monde.getJoueur().getInventaire().getListeInventaire().get(i).get(0).getValeur().asString());
 				elementInventaire.getChildren().add(Image);
 				elementInventaire.getChildren().add(valeurRessource);
 	
 	
-				elementInventaire.setTranslateX(i*60);
+				elementInventaire.setTranslateX((i+1)*60);
 				inventaireVue.getChildren().add(elementInventaire);
 			}			
 		}
@@ -271,21 +276,7 @@ import ESCAPE_Montreuil_C1.Modele.blocks.Block;
 			for (int i = 0; i < this.monde.getTerrain().getTableTerrain().size(); i++) {
 				for(int j=0;j<this.monde.getTerrain().getTableTerrain().get(i).size();j++) {
 					ImageView view = new ImageView() ;
-					if(this.monde.getTerrain().getTableTerrain().get(i).get(j).getNom()=='A') {
-						view.setImage(this.dictionnaireImage.get("Air"));
-					}
-					else if(this.monde.getTerrain().getTableTerrain().get(i).get(j).getNom()=='f'){
-						view.setImage(this.dictionnaireImage.get("Feuille"));
-					}
-					else if (this.monde.getTerrain().getTableTerrain().get(i).get(j).getNom() == 'F') {
-						view.setImage(this.dictionnaireImage.get("tronc"));
-					}
-					else if (this.monde.getTerrain().getTableTerrain().get(i).get(j).getNom() == 't'){
-						view.setImage(this.dictionnaireImage.get("Terre"));
-					}
-					else if (this.monde.getTerrain().getTableTerrain().get(i).get(j).getNom() == 'T') {
-						view.setImage(this.dictionnaireImage.get("solAvecHerbe"));
-					}
+					view.setImage(this.dictionnaireImage.get(this.monde.getTerrain().getTableTerrain().get(i).get(j).getNom()));
 					this.vue.getChildren().add(view);
 					String s =i+"9"+j;
 					view.setId(s);
@@ -296,6 +287,6 @@ import ESCAPE_Montreuil_C1.Modele.blocks.Block;
 				}
 			}
 		}
-		 
+	
 	
 	}
