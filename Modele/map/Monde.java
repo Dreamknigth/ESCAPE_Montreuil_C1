@@ -2,6 +2,7 @@ package ESCAPE_Montreuil_C1.Modele.map;
 
 import java.util.ArrayList;
 
+import ESCAPE_Montreuil_C1.Modele.Personnage.Ennemy;
 import ESCAPE_Montreuil_C1.Modele.Personnage.Joueur;
 import ESCAPE_Montreuil_C1.Modele.Personnage.Personnage;
 import ESCAPE_Montreuil_C1.Modele.blocks.Block;
@@ -13,7 +14,7 @@ import javafx.collections.ObservableList;
 public class Monde {
 	private Terrain leTerrain;
 	private Joueur leJoueur;
-	private ObservableList<Personnage> Ennemi;
+	private ObservableList<Ennemy> Ennemi;
 	
 	//constructeur
 	public Monde() {
@@ -33,7 +34,7 @@ public class Monde {
 	public Joueur getJoueur() {
 		return this.leJoueur;
 	}
-	public ObservableList<Personnage> getEnnemiList(){
+	public ObservableList<Ennemy> getEnnemiList(){
 		return this.Ennemi;
 	}
 	
@@ -42,9 +43,18 @@ public class Monde {
 			this.Ennemi.get(i).seDeplacerBas();
 		}
 	}
+	
 	public void DepEnnemi() {
-		for (int i = 0; i < this.Ennemi.size()-1;i++) {
-			this.Ennemi.get(i).seDeplacer();
+		for (int i = 0; i < this.Ennemi.size();i++) {
+			this.Ennemi.get(i).seDeplacer(leJoueur);
 		}
+	}
+	public int getnbCochon () {
+		int i = 0;
+		for (int j = 0; i<Ennemi.size(); j++) {
+			if (Ennemi.get(j).getNom() == "Cochon");
+			i++;
+		}
+		return i;
 	}
 }

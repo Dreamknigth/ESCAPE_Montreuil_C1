@@ -9,6 +9,8 @@ import java.util.ArrayList;
 
 import ESCAPE_Montreuil_C1.Modele.blocks.Air;
 import ESCAPE_Montreuil_C1.Modele.blocks.Block;
+import ESCAPE_Montreuil_C1.Modele.blocks.FerBlock;
+import ESCAPE_Montreuil_C1.Modele.blocks.PierreBlock;
 import ESCAPE_Montreuil_C1.Modele.blocks.Sol;
 import ESCAPE_Montreuil_C1.Modele.blocks.Terre;
 import ESCAPE_Montreuil_C1.Modele.blocks.bois;
@@ -75,6 +77,12 @@ public class MapReader {
 					this.terrain.get(i).get(j).setID(""+i+"9"+j);
 			break;
 			case 'F':this.terrain.get(i).add(new tronc());
+					this.terrain.get(i).get(j).setID(""+i+"9"+j);
+			break;
+			case 'P':this.terrain.get(i).add(new PierreBlock());
+					this.terrain.get(i).get(j).setID(""+i+"9"+j);
+			break;
+			case 'I':this.terrain.get(i).add(new FerBlock());
 					this.terrain.get(i).get(j).setID(""+i+"9"+j);
 			break;
 			default:this.terrain.get(i).add(new Sol());
