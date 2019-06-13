@@ -18,76 +18,66 @@ import javafx.collections.ObservableList;
 
 public class Inventaire {
 
-	private ObservableList< ObservableList<Objet> > sac ;
+	private ObservableList< CaseInventaire > sac ;
 	private int limiteNbTasSac=10;	//le nombre de tas d'objet dans le sac
-	private int limiteNbObjetSac=20;//le nombre d'objet dans une partie du sac
+	
 	
 	public Inventaire() {
 		/*MapReader mr=new MapReader();
 		mr.constructeurMap();
 		*/this.sac = FXCollections.observableArrayList();
+		//Pas le temps de tous coder donc on spawn avec une pioche
+		CaseInventaire Rpioche = new CaseInventaire(); //Rengement pioche
+		Rpioche.ajouterObjet( new piocheObjet() );
+		this.sac.add(Rpioche);
 		//this.ob.add(new AirBlock());
 	}
-	public ObservableList< ObservableList<Objet> > getListeInventaire () {
+	public ObservableList< CaseInventaire > getListeInventaire () {
 		return this.sac;
 	}
 	
-	public boolean ajouterBlock(Block leBlock) {
-		if(blockEstPresent(leBlock)<=0) {
-			if(this.sac.get( blockEstPresent(leBlock) ).size()<this.limiteNbObjetSac) {
-				this.sac.get( blockEstPresent(leBlock) ).add(leBlock);
-				return true;
-			}
-			else {
-				throw new Error("Vous ne pouvez pas avoir plus de "+this.sac.get( blockEstPresent(leBlock) ).get(0).getNom() );
-			}
-		}
-		else {
-			if(this.sac.size() < limiteNbTasSac) {
-				this.sac.add( FXCollections.observableArrayList() );
-				this.sac.get( this.sac.size()-1 ).add(leBlock);
-				return true;
-			}
-			else {
-				throw new Error("Different objet comble votre inventaire");
+	public boolean ajouterObjet(Objet unObjet) {
+		if(objetEstPresent(unObjet)<=0) {
+			if(!this.sac.get( objetEstPresent(unObjet) ).ajouterObjet(unObjet)) {
+				if(this.sac.size() < limiteNbTasSac) {
+					CaseInventaire caseInv = new CaseInventaire();
+					caseInv.ajouterObjet(unObjet);
+					this.sac.add( caseInv );
+					return true;
+				}
+				else {
+					throw new Error("Different objet comble votre inventaire");
+				}
 			}
 		}
+		return false;
 	}
 	
-	public int blockEstPresent(Block leBlock) {
+	public int objetEstPresent(Objet unObjet) {
 		for(int i=0;i<this.sac.size();i++) {
-			if (leBlock.egaux(this.sac.get(i).get(0))) {
+			if(this.sac.get(i).typeDeRengement().egaux(unObjet)) {
 				return i;
 			}
 		}
 		return -1;
 	}
 	public boolean supprimerBlock(Block exampleASupr) {
-		if( blockEstPresent(exampleASupr)>=0 ) {
-			this.sac.get( blockEstPresent(exampleASupr) ).remove(0);
-			return true;
+		if( objetEstPresent(exampleASupr)>=0 ) {
+			this.sac.get( objetEstPresent(exampleASupr) ).getCaseInv().remove(0);
 		}
 		return false;
 	}
 	
-	/*public Objet chercher(Objet unObjet) {
-		if (unObjet.getNom().equals("T") || unObjet.getNom().equals("t")) {
-			return this.sac.get(0);
+	
+
+	public int nbObjet(Objet unObjet) {
+		if(objetEstPresent(unObjet)>=0) {
+			return this.sac.get( objetEstPresent(unObjet) ).tailleRengement();
 		}
-		if (unObjet.getNom().equals("B") || unObjet.getNom().equals("Bois") || unObjet.getNom().equals("F") || unObjet.getNom().equals("f")) {
-			return this.sac.get(1);
-		}
-		if (unObjet.getNom().equals("p")) {
-			return this.sac.get(2);
-		}
-		return new AirBlock();
-		
-	}*/
-
-
-
-
+		return -1;
+	}
 }
+
 
 
 

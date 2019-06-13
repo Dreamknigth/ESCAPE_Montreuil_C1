@@ -2,6 +2,8 @@ package ESCAPE_Montreuil_C1.Modele.Personnage;
 
 
 import ESCAPE_Montreuil_C1.Modele.Inventaire.Inventaire;
+import com.sun.javafx.geom.Rectangle;
+
 import ESCAPE_Montreuil_C1.Modele.map.Terrain;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.DoubleProperty;
@@ -11,21 +13,26 @@ import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 
 public abstract class Personnage {
-	protected DoubleProperty x,y; //coordonnee
+	protected IntegerProperty x,y; //coordonnee
+	private Rectangle hitBox; //la hit box du perso
+	
 	protected String nom;
 	protected int pv;
 	private int ptAttaque;
 	//private Inventaire lInventaire;
 	private BooleanProperty versDroite;//etat vas permettre de definir la direction
 	private IntegerProperty etat;//etat vas permettre de definir l'etat
-	protected Terrain leTerrain;//terrain qui possedent une observable liste
-	private double lePas=1.0;
+	private int etatSaut=0;
+	private int hauteurSaut=3;
 	
+	protected Terrain leTerrain;//terrain qui possedent une observable liste
+	//TODO private objet objetMain;
 	
 	//Constructeur
 	public Personnage(int x,int y,String nom,Terrain leTerrain) {
-		this.x = new SimpleDoubleProperty(x);
-		this.y = new SimpleDoubleProperty(y);
+		this.x = new SimpleIntegerProperty(x);
+		this.y = new SimpleIntegerProperty(y);
+		this.hitBox = new Rectangle(x,y,1,2);
 		this.etat = new SimpleIntegerProperty(0); //0=rien 1=sauter 2=tomber 3=courrir
 		this.versDroite = new SimpleBooleanProperty(true); //true=va a Droite false=va a gauche
 
@@ -49,60 +56,102 @@ public abstract class Personnage {
 		}
 	}
 	
+	//seDeplacer
+	//Rappel:
+	//0=Rien 1=Saut 2=Tomber 3=Courrir
+	//VersDroite=true=droite VersDroite=false=gauche
+	public void seDeplacer(){
+		this.etat.setValue( this.etat.getValue()%4 ); //petit verife
+		if( this.etatSaut>0 ) {
+			this.etatSaut++;
+			this.etatSaut = this.etatSaut%(this.hauteurSaut+1); //verife apres saut
+			if(this.etatSaut<this.hauteurSaut) {
+				seDeplacerHaut();
+			}
+			case3();
+		}
+		else {
+			if( !seDeplacerBas() ) {
+				switch( this.etat.getValue() ) {
+				case 0://rien
+					break;
+				case 1:
+					this.etatSaut++;
+					seDeplacerHaut();
+					break;
+				default:
+					case3();
+					break;
+				}
+			}
+			else {
+				case3();
+			}
+		}
+	}
+	
+	private void case3() {
+		if(this.etat.getValue()==3) {
+			if(this.versDroite.getValue()) {
+				seDeplacerDroite();
+			}
+			else {
+				seDeplacerGauche();
+			}
+		}
+	}
+	
 	//Gauche
-	public boolean seDeplacerGauche() { //y=i x=j
+	private boolean seDeplacerGauche() { //y=i x=j
 		this.versDroite.setValue(false);
-		if(this.x.getValue()>=1  &&  this.leTerrain.getTableTerrain().get( (int)(double)(this.y.getValue()) ).get( (int)(double)(this.x.getValue()-lePas) ).getTraversable()  &&  this.leTerrain.getTableTerrain().get( (int)(double)(this.y.getValue()+1) ).get( (int)(double)(this.x.getValue()-lePas) ).getTraversable()) {
-			this.x.setValue(this.x.get()-lePas);
-			this.etat.set(3);
+		if(this.x.getValue()>=1  &&  this.leTerrain.getTableTerrain().get( (int)(double)(this.y.getValue()) ).get( (int)(double)(this.x.getValue()-1) ).getTraversable()  &&  this.leTerrain.getTableTerrain().get( (int)(double)(this.y.getValue()+1) ).get( (int)(double)(this.x.getValue()-1) ).getTraversable()) {
+			this.x.setValue(this.x.getValue()-1);
 			return true;
 		}
+		this.etat.setValue(0);
 		return false;
 	}
 	//Droite
-	public boolean seDeplacerDroite() { //y=i x=j
+	private boolean seDeplacerDroite() { //y=i x=j
 		this.versDroite.setValue(true);
-		if(this.x.getValue()<this.leTerrain.getTableTerrain().get( (int)(double)(this.y.getValue()) ).size()-1  &&  this.leTerrain.getTableTerrain().get( (int)(double)(this.y.getValue()) ).get( (int)(double)(this.x.getValue()+lePas) ).getTraversable()  &&  this.leTerrain.getTableTerrain().get( (int)(double)(this.y.getValue()+1) ).get( (int)(double)(this.x.getValue()+lePas) ).getTraversable()) {
-			this.x.setValue(this.x.get()+lePas);
-			this.etat.set(3);
+		if(this.x.getValue()<this.leTerrain.getTableTerrain().get( (int)(double)(this.y.getValue()) ).size()-1  &&  this.leTerrain.getTableTerrain().get( (int)(double)(this.y.getValue()) ).get( (int)(double)(this.x.getValue()+1) ).getTraversable()  &&  this.leTerrain.getTableTerrain().get( (int)(double)(this.y.getValue()+1) ).get( (int)(double)(this.x.getValue()+1) ).getTraversable()) {
+			this.x.setValue(this.x.get()+1);
 			return true;
 		}
+		this.etat.setValue(0);
 		return false;
 	}
 	//haut
-	protected boolean seDeplacerHaut() {
-		if(this.y.getValue()>=2 && this.leTerrain.getTableTerrain().get( (int)(double)(this.y.getValue()-lePas) ).get( (int)(double)(this.x.getValue()) ).getTraversable()) {
-			this.y.setValue(this.y.get()-lePas);
-			this.etat.set(1);
+	private boolean seDeplacerHaut() {
+		if(this.y.getValue()>=2 && this.leTerrain.getTableTerrain().get( (int)(double)(this.y.getValue()-1) ).get( (int)(double)(this.x.getValue()) ).getTraversable()) {
+			this.y.setValue(this.y.get()-1);
 			return true;
 		}
 		return false;
 	}
 	//bas
 	public boolean seDeplacerBas() {
-		if(this.y.getValue()<this.leTerrain.getTableTerrain().size()-2 && this.leTerrain.getTableTerrain().get( (int)(double)(this.y.getValue()+1+lePas) ).get( (int)(double)(this.x.getValue()) ).getTraversable()) {
-			this.y.setValue(this.y.get()+lePas);
-			this.etat.set(2);
+		if(this.y.getValue()<this.leTerrain.getTableTerrain().size()-2 && this.leTerrain.getTableTerrain().get( (int)(double)(this.y.getValue()+1.5+1) ).get( (int)(double)(this.x.getValue()) ).getTraversable()) {
+			this.y.setValue(this.y.get()+1);
 			return true;
 		}
-		this.etat.set(0);
 		return false;
 	}
 	//graviter
-	public void seDeplacerGraviter() {
-		if(this.seDeplacerBas()) {
-			this.seDeplacerGraviter();
-		}
-	}
+//	private void seDeplacerGraviter() {
+//		if(this.seDeplacerBas()) {
+//			this.seDeplacerGraviter();
+//		}
+//	}
 	
 	//getter
 	public String getNom() {
 		return this.nom;
 	}
-	public DoubleProperty getX() {
+	public IntegerProperty getX() {
 		return x;
 	}
-	public DoubleProperty getY() {
+	public IntegerProperty getY() {
 		return y;
 	}
 	public IntegerProperty getEtat() {
@@ -111,12 +160,15 @@ public abstract class Personnage {
 	public BooleanProperty getVersDroite() {
 		return this.versDroite;
 	}
+	public int getEtatSaut() {
+		return this.etatSaut;
+	}
 	//setter
 	public void setX(int a) {
-		this.x.set(a);
+		this.x.setValue(a);
 	}
 	public void setY(int a) {
-		this.y.set(a);
+		this.y.setValue(a);
 	}
 	
 }

@@ -1,9 +1,15 @@
 package ESCAPE_Montreuil_C1.Modele.Objet;
 
+import java.util.ArrayList;
+
+import ESCAPE_Montreuil_C1.Modele.Inventaire.CaseInventaire;
 import ESCAPE_Montreuil_C1.Modele.blocks.AirBlock;
 import ESCAPE_Montreuil_C1.Modele.blocks.Block;
+import ESCAPE_Montreuil_C1.Modele.blocks.TerreBlock;
+import ESCAPE_Montreuil_C1.Modele.blocks.boisBlock;
 import ESCAPE_Montreuil_C1.Modele.map.Monde;
 import ESCAPE_Montreuil_C1.Modele.map.Terrain;
+import javafx.collections.ObservableList;
 
 public class piocheObjet extends Outils{
 
@@ -25,17 +31,18 @@ public class piocheObjet extends Outils{
 
 	@Override
 	public Block faculté(Monde t, int x, int y) {
-		Block b=t.getTerrain().getTableTerrain().get(y).get(x);
-		System.out.println(b.getNom());
-		Objet o = t.getJoueur().getInventaire().chercher(b);
-		if(o!=null && o.getValeur().get()+1<=20) {
-			o.getValeur().set(o.getValeur().get()+1);
-			t.getTerrain().setTerrain(new AirBlock(), y, x);
-			return new AirBlock();
+		Objet b=t.getTerrain().getTableTerrain().get(y).get(x);
+		ObservableList< CaseInventaire > inventaire=t.getJoueur().getInventaire().getListeInventaire();
+		int placeDansSac = t.getJoueur().getInventaire().objetEstPresent(b);
+		if(placeDansSac>=0 ) {
+			if(inventaire.get(placeDansSac).getCaseInv().get(0).egaux( new boisBlock() ) || inventaire.get(placeDansSac).getCaseInv().get(0).egaux( new TerreBlock() )) {
+				inventaire.get(placeDansSac).ajouterObjet(b);
+				AirBlock a =new AirBlock();
+				t.getTerrain().setTerrain(a, y, x);
+				return a;
+			}
 		}
 		return null;
 	}
-
-
 
 }

@@ -1,5 +1,6 @@
 package ESCAPE_Montreuil_C1.Modele.Objet;
 
+import ESCAPE_Montreuil_C1.Modele.blocks.Block;
 import ESCAPE_Montreuil_C1.Modele.map.Monde;
 import ESCAPE_Montreuil_C1.Modele.map.Terrain;
 
@@ -20,7 +21,8 @@ public class épéeObjet extends ArmeObjet{
 	public int getatt() { return this.ptsattaque; }
 
 	@Override
-	public void faculté(Monde t, int x, int y) {
+	public Block faculté(Monde t, int x, int y) {
+		return null;
 		// TODO Auto-generated method stub
 		
 	}

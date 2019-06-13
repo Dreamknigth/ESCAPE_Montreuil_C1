@@ -7,7 +7,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane focusTraversable="true" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #9fd0e1;" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ESCAPE_Montreuil_C1.Controleur.SampleController">
+<BorderPane focusTraversable="true" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: gray;" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ESCAPE_Montreuil_C1.Controleur.SampleController">
    <center>
 
       <Pane fx:id="vue" onMouseClicked="#mouseClicked" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
@@ -19,5 +19,13 @@
    <top>
       <HBox fx:id="inventaireVue" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
    </top>
+   <right>
+      <Pane fx:id="PageAcceuil" prefHeight="199.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button layoutX="69.0" layoutY="14.0" mnemonicParsing="false" onAction="#play" text="Play" />
+            <Button layoutX="69.0" layoutY="60.0" mnemonicParsing="false" onAction="#quit" text="Quit" />
+         </children>
+      </Pane>
+   </right>
 
 </BorderPane>
