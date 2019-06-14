@@ -149,12 +149,11 @@ import javafx.scene.input.MouseEvent;
 			KeyFrame kfPerso = new KeyFrame(Duration.seconds(0.150),(ev ->{
 				this.monde.getJoueur().seDeplacer();
 				this.monde.getJoueur().getEtat().setValue(0);
-			}));
-			KeyFrame kfEnnemi = new KeyFrame(Duration.seconds(0.120),(ev ->{
 				this.monde.graviterEnnemi();
 				this.monde.DepEnnemi();
+				this.monde.degat();
+				System.out.println(this.monde.getJoueur().getpv());
 			}));
-			gameLoop.getKeyFrames().add(kfEnnemi);
 			gameLoop.getKeyFrames().add(kfPerso);
 		}
 		

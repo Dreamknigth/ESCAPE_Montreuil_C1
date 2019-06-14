@@ -24,7 +24,7 @@ public class Monde {
 		MapReader mr=new MapReader();
 		mr.constructeurMap();
 		this.leTerrain=new Terrain(mr.getTerrain());
-		this.leJoueur=new Joueur(5,23,"pseudo",this.leTerrain);
+		this.leJoueur=new Joueur(5,23,"pseudo",this.leTerrain, 100);
 		this.Ennemi = FXCollections.observableArrayList();
 		
 		
@@ -59,6 +59,14 @@ public class Monde {
 		for (int i = 0; i < this.Ennemi.size();i++) {
 			if (this.Ennemi.get(i).getNom() != "Oiseau")
 			this.Ennemi.get(i).seDeplacerBas();
+		}
+	}
+	
+	public void degat() {
+		for (int i = 0; i < this.Ennemi.size();i++) {
+			if (this.Ennemi.get(i).faireDegat(leJoueur)) {
+				this.leJoueur.prendDegat(3);
+			}
 		}
 	}
 	

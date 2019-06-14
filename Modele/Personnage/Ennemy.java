@@ -9,5 +9,12 @@ public abstract class Ennemy extends Personnage{
 	}
 	
 	public abstract void seDeplacer(Personnage p);
-
+	
+	public boolean faireDegat (Joueur j) {// a=y souris b=x souris
+		if ((j.getY().getValue() == (this.y.getValue())) && (j.getX().getValue() == this.x.getValue())){
+			
+			return true;	
+		}
+		return false;
+	}
 }

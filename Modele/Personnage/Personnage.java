@@ -16,7 +16,7 @@ public abstract class Personnage {
 	private Rectangle hitBox; //la hit box du perso
 	
 	protected String nom;
-	protected int pv;
+	IntegerProperty pv;
 	private int ptAttaque;
 	//private Inventaire lInventaire;
 	private BooleanProperty versDroite;//etat vas permettre de definir la direction
@@ -48,9 +48,9 @@ public abstract class Personnage {
 	
 	//Methodes
 	public void prendDegat(int ptDegat) {
-		this.pv=this.pv-ptDegat;
-		if(this.pv<=0) {
-			this.pv=0;
+		this.pv.set(this.pv.getValue()-ptDegat);
+		if(this.pv.getValue()<=0) {
+			this.pv.set(0);
 			System.out.println("You're DEAD!");
 		}
 	}
@@ -146,6 +146,10 @@ public abstract class Personnage {
 	//getter
 	public String getNom() {
 		return this.nom;
+	}
+	
+	public IntegerProperty getpv() {
+		return this.pv;
 	}
 	public IntegerProperty getX() {
 		return x;
