@@ -1,5 +1,6 @@
 package ESCAPE_Montreuil_C1.Vue;
 
+import java.awt.ImageCapabilities;
 import java.awt.Point;
 
 import ESCAPE_Montreuil_C1.Modele.Personnage.Joueur;
@@ -8,15 +9,20 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.VBox;
 
-public class Player extends ImageView {
+public class Player extends VBox {
 	private IntegerProperty etat;
+	private Label pvJoueur;
+	
+	private ImageView imagePlayer;
 	private BooleanProperty versDroite;
 	//R=Rien S=Saut T=Tomber C=Courrir
 	//D=Droite G=Gauche
-	
+	private ImageView Imageperso; 
 	private static Image persoRD=new Image("ESCAPE_Montreuil_C1/source/Joueur_gif/Joueur_Rien_Droite.gif");//perso pas de mouvement
 	private static Image persoCD=new Image("ESCAPE_Montreuil_C1/source/Joueur_gif/Joueur_Courrir_Droite.gif");//perso Droite
 	private static Image persoSD=new Image("ESCAPE_Montreuil_C1/source/Joueur_gif/Joueur_Saut_Droite.gif");//perso definir la gif quand il saute
@@ -29,10 +35,17 @@ public class Player extends ImageView {
 	
 	//constructeur
 	public Player(){
-		super(new Image("ESCAPE_Montreuil_C1/source/Joueur_gif/Joueur_Rien_Droite.gif"));
+		this.Imageperso=new ImageView(this.persoRD);
+		this.pvJoueur=new Label();
+		this.getChildren().add(this.pvJoueur);
+		this.getChildren().add(Imageperso);
+		this.pvJoueur.setMinHeight(-this.pvJoueur.getHeight()-20);
+		
+		
 		this.etat = new SimpleIntegerProperty(0);
 		this.versDroite = new SimpleBooleanProperty(true);
-		//debug
+		
+		//Je n'ai pas le temps de faire les differentes images donc je met RD
 		this.persoTD=this.persoRD;
 		this.persoRG=this.persoRD;
 		this.persoSG=this.persoRD;
@@ -45,31 +58,37 @@ public class Player extends ImageView {
 		etat=etat%4;
 		if(versDroite) {
 			switch(etat) {
-			case 0:this.setImage(persoRD);
+			case 0:this.Imageperso.setImage(persoRD);
 			break;
-			case 1:this.setImage(persoSD);
+			case 1:this.Imageperso.setImage(persoSD);
 			break;
-			case 2:this.setImage(persoTD);
+			case 2:this.Imageperso.setImage(persoTD);
 			break;
-			case 3:this.setImage(persoCD);
+			case 3:this.Imageperso.setImage(persoCD);
 			break;
-			default:this.setImage(persoRD);
+			default:this.Imageperso.setImage(persoRD);
 			break;
 			}
 		}
 		else {
 			switch(etat) {
-			case 0:this.setImage(persoRG);
+			case 0:this.Imageperso.setImage(persoRG);
 			break;
-			case 1:this.setImage(persoSG);
+			case 1:this.Imageperso.setImage(persoSG);
 			break;
-			case 2:this.setImage(persoTG);
+			case 2:this.Imageperso.setImage(persoTG);
 			break;
-			case 3:this.setImage(persoCG);
+			case 3:this.Imageperso.setImage(persoCG);
 			break;
-			default:this.setImage(persoRG);
+			default:this.Imageperso.setImage(persoRG);
 			break;
 			}
 		}
+	}
+	public ImageView getImagePerso() {
+		return this.Imageperso;
+	}
+	public Label getPv() {
+		return this.pvJoueur;
 	}
 }

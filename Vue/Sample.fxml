@@ -7,25 +7,179 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane focusTraversable="true" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: gray;" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ESCAPE_Montreuil_C1.Controleur.SampleController">
-   <center>
+<BorderPane fx:id="borderPane" focusTraversable="true" onKeyPressed="#touche" prefHeight="623.0" prefWidth="715.0" style="-fx-background-color: gray;" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ESCAPE_Montreuil_C1.Controleur.SampleController">
+	<center>
 
-      <Pane fx:id="vue" onMouseClicked="#mouseClicked" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-         <children>
-            <Pane fx:id="map" focusTraversable="true" onKeyPressed="#touche" prefHeight="200.0" prefWidth="200.0" />
-         </children>
-      </Pane>
-   </center>
-   <top>
-      <HBox fx:id="inventaireVue" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
-   </top>
-   <right>
-      <Pane fx:id="PageAcceuil" prefHeight="199.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-         <children>
-            <Button layoutX="69.0" layoutY="14.0" mnemonicParsing="false" onAction="#play" text="Play" />
-            <Button layoutX="69.0" layoutY="60.0" mnemonicParsing="false" onAction="#quit" text="Quit" />
-         </children>
-      </Pane>
-   </right>
+		<Pane fx:id="vue" onMouseClicked="#mouseClicked" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+			<children>
+				<Pane fx:id="map" focusTraversable="true" prefHeight="200.0" prefWidth="200.0" />
+			</children>
+		</Pane>
+	</center>
+	<top>
+		<HBox fx:id="inventaireVue" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+	</top>
+	<right>
+		<Pane fx:id="PageAcceuil" prefHeight="199.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+			<children>
+				<Button layoutX="69.0" layoutY="14.0" mnemonicParsing="false" onAction="#play" text="Play" />
+				<Button layoutX="69.0" layoutY="60.0" mnemonicParsing="false" onAction="#quit" text="Quit" />
+			</children>
+		</Pane>
+	</right>
+	<left>
+		<Pane fx:id="tableDeCrafting" prefHeight="544.0" prefWidth="496.0" style="-fx-background-color: white;" BorderPane.alignment="CENTER">
+			<children>
+				<HBox prefHeight="107.0" prefWidth="515.0">
+					<children>
+						<VBox prefHeight="200.0" prefWidth="100.0">
+							<children>
+								<ImageView fitHeight="110.0" fitWidth="133.0" pickOnBounds="true" preserveRatio="true">
+									<image>
+										<Image url="@../source/pierre2.jpg" />
+									</image>
+								</ImageView>
+								<Label prefHeight="34.0" prefWidth="110.0" text="Pierre 0" />
+							</children>
+						</VBox>
+						<Label prefHeight="109.0" prefWidth="28.0" text="+" />
+						<VBox prefHeight="200.0" prefWidth="100.0">
+							<children>
+								<ImageView fitHeight="116.0" fitWidth="132.0" pickOnBounds="true" preserveRatio="true">
+									<image>
+										<Image url="@../source/bois.jpg" />
+									</image>
+								</ImageView>
+								<Label text="Bois 0" />
+							</children>
+						</VBox>
+						<Label prefHeight="108.0" prefWidth="32.0" text="=" />
+						<VBox prefHeight="200.0" prefWidth="100.0">
+							<children>
+								<ImageView fitHeight="107.0" fitWidth="102.0" pickOnBounds="true" preserveRatio="true">
+									<image>
+										<Image url="@../source/pelle.jpg" />
+									</image>
+								</ImageView>
+								<Label text="Pelle" />
+							</children>
+						</VBox>
+						<Button mnemonicParsing="false" onAction="#craftPelle" prefHeight="116.0" prefWidth="96.0" text="Creer" />
+					</children>
+				</HBox>
+				<HBox layoutY="132.0" prefHeight="107.0" prefWidth="515.0">
+					<children>
+						<VBox prefHeight="200.0" prefWidth="100.0">
+							<children>
+								<ImageView fitHeight="110.0" fitWidth="133.0" pickOnBounds="true" preserveRatio="true">
+									<image>
+										<Image url="@../source/pierre2.jpg" />
+									</image>
+								</ImageView>
+								<Label prefHeight="34.0" prefWidth="110.0" text="Pierre 3" />
+							</children>
+						</VBox>
+						<Label prefHeight="109.0" prefWidth="28.0" text="+" />
+						<VBox prefHeight="200.0" prefWidth="100.0">
+							<children>
+								<ImageView fitHeight="104.0" fitWidth="116.0" pickOnBounds="true" preserveRatio="true">
+									<image>
+										<Image url="@../source/bois.jpg" />
+									</image>
+								</ImageView>
+								<Label text="Bois 2" />
+							</children>
+						</VBox>
+						<Label prefHeight="108.0" prefWidth="32.0" text="=" />
+						<VBox prefHeight="200.0" prefWidth="100.0">
+							<children>
+								<ImageView fitHeight="102.0" fitWidth="118.0" pickOnBounds="true" preserveRatio="true">
+									<image>
+										<Image url="@../source/hache.jpg" />
+									</image>
+								</ImageView>
+								<Label text="Hache" />
+							</children>
+						</VBox>
+						<Button mnemonicParsing="false" onAction="#craftHache" prefHeight="116.0" prefWidth="96.0" text="Creer" />
+					</children>
+				</HBox>
+				<HBox layoutY="250.0" prefHeight="107.0" prefWidth="515.0">
+					<children>
+						<VBox prefHeight="200.0" prefWidth="100.0">
+							<children>
+								<ImageView fitHeight="110.0" fitWidth="133.0" pickOnBounds="true" preserveRatio="true">
+									<image>
+										<Image url="@../source/Fer.png" />
+									</image>
+								</ImageView>
+								<Label prefHeight="34.0" prefWidth="110.0" text="Fer 3" />
+							</children>
+						</VBox>
+						<Label prefHeight="109.0" prefWidth="28.0" text="+" />
+						<VBox prefHeight="200.0" prefWidth="100.0">
+							<children>
+								<ImageView fitHeight="108.0" fitWidth="116.0" pickOnBounds="true" preserveRatio="true">
+									<image>
+										<Image url="@../source/bois.jpg" />
+									</image>
+								</ImageView>
+								<Label text="Bois 2" />
+							</children>
+						</VBox>
+						<Label prefHeight="108.0" prefWidth="32.0" text="=" />
+						<VBox prefHeight="200.0" prefWidth="100.0">
+							<children>
+								<ImageView fitHeight="107.0" fitWidth="102.0" pickOnBounds="true" preserveRatio="true">
+									<image>
+										<Image url="@../source/pioche.jpg" />
+									</image>
+								</ImageView>
+								<Label text="pioche" />
+							</children>
+						</VBox>
+						<Button mnemonicParsing="false" onAction="#craftPioche" prefHeight="116.0" prefWidth="96.0" text="Creer" />
+					</children>
+				</HBox>
+				<HBox layoutY="374.0" prefHeight="107.0" prefWidth="515.0">
+					<children>
+						<VBox prefHeight="200.0" prefWidth="100.0">
+							<children>
+								<ImageView fitHeight="110.0" fitWidth="133.0" pickOnBounds="true" preserveRatio="true">
+									<image>
+										<Image url="@../source/Fer.png" />
+									</image>
+								</ImageView>
+								<Label prefHeight="34.0" prefWidth="110.0" text="Fer 5" />
+							</children>
+						</VBox>
+						<Label prefHeight="109.0" prefWidth="28.0" text="+" />
+						<VBox prefHeight="200.0" prefWidth="100.0">
+							<children>
+								<ImageView fitHeight="116.0" fitWidth="132.0" pickOnBounds="true" preserveRatio="true">
+									<image>
+										<Image url="@../source/bois.jpg" />
+									</image>
+								</ImageView>
+								<Label text="Bois 3" />
+							</children>
+						</VBox>
+						<Label prefHeight="108.0" prefWidth="32.0" text="=" />
+						<VBox prefHeight="200.0" prefWidth="100.0">
+							<children>
+								<ImageView fitHeight="107.0" fitWidth="102.0" pickOnBounds="true" preserveRatio="true">
+									<image>
+										<Image url="@../source/épée.jpg" />
+									</image>
+								</ImageView>
+								<Label text="Epee" />
+							</children>
+						</VBox>
+						<Button mnemonicParsing="false" onAction="#craftEpee" prefHeight="116.0" prefWidth="96.0" text="Creer" />
+					</children>
+				</HBox>
+			</children>
+		</Pane>
+	</left>
 
 </BorderPane>

@@ -12,6 +12,10 @@ import ESCAPE_Montreuil_C1.Modele.blocks.Block;
 import ESCAPE_Montreuil_C1.Modele.blocks.TerreBlock;
 import ESCAPE_Montreuil_C1.Modele.blocks.feuilleBlock;
 import ESCAPE_Montreuil_C1.Modele.blocks.troncBlock;
+
+import ESCAPE_Montreuil_C1.Modele.blocks.FerBlock;
+import ESCAPE_Montreuil_C1.Modele.blocks.PierreBlock;
+import ESCAPE_Montreuil_C1.Modele.blocks.SolBlock;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -62,17 +66,29 @@ public class MapReader {
 		this.terrain.add(FXCollections.observableArrayList());
 		for(j=0;j<ligne.length;j++) {
 			charBlock=ligne[j].charAt(0);
+
 			String a = charBlock+"";
-			switch(a) {
+		switch(a) {
 			case "A":this.terrain.get(i).add(new AirBlock());
+					this.terrain.get(i).get(j).setID(""+i+"9"+j);
 			break;
 			case "T":this.terrain.get(i).add(new TerreBlock());
+					this.terrain.get(i).get(j).setID(""+i+"9"+j);
 			break;
 			case "f":this.terrain.get(i).add(new feuilleBlock());
+					this.terrain.get(i).get(j).setID(""+i+"9"+j);
 			break;
 			case "F":this.terrain.get(i).add(new troncBlock());
+					this.terrain.get(i).get(j).setID(""+i+"9"+j);
 			break;
-			default:this.terrain.get(i).add(new TerreBlock());
+			case "P":this.terrain.get(i).add(new PierreBlock());
+					this.terrain.get(i).get(j).setID(""+i+"9"+j);
+			break;
+			case "I":this.terrain.get(i).add(new FerBlock());
+					this.terrain.get(i).get(j).setID(""+i+"9"+j);
+			break;
+			default:this.terrain.get(i).add(new SolBlock());
+					this.terrain.get(i).get(j).setID(""+i+"9"+j);
 			break;
 			}
 		}

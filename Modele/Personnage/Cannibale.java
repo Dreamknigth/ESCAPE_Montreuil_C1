@@ -6,13 +6,15 @@ import ESCAPE_Montreuil_C1.Modele.blocks.Block;
 import ESCAPE_Montreuil_C1.Modele.map.Terrain;
 import javafx.collections.ObservableList;
 
-public class Cannibale extends Personnage{
+public class Cannibale extends Ennemy{
 	public Cannibale(int x,int y,Terrain leTerrain) {
 		super(x,y,"Cannibale",leTerrain);
 	}
-	
-	public void seDeplacer() {
-		//TODO condition + code + appel methode algo graphe
+
+	@Override
+	public void seDeplacer(Personnage p) {
+		// TODO Auto-generated method stub
+		
 	}
-	//TODO methode algo graphe
+	
 }

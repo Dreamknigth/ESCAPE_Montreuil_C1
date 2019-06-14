@@ -2,6 +2,7 @@ package ESCAPE_Montreuil_C1.Modele.Personnage;
 
 
 
+import ESCAPE_Montreuil_C1.Modele.Crafting.Craft;
 import ESCAPE_Montreuil_C1.Modele.Inventaire.Inventaire;
 import ESCAPE_Montreuil_C1.Modele.Objet.Objet;
 import ESCAPE_Montreuil_C1.Modele.blocks.AirBlock;
@@ -12,16 +13,22 @@ import javafx.collections.ObservableList;
 public class Joueur extends Personnage{ //Rappel: i=y x=j
 	private Objet objet_Dans_La_Main;
 	private Inventaire Inventaire;
+	private Craft craftJoueur;
 	
 	//constructeur
 	public Joueur(int x,int y,String nom,Terrain leTerrain) {
 		super(x,y,nom,leTerrain);
 		this.objet_Dans_La_Main=new AirBlock();
 		this.Inventaire= new Inventaire();
+		this.craftJoueur = new Craft( this.Inventaire );
 	}
 	
 	//methode
 	
+	//getter
+	public Craft getCraft() {
+		return this.craftJoueur;
+	}
 	
 	//setter
 	public void setNom(String nom) {
@@ -44,19 +51,12 @@ public class Joueur extends Personnage{ //Rappel: i=y x=j
 		}
 		return false;
 	}
-	
 
-	public Inventaire getInventaire(){
+	public Inventaire getInventaire() {
 		return this.Inventaire;
-		
 	}
 
 	
-
-
-	
-
-	
-
-	
 }
+
+

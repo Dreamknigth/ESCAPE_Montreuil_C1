@@ -21,6 +21,8 @@ public class Terrain {
 	}
 	
 	public void setTerrain(Block b, int i, int j) {
+		
+		b.setID(this.tableTerrain.get(i).get(j).getID());
 		//System.out.println(this.tableTerrain.get(i).get(j));
 		this.tableTerrain.get(i).set( j, b);
 		//System.out.println(this.tableTerrain.get(i).get(j));

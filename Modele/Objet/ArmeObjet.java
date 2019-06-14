@@ -4,7 +4,6 @@ public abstract class ArmeObjet extends Objet{
 	
 	protected int ptsattaque;
 	protected int durabilité;
-	protected String nom;
 
 	public ArmeObjet(String nom, int ptatt, int dura) {
 		super(nom);

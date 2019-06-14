@@ -13,9 +13,10 @@ public class PierreBlock extends BlockDestructible{
 		Objet o =t.getJoueur().getObjetDansLaMain();
 		if(o.getValeur().get()>0) {
 			o.getValeur().set(o.getValeur().get()-1);
-			t.getTerrain().setTerrain(new boisBlock(), y, x);
+			t.getTerrain().setTerrain(new PierreBlock(), y, x);
+			return new PierreBlock();
 		}
-		return this;
+		return null;
 		
 	}
 }

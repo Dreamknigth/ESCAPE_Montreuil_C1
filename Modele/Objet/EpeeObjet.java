@@ -1,14 +1,15 @@
 package ESCAPE_Montreuil_C1.Modele.Objet;
 
 import ESCAPE_Montreuil_C1.Modele.blocks.Block;
+
 import ESCAPE_Montreuil_C1.Modele.map.Monde;
-import ESCAPE_Montreuil_C1.Modele.map.Terrain;
 
-public class épéeObjet extends ArmeObjet{
 
-	public épéeObjet() {
-		super("épée", 50, 100);
-		this.nom = "E";
+public class EpeeObjet extends ArmeObjet{
+
+	public EpeeObjet() {
+		super("e", 50, 100);
+
 		this.ptsattaque = 50;
 		this.durabilité = 100;
 	}
@@ -22,9 +23,15 @@ public class épéeObjet extends ArmeObjet{
 
 	@Override
 	public Block faculté(Monde t, int x, int y) {
-		return null;
-		// TODO Auto-generated method stub
+		for(int i=0 ;i<t.getEnnemiList().size();i++) {
+			if(t.getEnnemiList().get(i).getHitBox().contains(x, y)){
+				System.out.println(t.getEnnemiList().get(i).getPV());
+				t.getEnnemiList().get(i).prendDegat(10);
+				System.out.println(t.getEnnemiList().get(i).getPV());
+			}
+		}
 		
+		return t.getTerrain().getBlockTerrain(y, x);
 	}
 
 	

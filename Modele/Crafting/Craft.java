@@ -1,66 +1,62 @@
 package ESCAPE_Montreuil_C1.Modele.Crafting;
 
 import ESCAPE_Montreuil_C1.Modele.Inventaire.Inventaire;
+import ESCAPE_Montreuil_C1.Modele.Objet.EpeeObjet;
 import ESCAPE_Montreuil_C1.Modele.Objet.Objet;
 import ESCAPE_Montreuil_C1.Modele.Objet.hacheObjet;
-import ESCAPE_Montreuil_C1.Modele.Objet.lanceObjet;
+import ESCAPE_Montreuil_C1.Modele.Objet.pelleObjet;
 import ESCAPE_Montreuil_C1.Modele.Objet.piocheObjet;
+import ESCAPE_Montreuil_C1.Modele.blocks.FerBlock;
+import ESCAPE_Montreuil_C1.Modele.blocks.PierreBlock;
+import ESCAPE_Montreuil_C1.Modele.blocks.boisBlock;
 
 public class Craft {
-	
-	public void craftingépée (Objet o, Inventaire in) {
-		if (in.getnbObjet(in.getObjet("Fer")) > 0 && in.getnbObjet(in.getObjet("bois")) > 0) {
-			lanceObjet ep = new lanceObjet();
-			ep.setnb(1);
-			in.getObjet("Fer").setnb(-10);
-			in.getObjet("bois").setnb(-10);
-			in.InAdd(ep);
-			System.out.println(ep.getNom());
-		}
-		else {
-			System.out.println("Error");
+	private Inventaire lInventaire;
+	public Craft(Inventaire inv) {
+		this.lInventaire=inv;
+	}
+
+
+	public void craftingEpee() {
+		if(this.lInventaire.recherche( new EpeeObjet() ).getValeur().getValue()==0) {
+			if (this.lInventaire.recherche( new FerBlock() ).getValeur().getValue() >=5 && this.lInventaire.recherche( new boisBlock() ).getValeur().get() >=3) {
+				Objet ep = this.lInventaire.recherche(new EpeeObjet());
+				ep.getValeur().set( ep.getValeur().getValue()+1 );
+				this.lInventaire.recherche( new FerBlock() ).getValeur().set( this.lInventaire.recherche( new FerBlock() ).getValeur().getValue()-5 );
+				this.lInventaire.recherche( new boisBlock() ).getValeur().set(this.lInventaire.recherche( new boisBlock() ).getValeur().getValue()-3);
+			}
 		}
 	}
-	
-	public void craftinghache (Objet o, Inventaire in) {
-		if (in.getnbObjet(in.getObjet("Fer")) > 0 && in.getnbObjet(in.getObjet("bois")) > 0) {
-			hacheObjet hc = new hacheObjet();
-			hc.setnb(1);
-			in.getObjet("Fer").setnb(-10);
-			in.getObjet("bois").setnb(-10);
-			in.InAdd(hc);
-			System.out.println(hc.getNom());
-		}
-		else {
-			System.out.println("Error");
+
+	public void craftingHache () {
+		if(this.lInventaire.recherche( new hacheObjet() ).getValeur().getValue()==0) {
+			if (this.lInventaire.recherche( new PierreBlock() ).getValeur().getValue() >=3 && this.lInventaire.recherche( new boisBlock() ).getValeur().get() >=2) {
+				Objet ep = this.lInventaire.recherche(new hacheObjet());
+				ep.getValeur().set( ep.getValeur().getValue()+1 );
+				this.lInventaire.recherche( new PierreBlock() ).getValeur().set( this.lInventaire.recherche( new PierreBlock() ).getValeur().getValue()-3 );
+				this.lInventaire.recherche( new boisBlock() ).getValeur().set(this.lInventaire.recherche( new boisBlock() ).getValeur().getValue()-2);		}
 		}
 	}
-	
-	public void craftinglance (Objet o, Inventaire in) {
-		if (in.getnbObjet(in.getObjet("Fer")) > 0 && in.getnbObjet(in.getObjet("bois")) > 0) {
-			lanceObjet lc = new lanceObjet();
-			lc.setnb(1);
-			in.getObjet("Fer").setnb(-10);
-			in.getObjet("bois").setnb(-10);
-			in.InAdd(lc);
-			System.out.println(lc.getNom());
-		}
-		else {
-			System.out.println("Error");
+
+	public void craftingPelle () {
+		if(this.lInventaire.recherche( new pelleObjet() ).getValeur().getValue()==0) {
+
+			System.out.println("okle debug");
+			Objet ep = this.lInventaire.recherche(new pelleObjet());
+			System.out.println(this.lInventaire.recherche(ep).getValeur().getValue());
+			ep.getValeur().set( ep.getValeur().getValue()+1 );
 		}
 	}
-	
-	public void craftingpioche (Objet o, Inventaire in) {
-		if (in.getnbObjet(in.getObjet("Fer")) > 0 && in.getnbObjet(in.getObjet("bois")) > 0) {
-			piocheObjet pc = new piocheObjet();
-			pc.setnb(1);
-			in.getObjet("Fer").setnb(-10);
-			in.getObjet("bois").setnb(-10);
-			in.InAdd(pc);
-			System.out.println(pc.getNom());
-		}
-		else {
-			System.out.println("Error");
+
+	public void craftingPioche () {
+		if(this.lInventaire.recherche( new piocheObjet() ).getValeur().getValue()==0) {
+
+			if (this.lInventaire.recherche( new FerBlock() ).getValeur().getValue() >=3 && this.lInventaire.recherche( new boisBlock() ).getValeur().get() >=2) {
+				Objet ep = this.lInventaire.recherche(new piocheObjet());
+				ep.getValeur().set( ep.getValeur().getValue()+1 );
+				this.lInventaire.recherche( new FerBlock() ).getValeur().set( this.lInventaire.recherche( new FerBlock() ).getValeur().getValue()-3 );
+				this.lInventaire.recherche( new boisBlock() ).getValeur().set(this.lInventaire.recherche( new boisBlock() ).getValeur().getValue()-2);
+			}
 		}
 	}
 

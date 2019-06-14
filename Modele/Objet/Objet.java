@@ -14,7 +14,7 @@ public abstract class Objet {
 	
 	public Objet(String nom2) {
 		this.nom = nom2;
-		this.ValeurObjet= new SimpleIntegerProperty();
+		this.ValeurObjet= new SimpleIntegerProperty(0);
 		
 	}
 

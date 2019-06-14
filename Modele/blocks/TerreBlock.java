@@ -18,9 +18,9 @@ public class TerreBlock extends BlockDestructible{
 		if(o.getValeur().get()>0) {
 			o.getValeur().set(o.getValeur().get()-1);
 			t.getTerrain().setTerrain(new TerreBlock(), y, x);
+			return new TerreBlock();
 		}
-		return this;
-		
+		return null;
 	}
 
 	

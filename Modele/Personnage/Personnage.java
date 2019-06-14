@@ -17,7 +17,7 @@ public abstract class Personnage {
 	private Rectangle hitBox; //la hit box du perso
 	
 	protected String nom;
-	protected int pv;
+	protected IntegerProperty pv;
 	private int ptAttaque;
 	//private Inventaire lInventaire;
 	private BooleanProperty versDroite;//etat vas permettre de definir la direction
@@ -35,7 +35,7 @@ public abstract class Personnage {
 		this.hitBox = new Rectangle(x,y,1,2);
 		this.etat = new SimpleIntegerProperty(0); //0=rien 1=sauter 2=tomber 3=courrir
 		this.versDroite = new SimpleBooleanProperty(true); //true=va a Droite false=va a gauche
-
+		this.pv= new SimpleIntegerProperty(100);
 		this.leTerrain=leTerrain;
 		this.nom=nom;
 	}
@@ -49,9 +49,9 @@ public abstract class Personnage {
 	
 	//Methodes
 	public void prendDegat(int ptDegat) {
-		this.pv=this.pv-ptDegat;
-		if(this.pv<=0) {
-			this.pv=0;
+		this.pv.set(this.pv.getValue()- ptDegat);
+		if(this.pv.getValue()<=0) {
+			this.pv.set(0);
 			System.out.println("You're DEAD!");
 		}
 	}
@@ -102,7 +102,7 @@ public abstract class Personnage {
 	}
 	
 	//Gauche
-	private boolean seDeplacerGauche() { //y=i x=j
+	protected boolean seDeplacerGauche() { //y=i x=j
 		this.versDroite.setValue(false);
 		if(this.x.getValue()>=1  &&  this.leTerrain.getTableTerrain().get( (int)(double)(this.y.getValue()) ).get( (int)(double)(this.x.getValue()-1) ).getTraversable()  &&  this.leTerrain.getTableTerrain().get( (int)(double)(this.y.getValue()+1) ).get( (int)(double)(this.x.getValue()-1) ).getTraversable()) {
 			this.x.setValue(this.x.getValue()-1);
@@ -112,7 +112,7 @@ public abstract class Personnage {
 		return false;
 	}
 	//Droite
-	private boolean seDeplacerDroite() { //y=i x=j
+	protected boolean seDeplacerDroite() { //y=i x=j
 		this.versDroite.setValue(true);
 		if(this.x.getValue()<this.leTerrain.getTableTerrain().get( (int)(double)(this.y.getValue()) ).size()-1  &&  this.leTerrain.getTableTerrain().get( (int)(double)(this.y.getValue()) ).get( (int)(double)(this.x.getValue()+1) ).getTraversable()  &&  this.leTerrain.getTableTerrain().get( (int)(double)(this.y.getValue()+1) ).get( (int)(double)(this.x.getValue()+1) ).getTraversable()) {
 			this.x.setValue(this.x.get()+1);
@@ -122,7 +122,7 @@ public abstract class Personnage {
 		return false;
 	}
 	//haut
-	private boolean seDeplacerHaut() {
+	protected boolean seDeplacerHaut() {
 		if(this.y.getValue()>=2 && this.leTerrain.getTableTerrain().get( (int)(double)(this.y.getValue()-1) ).get( (int)(double)(this.x.getValue()) ).getTraversable()) {
 			this.y.setValue(this.y.get()-1);
 			return true;
@@ -131,7 +131,7 @@ public abstract class Personnage {
 	}
 	//bas
 	public boolean seDeplacerBas() {
-		if(this.y.getValue()<this.leTerrain.getTableTerrain().size()-2 && this.leTerrain.getTableTerrain().get( (int)(double)(this.y.getValue()+1.5+1) ).get( (int)(double)(this.x.getValue()) ).getTraversable()) {
+		if(this.y.getValue()<this.leTerrain.getTableTerrain().size()-2 && this.leTerrain.getTableTerrain().get( (int)(double)(this.y.getValue()+2) ).get( (int)(double)(this.x.getValue()) ).getTraversable()) {
 			this.y.setValue(this.y.get()+1);
 			return true;
 		}
@@ -163,12 +163,18 @@ public abstract class Personnage {
 	public int getEtatSaut() {
 		return this.etatSaut;
 	}
+	public IntegerProperty getPV() {
+		return this.pv;
+	}
 	//setter
 	public void setX(int a) {
 		this.x.setValue(a);
 	}
 	public void setY(int a) {
 		this.y.setValue(a);
+	}
+	public Rectangle getHitBox() {
+		return this.hitBox;
 	}
 	
 }
