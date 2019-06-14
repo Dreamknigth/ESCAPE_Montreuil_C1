@@ -1,23 +1,20 @@
 package ESCAPE_Montreuil_C1.Vue;
 
-import java.awt.ImageCapabilities;
-import java.awt.Point;
 
-import ESCAPE_Montreuil_C1.Modele.Personnage.Joueur;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleBooleanProperty;
-import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 
 public class Player extends VBox {
+	//déclaration
+	
 	private IntegerProperty etat;
 	private Label pvJoueur;
-	
 	private ImageView imagePlayer;
 	private BooleanProperty versDroite;
 	//R=Rien S=Saut T=Tomber C=Courrir
@@ -51,7 +48,6 @@ public class Player extends VBox {
 		this.persoSG=this.persoRD;
 		this.persoTG=this.persoRD;
 	}
-	//TODO bind le player avec une variable a ajouter dans le modele.joueur qui definis sont état 
 	
 	//setter
 	public void setCadre(boolean versDroite,int etat) {
@@ -85,6 +81,7 @@ public class Player extends VBox {
 			}
 		}
 	}
+	//getter
 	public ImageView getImagePerso() {
 		return this.Imageperso;
 	}

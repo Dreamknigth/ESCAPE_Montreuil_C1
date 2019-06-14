@@ -39,21 +39,6 @@ public class Inventaire {
 
     //Méthodes
     
-    /**
-     * prend en un paramètre un block 
-     * @param unBlock
-     * @return
-     */
-    public Objet recherche(Block unBlock) {
-        int i =0;
-        while(i<this.ob.size()) {
-            if(this.ob.get(i).getNom().equals(unBlock.getNom())) {
-                return this.ob.get(i);
-            }
-            i++;
-        }
-        return null;
-    }
     /***
      * orend en parametre un objet
      * @param o

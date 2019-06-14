@@ -9,16 +9,25 @@ import javafx.scene.image.ImageView;
 
 
 public class EnnemiVue {
+	//déclaration et création des image et des imageView
 	public static Image Cochon = new Image ("ESCAPE_Montreuil_C1/source/PNJ/Cochon_Mouvement.gif");
 	public static Image Oiseau = new Image ("ESCAPE_Montreuil_C1/source/PNJ/oiseau.gif");
 	public static Image llama = new Image ("ESCAPE_Montreuil_C1/source/PNJ/llama.gif");
 	public static Image Cannibale = new Image ("ESCAPE_Montreuil_C1/source/PNJ/Cannibale.gif");
 	private ArrayList<ImageView> img;
 	
+	// constructeur
+	
 	public EnnemiVue() {
 		this.img = new ArrayList<>();
 	}
 	
+	//Méthodes
+	
+	/**
+	 * verifie dans la liste l'ennemi et lui attribut l'image ainsi que la taille
+	 * @param observableList
+	 */
 	public void addImgEnnemi(ObservableList<EnnemiModele> observableList) {
 		for (int i = 0; i<observableList.size(); i++ ){
 			if (observableList.get(i).getNom() == "Cochon") {
@@ -44,7 +53,7 @@ public class EnnemiVue {
 		}
 		
 	}
-	
+	// getter
 	public ArrayList<ImageView> getImageList(){
 		return img;
 	}

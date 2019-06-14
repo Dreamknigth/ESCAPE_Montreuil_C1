@@ -2,16 +2,11 @@ package ESCAPE_Montreuil_C1.Controleur;
 
 
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
 
-import ESCAPE_Montreuil_C1.Modele.Crafting.Craft;
-import ESCAPE_Montreuil_C1.Modele.Inventaire.Inventaire;
-import ESCAPE_Montreuil_C1.Modele.Personnage.Cochon;
-import ESCAPE_Montreuil_C1.Modele.Personnage.Oiseau;
-import ESCAPE_Montreuil_C1.Modele.Personnage.llama;
+
 import ESCAPE_Montreuil_C1.Modele.map.Monde;
 import ESCAPE_Montreuil_C1.Modele.blocks.Block;
 import ESCAPE_Montreuil_C1.Vue.EnnemiVue;
@@ -21,16 +16,13 @@ import javafx.animation.Timeline;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ListChangeListener;
-import javafx.collections.ListChangeListener.Change;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -43,13 +35,10 @@ import javafx.scene.input.MouseEvent;
 
 
 public class SampleController implements Initializable{
-	@FXML
-	private BorderPane borderPane;
 
+	// déclaration 
 	@FXML
 	private ImageView perso;
-
-	private boolean etatDesPages=true;
 	@FXML
 	private Pane map;
 	@FXML
@@ -60,19 +49,18 @@ public class SampleController implements Initializable{
 	private Pane tableDeCrafting;
 	@FXML
 	private HBox inventaire;
-
 	@FXML
 	private HBox inventaireVue;
 
+	private boolean etatDesPages=true;
 	private Map<String, Image> dictionnaireImage = new HashMap< String,Image>();  		
-
-
 	private Timeline gameLoop=new Timeline();
-
 	private Monde monde;
 	private Player lePlayer;
 	private EnnemiVue e = new EnnemiVue();
 
+
+	//Methodes
 
 	@FXML
 	void play(ActionEvent event) {
@@ -80,39 +68,32 @@ public class SampleController implements Initializable{
 		this.map.setVisible(true);
 		this.vue.setVisible(true);
 	}
-
 	@FXML
 	void quit(ActionEvent event) {
 		System.exit(0);
 	}
-
 	@FXML
 	void craftEpee(ActionEvent event) {
 		this.monde.getJoueur().getCraft().craftingEpee();
 	}
-
 	@FXML
 	void craftHache(ActionEvent event) {
 		this.monde.getJoueur().getCraft().craftingHache();
-
 	}
-
 	@FXML
 	void craftPelle(ActionEvent event) {
 		this.monde.getJoueur().getCraft().craftingPelle();
-
 	}
-
 	@FXML
 	void craftPioche(ActionEvent event) {
 		this.monde.getJoueur().getCraft().craftingPioche();
 	}
 
 
+	//touche clavier 
 	@FXML
 	private void touche(KeyEvent e) throws InterruptedException {
 		KeyCode code = e.getCode();
-		//System.out.println(this.j1.getY().getValue()+" "+this.j1.getX().getValue());
 		if ( (code == KeyCode.Z || code == KeyCode.UP)  ) {
 			this.monde.getJoueur().getEtat().setValue(1);
 		}
@@ -127,10 +108,11 @@ public class SampleController implements Initializable{
 		if(code == KeyCode.S || code == KeyCode.DOWN){
 			this.monde.getJoueur().getEtat().setValue(2);
 		}
-		if(code == KeyCode.I ){
+		if(code == KeyCode.I ){ // Ouverture de l'inventaire
 			etatDesPages=!etatDesPages;
 			this.tableDeCrafting.setVisible(etatDesPages);
 		}
+		// selon les touche on selectionne des objet différent
 		if(code == KeyCode.F1) {
 			this.monde.getJoueur().setObjetDansLaMain(this.monde.getJoueur().getInventaire().getListeInventaire().get(0));		}
 		if(code == KeyCode.F2) {
@@ -154,30 +136,23 @@ public class SampleController implements Initializable{
 		if(code == KeyCode.F8) {
 			this.monde.getJoueur().setObjetDansLaMain(this.monde.getJoueur().getInventaire().getListeInventaire().get(7));
 		}
-		/*if(code == KeyCode.F3) {
-					this.EtatInventaire=new ();
-				}*/
 	}
 
+	// touche souris
 	@FXML
 	void mouseClicked(MouseEvent event) {
-		/**
-		 * Recuperation des coordonnées du click
-		 */
+		//recuperation des clicks 
 		int x =(int)event.getX()/32;
 		int y =(int)event.getY()/32;
 		MouseButton Button = event.getButton();
-		//System.out.println(x+";"+y);
 		ImageView l= (ImageView) vue.lookup('#'+""+y+'9'+x);
-		/**
-		 * Changement
-		 */
+
+		//Changement
+
 		Monde t= this.monde;
 		if(this.monde.getJoueur().modifPossible(y, x) && this.monde.getJoueur().getObjetDansLaMain().getValeur().getValue()!=0) {
 			if (Button==MouseButton.PRIMARY  ) { // rendre Main
 				String nomObjetDansLaMain=this.monde.getJoueur().getObjetDansLaMain().faculte(t,x,y).getNom();
-				System.out.println(this.monde.getTerrain().getTableTerrain().get(y).get(x).getNom());
-				System.out.println(this.monde.getJoueur().getObjetDansLaMain().getNom());
 				if (nomObjetDansLaMain != null)
 					l.setImage(this.dictionnaireImage.get(nomObjetDansLaMain));
 			}
@@ -185,9 +160,9 @@ public class SampleController implements Initializable{
 		}
 	}
 
-
-
-
+	/**
+	 * Gameloop gestion des fps et le timing du jeu 
+	 */
 	private void initGameLoop() {
 		gameLoop.setCycleCount(Timeline.INDEFINITE);
 
@@ -202,21 +177,70 @@ public class SampleController implements Initializable{
 	}
 
 
+	//Initialisation 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		//Declaration et Initialisation 
+
 		this.PageAcceuil.setVisible(etatDesPages);
 		this.tableDeCrafting.setVisible(!etatDesPages);
 		this.map.setVisible(!etatDesPages);
-		//this.inventaire.setVisible(false);
 		this.vue.setVisible(!etatDesPages);
-		/**
-		 * Creation de la map
-		 */
+		creerDictionnaire();
+		this.monde=new Monde();
+		creerVueTerrain();
+		this.lePlayer=new Player();
+		this.vue.getChildren().add(this.lePlayer);
+		gestionPlayer();
+		gestionEnnemi();
+		initGameLoop();
+		gameLoop.play();
+		creationInventaire();
+		gestionTerrain();
+	}
+	/**
+	 * creation inventaire 
+	 */
+	private void creationInventaire() {
+		for (int i = 0 ;i<this.monde.getJoueur().getInventaire().getTailleInv();i++ ) {
+			VBox elementInventaire = new VBox();
+			Label boutonA_Appuyé = new Label();
+			Label valeurRessource = new Label();
+			ImageView Image = new ImageView(dictionnaireImage.get(this.monde.getJoueur().getInventaire().getListeInventaire().get(i).getNom()));
+			
+			Image.setFitHeight(80);
+			Image.setFitWidth(Image.getFitHeight());
+			boutonA_Appuyé.setText("F"+(i+1));
+			valeurRessource.textProperty().bind(this.monde.getJoueur().getInventaire().getListeInventaire().get(i).getValeur().asString());
+			
+			elementInventaire.getChildren().add(boutonA_Appuyé);
+			elementInventaire.getChildren().add(Image);
+			elementInventaire.getChildren().add(valeurRessource);
+			elementInventaire.setTranslateX((i+1)*60);
+			inventaireVue.getChildren().add(elementInventaire);
+		}			
+
+	}
+	public void creerVueTerrain() {
+
+		for (int i = 0; i < this.monde.getTerrain().getTableTerrain().size(); i++) {
+			for(int j=0;j<this.monde.getTerrain().getTableTerrain().get(i).size();j++) {
+				ImageView view = new ImageView() ;
+				view.setImage(this.dictionnaireImage.get(this.monde.getTerrain().getTableTerrain().get(i).get(j).getNom()));
+				this.vue.getChildren().add(view);
+				String s =i+"9"+j;
+				view.setId(s);
+				view.setTranslateX(j*32);
+				view.setTranslateY(i*32);
+				view.setFitHeight(32);
+				view.setFitWidth(view.getFitHeight());
+			}
+		}
+	}
+
+	public void creerDictionnaire() {
 		dictionnaireImage = new HashMap< String,Image>(); 
 		dictionnaireImage.put("A",new Image("ESCAPE_Montreuil_C1/source/air.jpg" ));
 		dictionnaireImage.put("t", new Image("ESCAPE_Montreuil_C1/source/terre.jpg")); 
-		//dictionnaireImage.put("bois", new Image("ESCAPE_Montreuil_C1/source/tronc.jpg"));
 		dictionnaireImage.put("B", new Image("ESCAPE_Montreuil_C1/source/tronc.jpg"));
 		dictionnaireImage.put("I", new Image("ESCAPE_Montreuil_C1/source/Fer.png"));
 		dictionnaireImage.put("T",new Image("ESCAPE_Montreuil_C1/source/solpetit.jpg"));
@@ -227,21 +251,9 @@ public class SampleController implements Initializable{
 		dictionnaireImage.put("H",new Image("ESCAPE_Montreuil_C1/source/hache.jpg"));
 		dictionnaireImage.put("e",new Image("ESCAPE_Montreuil_C1/source/épée.jpg"));
 		dictionnaireImage.put("L",new Image("ESCAPE_Montreuil_C1/source/pelle.jpg"));
+	}
 
-		//Image Fer= new Image("ESCAPE_Montreuil_C1/source/Fer.jpg");
-		//Image elixir= new Image("ESCAPE_Montreuil_C1/source/elixir.png");
-		this.monde=new Monde();
-		creerVueTerrain();
-		this.lePlayer=new Player();
-		this.vue.getChildren().add(this.lePlayer);
-
-
-
-		/**
-		 * Initialisation des Ressources Dans Inventaire
-		 */
-		//	creationInventaire();
-
+	public void gestionPlayer() {
 		/**
 		 * bind les positions du player(imageview) avec les positions du joueur
 		 */
@@ -251,7 +263,7 @@ public class SampleController implements Initializable{
 		this.lePlayer.getImagePerso().setFitHeight(64);
 		this.lePlayer.getImagePerso().setFitWidth(32);
 		this.lePlayer.getImagePerso().setTranslateY(-this.lePlayer.getPv().getMaxHeight());
-		
+
 		/**
 		 * bind les positions de la vue avec les positions du joueur
 		 */
@@ -272,14 +284,9 @@ public class SampleController implements Initializable{
 				lePlayer.setCadre( monde.getJoueur().getVersDroite().getValue(), monde.getJoueur().getEtat().getValue() );
 			}
 		});
+	}
 
-		//monde.getJoueur().seDeplacerGraviter();
-		// https://docs.oracle.com/javafx/2/api/javafx/beans/value/ObservableValue.html
-		// void addListener(ChangeelleObjet()Listener<? super T> listener)
-
-		initGameLoop();
-		gameLoop.play();
-
+	public void gestionEnnemi() {
 		/**
 		 * Les ennemis
 		 */
@@ -291,7 +298,7 @@ public class SampleController implements Initializable{
 		}
 
 		/**
-		 * position ennemis
+		 * position bind ennemis
 		 */
 
 		for (int i = 0; i<this.monde.getEnnemiList().size();i++) {
@@ -299,20 +306,9 @@ public class SampleController implements Initializable{
 			this.e.getImageList().get(i).translateYProperty().bind(this.monde.getEnnemiList().get(i).getY().multiply(32));
 		}
 
-		/**
-		 * Initialisation des Ressources Dans Inventaire
-		 */
-		creationInventaire();
+	}
 
-		
-
-		
-
-		System.out.println("le debug de la vie!");
-		System.out.println("test "+this.monde.getJoueur().getNom());
-
-		System.out.println("le debug de la mort!");
-
+	public void gestionTerrain() {
 		for(int y=0;y<this.monde.getTerrain().getTableTerrain().size();y++) {
 			this.monde.getTerrain().getTableTerrain().get(y).addListener(new ListChangeListener<Block>() {
 
@@ -322,56 +318,11 @@ public class SampleController implements Initializable{
 						if (c.wasReplaced()) {
 							for (Block b : c.getRemoved()) {
 								ImageView l = (ImageView) vue.lookup('#'+b.getID());
-								//l.setImage(dictionnaireImage.get(iventaireModele.transforme_Block_en_Objet(EtatInventaire).getNom()));
-								System.out.println("do");
 							}
 						}
 					}
 				}
 			});
-		}
-
-		//monde.getJoueur().seDeplacerGraviter();
-		// https://docs.oracle.com/javafx/2/api/javafx/beans/value/ObservableValue.html
-		// void addListener(ChangeListener<? super T> listener)
-
-		initGameLoop();
-		gameLoop.play();
-	}
-	private void creationInventaire() {
-		for (int i = 0 ;i<this.monde.getJoueur().getInventaire().getTailleInv();i++ ) {
-			VBox elementInventaire = new VBox();
-			Label boutonA_Appuyé = new Label();
-			Label valeurRessource = new Label();
-			ImageView Image = new ImageView(dictionnaireImage.get(this.monde.getJoueur().getInventaire().getListeInventaire().get(i).getNom()));
-			Image.setFitHeight(80);
-			Image.setFitWidth(Image.getFitHeight());
-			boutonA_Appuyé.setText("F"+(i+1));
-			valeurRessource.textProperty().bind(this.monde.getJoueur().getInventaire().getListeInventaire().get(i).getValeur().asString());
-			elementInventaire.getChildren().add(boutonA_Appuyé);
-			elementInventaire.getChildren().add(Image);
-			elementInventaire.getChildren().add(valeurRessource);
-			elementInventaire.setTranslateX((i+1)*60);
-			inventaireVue.getChildren().add(elementInventaire);
-		}			
-
-
-
-	}
-	public void creerVueTerrain() {
-
-		for (int i = 0; i < this.monde.getTerrain().getTableTerrain().size(); i++) {
-			for(int j=0;j<this.monde.getTerrain().getTableTerrain().get(i).size();j++) {
-				ImageView view = new ImageView() ;
-				view.setImage(this.dictionnaireImage.get(this.monde.getTerrain().getTableTerrain().get(i).get(j).getNom()));
-				this.vue.getChildren().add(view);
-				String s =i+"9"+j;
-				view.setId(s);
-				view.setTranslateX(j*32);
-				view.setTranslateY(i*32);
-				view.setFitHeight(32);
-				view.setFitWidth(view.getFitHeight());
-			}
 		}
 	}
 
