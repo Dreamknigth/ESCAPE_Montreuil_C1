@@ -79,12 +79,6 @@ public class Inventaire {
 		return null;
 		
 	}
-
-
-
-
-
-
 }
 
 

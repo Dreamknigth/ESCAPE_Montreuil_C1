@@ -14,6 +14,7 @@ import ESCAPE_Montreuil_C1.Modele.Inventaire.Inventaire;
 import ESCAPE_Montreuil_C1.Modele.Objet.Fer;
 import ESCAPE_Montreuil_C1.Modele.Personnage.Cochon;
 import ESCAPE_Montreuil_C1.Modele.Personnage.Oiseau;
+import ESCAPE_Montreuil_C1.Modele.Personnage.llama;
 import ESCAPE_Montreuil_C1.Modele.map.Monde;
 import ESCAPE_Montreuil_C1.Modele.blocks.Air;
 import ESCAPE_Montreuil_C1.Modele.blocks.Terre;
@@ -54,17 +55,6 @@ import javafx.scene.input.MouseEvent;
 		@FXML
 		private HBox inventaireVue = new HBox();
 	
-		private Inventaire iventaireModele=new Inventaire();
-	
-		private Map<String, Image> dictionnaireImage = new HashMap< String,Image>();  		
-	
-	
-		private Timeline gameLoop=new Timeline();
-	
-		private Monde monde;
-		private Player lePlayer;
-		private Ennemi e = new Ennemi();
-	
 		@FXML
 		private Pane map;
 		@FXML
@@ -79,6 +69,16 @@ import javafx.scene.input.MouseEvent;
 		private ImageView RessourceElixir;
 		@FXML
 		private HBox inventaire;
+		
+		private Inventaire iventaireModele=new Inventaire();
+		
+		private Map<String, Image> dictionnaireImage = new HashMap< String,Image>();  		
+
+		private Timeline gameLoop=new Timeline();
+	
+		private Monde monde;
+		private Player lePlayer;
+		private Ennemi e = new Ennemi();
 	
 		@FXML
 		private void touche(KeyEvent e) throws InterruptedException {
@@ -109,8 +109,6 @@ import javafx.scene.input.MouseEvent;
 				this.EtatInventaire=new ();
 			}*/
 		}
-
-	
 
 		@FXML
 		void mouseClicked(MouseEvent event) {
@@ -145,10 +143,6 @@ import javafx.scene.input.MouseEvent;
 			this.EtatInventaire = new Air();
 			System.out.println("ok");
 		}
-		
-		
-		
-		
 		private void initGameLoop() {
 			gameLoop.setCycleCount(Timeline.INDEFINITE);
 
@@ -156,7 +150,7 @@ import javafx.scene.input.MouseEvent;
 				this.monde.getJoueur().seDeplacer();
 				this.monde.getJoueur().getEtat().setValue(0);
 			}));
-			KeyFrame kfEnnemi = new KeyFrame(Duration.seconds(0.2),(ev ->{
+			KeyFrame kfEnnemi = new KeyFrame(Duration.seconds(0.120),(ev ->{
 				this.monde.graviterEnnemi();
 				this.monde.DepEnnemi();
 			}));
@@ -191,12 +185,7 @@ import javafx.scene.input.MouseEvent;
 			 * Les ennemis
 			 */
 			
-			this.monde.getEnnemiList().add(new Cochon(1, 23, this.monde.getTerrain()));
-			this.monde.getEnnemiList().add(new Cochon(1, 23, this.monde.getTerrain()));
-			this.monde.getEnnemiList().add(new Cochon(1, 23, this.monde.getTerrain()));
-			this.monde.getEnnemiList().add(new Cochon(1, 23, this.monde.getTerrain()));
-			this.monde.getEnnemiList().add(new Oiseau(1, 15, this.monde.getTerrain()));
-			this.monde.getEnnemiList().add(new Oiseau(2, 15, this.monde.getTerrain()));
+
 			this.e.addImgEnnemi(this.monde.getEnnemiList());
 			
 			for (int i = 0; i<this.monde.getEnnemiList().size();i++) {
@@ -328,6 +317,4 @@ import javafx.scene.input.MouseEvent;
 				}
 			}
 		}
-		 
-	
 	}

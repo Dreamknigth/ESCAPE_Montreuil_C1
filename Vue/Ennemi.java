@@ -22,6 +22,8 @@ import javafx.scene.image.ImageView;
 public class Ennemi {
 	public static Image Cochon = new Image ("ESCAPE_Montreuil_C1/source/PNJ/Cochon_Mouvement.gif");
 	public static Image Oiseau = new Image ("ESCAPE_Montreuil_C1/source/PNJ/oiseau.gif");
+	public static Image llama = new Image ("ESCAPE_Montreuil_C1/source/PNJ/llama.gif");
+	public static Image Cannibale = new Image ("ESCAPE_Montreuil_C1/source/PNJ/Cannibale.gif");
 	private ArrayList<ImageView> img;
 	
 	public Ennemi() {
@@ -39,6 +41,16 @@ public class Ennemi {
 				this.img.add(new ImageView(Oiseau));
 				this.img.get(i).setFitWidth(64);
 				this.img.get(i).setFitHeight(64);
+			}
+			else if (observableList.get(i).getNom() == "llama") {
+				this.img.add(new ImageView(llama));
+				this.img.get(i).setFitHeight(80);
+				this.img.get(i).setFitWidth(64);
+			}
+			else if (observableList.get(i).getNom() == "Cannibale") {
+				this.img.add(new ImageView(Cannibale));
+				this.img.get(i).setFitHeight(80);
+				this.img.get(i).setFitWidth(64);
 			}
 		}
 		

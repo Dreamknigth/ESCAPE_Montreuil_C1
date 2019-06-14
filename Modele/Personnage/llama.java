@@ -5,15 +5,17 @@ import ESCAPE_Montreuil_C1.Modele.map.Terrain;
 public class llama extends Ennemy {
 
 	public llama(int x, int y, Terrain leTerrain) {
-		super(x, y, "Llama", leTerrain);
+		super(x, y, "llama", leTerrain);
 	}
 	
 	private boolean versDroite=true;
 
-	public void seDeplacer() {
+	@Override
+	public void seDeplacer(Personnage p) {
 		//TODO condition + code + appel methode algo graphe
 		
 		if (Math.random()>0.8) {
+			this.seDeplacerHaut();
 			this.seDeplacerHaut();
 		}
 		
@@ -37,12 +39,6 @@ public class llama extends Ennemy {
 		else {
 			versDroite=!versDroite;
 		}
-	}
-
-	@Override
-	public void seDeplacer(Personnage p) {
-		// TODO Auto-generated method stub
-		
 	}
 }
 
