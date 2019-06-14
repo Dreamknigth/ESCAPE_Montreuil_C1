@@ -20,10 +20,10 @@ public class pelleObjet extends ArmeObjet{
 	@Override
 	public Block faculte(Monde t, int x, int y) {
 		Block b=t.getTerrain().getTableTerrain().get(y).get(x); //le Block sur lequel on a cliquer
-		if(b.egaux(new SolBlock())) { //si le block est du sol
-			b=new TerreBlock(); //ajouter de la terre (sol = terre, mais les image sont differente pour le design)
-		}
-		else if(b.egaux(new TerreBlock()) || b.egaux(new boisBlock()) || b.egaux(new PierreBlock())) { //sinon si le block est de la terre du bois ou de la pierre
+		if(b.egaux(new TerreBlock()) || b.egaux(new SolBlock()) || b.egaux(new boisBlock()) || b.egaux(new PierreBlock())) { //sinon si le block est de la terre du bois ou de la pierre
+			if(b.egaux(new SolBlock())) { //si le block est du sol
+				b=new TerreBlock(); //ajouter de la terre (sol = terre, mais les image sont differente pour le design)
+			}
 			Objet o = t.getJoueur().getInventaire().recherche(b);
 			if(o!=null && o.getValeur().get()+1<=32) {
 				o.getValeur().set( o.getValeur().get()+1 );
@@ -31,7 +31,7 @@ public class pelleObjet extends ArmeObjet{
 				return new AirBlock();
 			}
 		}
-		return b;
+		return t.getTerrain().getBlockTerrain(y, x);
 	}
 
 

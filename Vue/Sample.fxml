@@ -7,7 +7,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane fx:id="borderPane" focusTraversable="true" onKeyPressed="#touche" prefHeight="623.0" prefWidth="715.0" style="-fx-background-color: gray;" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ESCAPE_Montreuil_C1.Controleur.SampleController">
+<BorderPane fx:id="borderPane" focusTraversable="true" onKeyPressed="#touche" prefHeight="623.0" prefWidth="715.0" style="-fx-background-color: #90cee7;" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ESCAPE_Montreuil_C1.Controleur.SampleController">
 	<center>
 
 		<Pane fx:id="vue" onMouseClicked="#mouseClicked" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
@@ -28,7 +28,7 @@
 		</Pane>
 	</right>
 	<left>
-		<Pane fx:id="tableDeCrafting" prefHeight="544.0" prefWidth="496.0" style="-fx-background-color: white;" BorderPane.alignment="CENTER">
+		<Pane fx:id="tableDeCrafting" prefHeight="544.0" prefWidth="496.0" style="-fx-background-color: grey;" BorderPane.alignment="CENTER">
 			<children>
 				<HBox prefHeight="107.0" prefWidth="515.0">
 					<children>
