@@ -49,7 +49,7 @@ public abstract class Personnage {
 	
 	//Methodes
 	public void prendDegat(int ptDegat) {
-		this.pv.set(this.pv.getValue()- ptDegat);
+		this.pv.set(this.pv.getValue()-ptDegat);
 		if(this.pv.getValue()<=0) {
 			this.pv.set(0);
 			System.out.println("You're DEAD!");
@@ -147,6 +147,10 @@ public abstract class Personnage {
 	//getter
 	public String getNom() {
 		return this.nom;
+	}
+	
+	public IntegerProperty getpv() {
+		return this.pv;
 	}
 	public IntegerProperty getX() {
 		return x;

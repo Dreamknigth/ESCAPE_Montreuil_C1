@@ -8,19 +8,22 @@ import ESCAPE_Montreuil_C1.Modele.Objet.Objet;
 import ESCAPE_Montreuil_C1.Modele.blocks.AirBlock;
 import ESCAPE_Montreuil_C1.Modele.blocks.Block;
 import ESCAPE_Montreuil_C1.Modele.map.Terrain;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.ObservableList;
 
 public class Joueur extends Personnage{ //Rappel: i=y x=j
 	private Objet objet_Dans_La_Main;
-	private Inventaire Inventaire;
+	private Inventaire lInventaire;
 	private Craft craftJoueur;
 	
 	//constructeur
-	public Joueur(int x,int y,String nom,Terrain leTerrain) {
+	public Joueur(int x,int y,String nom,Terrain leTerrain, int pv) {
 		super(x,y,nom,leTerrain);
 		this.objet_Dans_La_Main=new AirBlock();
-		this.Inventaire= new Inventaire();
-		this.craftJoueur = new Craft( this.Inventaire );
+		this.lInventaire= new Inventaire();
+		this.craftJoueur = new Craft( this.lInventaire );
+		this.pv = new SimpleIntegerProperty(pv);
 	}
 	
 	//methode
@@ -44,7 +47,6 @@ public class Joueur extends Personnage{ //Rappel: i=y x=j
 	public boolean modifPossible(int a, int b) {// a=y souris b=x souris
 		if ( ((a == (this.y.getValue())+2) || (a == (this.y.getValue())+1) || (a == (this.y.getValue())) || (a == (this.y.getValue())-1)) && 
 				((b == this.x.getValue())|| (b == this.x.getValue()+1) || (b == this.x.getValue()-1)) ) {
-			System.out.println("OUI");
 			
 			return true;
 			
@@ -53,7 +55,7 @@ public class Joueur extends Personnage{ //Rappel: i=y x=j
 	}
 
 	public Inventaire getInventaire() {
-		return this.Inventaire;
+		return this.lInventaire;
 	}
 
 	

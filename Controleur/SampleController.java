@@ -11,6 +11,7 @@ import ESCAPE_Montreuil_C1.Modele.Crafting.Craft;
 import ESCAPE_Montreuil_C1.Modele.Inventaire.Inventaire;
 import ESCAPE_Montreuil_C1.Modele.Personnage.Cochon;
 import ESCAPE_Montreuil_C1.Modele.Personnage.Oiseau;
+import ESCAPE_Montreuil_C1.Modele.Personnage.llama;
 import ESCAPE_Montreuil_C1.Modele.map.Monde;
 import ESCAPE_Montreuil_C1.Modele.blocks.Block;
 import ESCAPE_Montreuil_C1.Vue.Ennemi;
@@ -180,9 +181,6 @@ public class SampleController implements Initializable{
 				if (nomObjetDansLaMain != null)
 					l.setImage(this.dictionnaireImage.get(nomObjetDansLaMain));
 			}
-			/*else if (Button==MouseButton.SECONDARY && this.monde.getJoueur().creerPossible(ObjetDans)){
-							this.monde.getTerrain().setTerrain(ObjetDans, y, x);
-						}*/
 
 		}
 	}
@@ -196,12 +194,10 @@ public class SampleController implements Initializable{
 		KeyFrame kfPerso = new KeyFrame(Duration.seconds(0.150),(ev ->{
 			this.monde.getJoueur().seDeplacer();
 			this.monde.getJoueur().getEtat().setValue(0);
-		}));
-		KeyFrame kfEnnemi = new KeyFrame(Duration.seconds(0.2),(ev ->{
 			this.monde.graviterEnnemi();
 			this.monde.DepEnnemi();
+			this.monde.degat();
 		}));
-		gameLoop.getKeyFrames().add(kfEnnemi);
 		gameLoop.getKeyFrames().add(kfPerso);
 	}
 
@@ -288,12 +284,6 @@ public class SampleController implements Initializable{
 		 * Les ennemis
 		 */
 
-		this.monde.getEnnemiList().add(new Cochon(1, 23, this.monde.getTerrain()));
-		this.monde.getEnnemiList().add(new Cochon(1, 23, this.monde.getTerrain()));
-		this.monde.getEnnemiList().add(new Cochon(1, 23, this.monde.getTerrain()));
-		this.monde.getEnnemiList().add(new Cochon(1, 23, this.monde.getTerrain()));
-		this.monde.getEnnemiList().add(new Oiseau(1, 15, this.monde.getTerrain()));
-		this.monde.getEnnemiList().add(new Oiseau(2, 15, this.monde.getTerrain()));
 		this.e.addImgEnnemi(this.monde.getEnnemiList());
 
 		for (int i = 0; i<this.monde.getEnnemiList().size();i++) {
@@ -387,3 +377,4 @@ public class SampleController implements Initializable{
 
 
 }
+

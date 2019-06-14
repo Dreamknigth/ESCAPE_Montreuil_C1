@@ -11,21 +11,45 @@ public class Oiseau extends Ennemy{
 
 	@Override
 	public void seDeplacer(Personnage p) {
+		
 		if (p.getX().getValue() >= 52 && p.getX().getValue() <= 120) {
 			if (this.x.getValue() < p.getX().getValue()) {
-				this.x.set(this.x.getValue()+1);
+				this.seDeplacerDroite();
 			}
 			
-			if (this.y.getValue() < p.getY().getValue()) {
-				this.y.set(this.y.getValue()+1);
+			if (this.y.getValue() < p.getY().getValue()){
+				this.seDeplacerBas();
 			}
 			
 			if (this.x.getValue() > p.getX().getValue()) {
-				this.x.set(this.x.getValue()-1);
+				this.seDeplacerGauche();
 			}
 			
 			if (this.y.getValue() > p.getY().getValue()) {
-				this.y.set(this.y.getValue()-1);
+				this.seDeplacerHaut();
+			}
+		}
+		
+		else {
+			if (this.x.getValue()<this.leTerrain.getTableTerrain().get( (int)(double)(this.y.getValue()) )
+					.size()-1  &&  this.leTerrain.getTableTerrain().get( (int)(double)(this.y.getValue()) )
+					.get( (int)(double)(this.x.getValue()+1) ).getTraversable()  &&  this.leTerrain.getTableTerrain()
+					.get( (int)(double)(this.y.getValue()+1) ).get( (int)(double)(this.x.getValue()+1) ).getTraversable() && versDroite){
+				
+				
+					this.seDeplacerDroite();
+			}
+		
+			else if (this.x.getValue()>=1  && this.leTerrain.getTableTerrain().get( (int)(double)(this.y.getValue()))
+					.get( (int)(double)(this.x.getValue()-1) ).getTraversable()  &&  this.leTerrain.getTableTerrain()
+					.get( (int)(double)(this.y.getValue()+1) ).get( (int)(double)(this.x.getValue()-1) ).getTraversable() && !versDroite) {
+					this.seDeplacerGauche();
+					
+					
+					
+			}
+			else {
+				versDroite=!versDroite;
 			}
 		}
 	}
