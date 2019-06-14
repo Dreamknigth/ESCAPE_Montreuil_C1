@@ -40,9 +40,7 @@ public class Inventaire {
     //Méthodes
     
     /***
-     * orend en parametre un objet
-     * @param o
-     * @return
+     * recherche l'objet dans un inventaire
      */
     public Objet recherche(Objet o) {
         int i =0;
