@@ -20,14 +20,18 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 public class MapReader {
+	//declaration
 	private File fp;
 	private FileReader fpr;
 	private BufferedReader bfReader;
 	private ArrayList<ObservableList <Block>> terrain;
-
+	
+	/**
+	 * Le MapReader permet de traduire la map csv en liste de list observable de Block
+	 */
+	//constructeur
 	public MapReader() {
 		try {
-//			this.fp = new File("src/ESCAPE_Montreuil_C1/source/terrain.csv");
 			this.fp = new File("src/ESCAPE_Montreuil_C1/source/map5.csv");
 
 			this.fpr = new FileReader(this.fp);
@@ -41,13 +45,14 @@ public class MapReader {
 		this.terrain=new ArrayList<ObservableList <Block>>();
 	}
 	
+	//methode
 	public void constructeurMap() {
 		int i=0;
 		String [] ligne;
 		try {
 			//un faire tant que on est pas arriver a la fin
 			do {
-				ligne=this.bfReader.readLine().split(",");
+				ligne=this.bfReader.readLine().split(","); //separe le resultat en tableaux de String en fonction des point virgule
 				if(ligne!=null) {
 					lireLigne(i,ligne);
 				}
@@ -59,10 +64,14 @@ public class MapReader {
 			System.out.println("Fin de la lecture");
 		}
 	}
+	
+	/**
+	 * Permet de lire une ligne du fichier csv
+	 * creer un objet en fonction de la case du tableaux de String lu
+	 */
 	private void lireLigne(int i, String [] ligne) {
 		int j=0;
 		char charBlock;
-		//la declaration de la liste observable dans la liste de liste observable puis ajouter a la liste observable le caractere
 		this.terrain.add(FXCollections.observableArrayList());
 		for(j=0;j<ligne.length;j++) {
 			charBlock=ligne[j].charAt(0);
@@ -94,6 +103,14 @@ public class MapReader {
 		}
 	}
 	
+	//getter
+	public ArrayList<ObservableList <Block>> getTerrain(){
+		return this.terrain;
+	}
+	
+	/**
+	 * On l'as creer pour verfifer la bonne lecture de la map csv
+	 */
 	public void afficheTerrain() {
 		System.out.print("-");
 		for(int i=0;i<this.terrain.get(0).size();i++) {
@@ -112,8 +129,5 @@ public class MapReader {
 			System.out.print("\n");
 		}
 	}
-	
-	public ArrayList<ObservableList <Block>> getTerrain(){
-		return this.terrain;
-	}
+
 }

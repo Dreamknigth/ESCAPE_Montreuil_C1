@@ -14,7 +14,7 @@ import ESCAPE_Montreuil_C1.Modele.Personnage.Oiseau;
 import ESCAPE_Montreuil_C1.Modele.Personnage.llama;
 import ESCAPE_Montreuil_C1.Modele.map.Monde;
 import ESCAPE_Montreuil_C1.Modele.blocks.Block;
-import ESCAPE_Montreuil_C1.Vue.Ennemi;
+import ESCAPE_Montreuil_C1.Vue.EnnemiVue;
 import ESCAPE_Montreuil_C1.Vue.Player;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -71,7 +71,7 @@ public class SampleController implements Initializable{
 
 	private Monde monde;
 	private Player lePlayer;
-	private Ennemi e = new Ennemi();
+	private EnnemiVue e = new EnnemiVue();
 
 
 	@FXML
@@ -175,7 +175,7 @@ public class SampleController implements Initializable{
 		Monde t= this.monde;
 		if(this.monde.getJoueur().modifPossible(y, x) && this.monde.getJoueur().getObjetDansLaMain().getValeur().getValue()!=0) {
 			if (Button==MouseButton.PRIMARY  ) { // rendre Main
-				String nomObjetDansLaMain=this.monde.getJoueur().getObjetDansLaMain().faculté(t,x,y).getNom();
+				String nomObjetDansLaMain=this.monde.getJoueur().getObjetDansLaMain().faculte(t,x,y).getNom();
 				System.out.println(this.monde.getTerrain().getTableTerrain().get(y).get(x).getNom());
 				System.out.println(this.monde.getJoueur().getObjetDansLaMain().getNom());
 				if (nomObjetDansLaMain != null)
@@ -195,8 +195,8 @@ public class SampleController implements Initializable{
 			this.monde.getJoueur().seDeplacer();
 			this.monde.getJoueur().getEtat().setValue(0);
 			this.monde.graviterEnnemi();
-			this.monde.DepEnnemi();
-			this.monde.degat();
+			this.monde.deplaceEnnemi();
+			this.monde.activationAttaque();
 		}));
 		gameLoop.getKeyFrames().add(kfPerso);
 	}
@@ -339,7 +339,7 @@ public class SampleController implements Initializable{
 		gameLoop.play();
 	}
 	private void creationInventaire() {
-		for (int i = 0 ;i<this.monde.getJoueur().getInventaire().tailleInv();i++ ) {
+		for (int i = 0 ;i<this.monde.getJoueur().getInventaire().getTailleInv();i++ ) {
 			VBox elementInventaire = new VBox();
 			Label boutonA_Appuyé = new Label();
 			Label valeurRessource = new Label();

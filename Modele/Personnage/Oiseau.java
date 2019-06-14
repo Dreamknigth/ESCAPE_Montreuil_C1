@@ -2,13 +2,18 @@ package ESCAPE_Montreuil_C1.Modele.Personnage;
 
 import ESCAPE_Montreuil_C1.Modele.map.Terrain;
 
-public class Oiseau extends Ennemy{
+public class Oiseau extends EnnemiModele{
 
+	// Constructeur
+	
 	public Oiseau(int x, int y, Terrain leTerrain) {
 		super(x, y, "Oiseau", leTerrain);
 	}
+	//direction
 	private boolean versDroite=true;
 
+	// déplacement gauche droite si le personnage atteint pas 52eme case horizontale 
+	// sinon suit le joueur
 	@Override
 	public void seDeplacer(Personnage p) {
 		

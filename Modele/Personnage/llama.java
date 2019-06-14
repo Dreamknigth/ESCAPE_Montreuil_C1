@@ -2,17 +2,20 @@ package ESCAPE_Montreuil_C1.Modele.Personnage;
 
 import ESCAPE_Montreuil_C1.Modele.map.Terrain;
 
-public class llama extends Ennemy {
+public class llama extends EnnemiModele {
 
+	//Constructeur
+	
 	public llama(int x, int y, Terrain leTerrain) {
 		super(x, y, "llama", leTerrain);
 	}
 	
+	// Direction
 	private boolean versDroite=true;
 
+	// Déplacement comme le cochon mais avec un random de double saut 
 	@Override
 	public void seDeplacer(Personnage p) {
-		//TODO condition + code + appel methode algo graphe
 		
 		if (Math.random()>0.8) {
 			this.seDeplacerHaut();

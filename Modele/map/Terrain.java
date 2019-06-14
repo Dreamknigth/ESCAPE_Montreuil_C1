@@ -19,15 +19,12 @@ public class Terrain {
 	public ArrayList<ObservableList <Block>> getTableTerrain() {
 		return this.tableTerrain;
 	}
-	
-	public void setTerrain(Block b, int i, int j) {
-		
-		b.setID(this.tableTerrain.get(i).get(j).getID());
-		//System.out.println(this.tableTerrain.get(i).get(j));
-		this.tableTerrain.get(i).set( j, b);
-		//System.out.println(this.tableTerrain.get(i).get(j));
-	}
 	public Block getBlockTerrain(int i,int j) {
 		return this.tableTerrain.get(i).get(j);
+	}
+	//setter
+	public void setDansTerrain(Block b, int i, int j) {
+		b.setID(this.tableTerrain.get(i).get(j).getID()); //Le block est modifier mais l'id reste le même
+		this.tableTerrain.get(i).set( j, b);
 	}
 }

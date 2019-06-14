@@ -11,28 +11,23 @@ import ESCAPE_Montreuil_C1.Modele.map.Monde;
 public class pelleObjet extends ArmeObjet{
 
 	public pelleObjet() {
-		super("L", 25, 100);
+		super("L", 25);
 	}
 
-	@Override
-	public int getatt() { return this.ptsattaque;}
-
-	@Override
-	public int getdura() { return this.durabilité;}
 	@Override
 	public String getNom() { return this.nom; }
 
 	@Override
-	public Block faculté(Monde t, int x, int y) {
-		Block b=t.getTerrain().getTableTerrain().get(y).get(x);
-		if(b.egaux(new TerreBlock()) || b.egaux(new SolBlock()) || b.egaux(new boisBlock()) || b.egaux(new PierreBlock())) {
-			if(b.egaux(new SolBlock())) {
-				b=new TerreBlock();
-			}
+	public Block faculte(Monde t, int x, int y) {
+		Block b=t.getTerrain().getTableTerrain().get(y).get(x); //le Block sur lequel on a cliquer
+		if(b.egaux(new SolBlock())) { //si le block est du sol
+			b=new TerreBlock(); //ajouter de la terre (sol = terre, mais les image sont differente pour le design)
+		}
+		else if(b.egaux(new TerreBlock()) || b.egaux(new boisBlock()) || b.egaux(new PierreBlock())) { //sinon si le block est de la terre du bois ou de la pierre
 			Objet o = t.getJoueur().getInventaire().recherche(b);
 			if(o!=null && o.getValeur().get()+1<=32) {
 				o.getValeur().set( o.getValeur().get()+1 );
-				t.getTerrain().setTerrain(new AirBlock(), y, x);
+				t.getTerrain().setDansTerrain(new AirBlock(), y, x);
 				return new AirBlock();
 			}
 		}

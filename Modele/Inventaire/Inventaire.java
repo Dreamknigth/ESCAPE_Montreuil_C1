@@ -16,9 +16,12 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 public class Inventaire {
+	
+	// déclaration
 
     private ObservableList<Objet> ob ;
     
+    // Constructeur
     public Inventaire() {
         MapReader mr=new MapReader();
         mr.constructeurMap();
@@ -33,10 +36,14 @@ public class Inventaire {
         this.ob.add(new pelleObjet());
         
     }
-    public ObservableList<Objet> getListeInventaire () {
-        return this.ob;
-    }
 
+    //Méthodes
+    
+    /**
+     * prend en un paramètre un block 
+     * @param unBlock
+     * @return
+     */
     public Objet recherche(Block unBlock) {
         int i =0;
         while(i<this.ob.size()) {
@@ -47,6 +54,11 @@ public class Inventaire {
         }
         return null;
     }
+    /***
+     * orend en parametre un objet
+     * @param o
+     * @return
+     */
     public Objet recherche(Objet o) {
         int i =0;
         while(i<this.ob.size()) {
@@ -57,10 +69,16 @@ public class Inventaire {
         }
         return null;
     }
-    public int tailleInv() {
+    
+    //getter
+	
+    public ObservableList<Objet> getListeInventaire () {
+        return this.ob;
+    }
+    
+    public int getTailleInv() {
     	return this.ob.size();
     }
-	
 
 }
 

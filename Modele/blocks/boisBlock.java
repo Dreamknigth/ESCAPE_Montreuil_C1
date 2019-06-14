@@ -3,20 +3,22 @@ package ESCAPE_Montreuil_C1.Modele.blocks;
 import ESCAPE_Montreuil_C1.Modele.Objet.Objet;
 import ESCAPE_Montreuil_C1.Modele.map.Monde;
 
-public class boisBlock extends BlockDestructible {
+public class boisBlock extends Block {
 	
-
+	//constructeur
 	public boisBlock() {
-		super(true,10,"F");
+		super(true,"F");
 	}
+	
+	//methodes
+	
 	@Override
-	public Block faculté(Monde t,int x,int y) {
-		System.out.println(this.getClass());
-		Objet o =t.getJoueur().getObjetDansLaMain();
-		if(o.getValeur().get()>0) {
-			o.getValeur().set(o.getValeur().get()-1);
-			t.getTerrain().setTerrain(new boisBlock(), y, x);
-			return new boisBlock();
+	public Block faculte(Monde t,int x,int y) {
+		Objet o =t.getJoueur().getObjetDansLaMain(); // on recupere l'objet sur lequel on clique
+		if(o.getValeur().get()>0) {					 // si l objet est present dans l inventaire (valeur superieur a 0)
+			o.getValeur().set(o.getValeur().get()-1);// on soustrait 1
+			t.getTerrain().setDansTerrain(new boisBlock(), y, x);// on le place dans la map
+			return new boisBlock();								
 		}
 		return null;
 		

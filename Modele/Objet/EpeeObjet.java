@@ -6,33 +6,26 @@ import ESCAPE_Montreuil_C1.Modele.map.Monde;
 
 
 public class EpeeObjet extends ArmeObjet{
-
+	//constructeur
 	public EpeeObjet() {
-		super("e", 50, 100);
+		super("e", 50);
 
 		this.ptsattaque = 50;
-		this.durabilité = 100;
 	}
-
+	
+	//methode
 	@Override
-	public int getdura() { return this.durabilité; }
-	@Override
-	public String getNom() { return this.nom; }
-	@Override
-	public int getatt() { return this.ptsattaque; }
-
-	@Override
-	public Block faculté(Monde t, int x, int y) {
+	public Block faculte(Monde t, int x, int y) {
 		for(int i=0 ;i<t.getEnnemiList().size();i++) {
-			if(t.getEnnemiList().get(i).getHitBox().contains(x, y)){
-				System.out.println(t.getEnnemiList().get(i).getPV());
-				t.getEnnemiList().get(i).prendDegat(10);
-				System.out.println(t.getEnnemiList().get(i).getPV());
+			if(t.getEnnemiList().get(i).getHitBox().contains(x, y)){// on verifie la presence d un ennemi
+				t.getEnnemiList().get(i).prendDegat(10);			// on attaque
 			}
 		}
 		
 		return t.getTerrain().getBlockTerrain(y, x);
 	}
-
 	
+	//getter
+	@Override
+	public String getNom() { return this.nom; }
 }

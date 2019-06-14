@@ -60,6 +60,12 @@ public abstract class Personnage {
 	//Rappel:
 	//0=Rien 1=Saut 2=Tomber 3=Courrir
 	//VersDroite=true=droite VersDroite=false=gauche
+	
+	/**
+	 * les deplacements contiennent les collisions
+	 * ils dependent de l'emplacement du personnages
+	 */
+	
 	public void seDeplacer(){
 		this.etat.setValue( this.etat.getValue()%4 ); //petit verife
 		if( this.etatSaut>0 ) {
@@ -101,6 +107,11 @@ public abstract class Personnage {
 		}
 	}
 	
+	/**
+	 * Vérifie les collisions return true si 
+	 * c'est possibli est applique le deplacment indiquer
+	 */
+	
 	//Gauche
 	protected boolean seDeplacerGauche() { //y=i x=j
 		this.versDroite.setValue(false);
@@ -137,6 +148,10 @@ public abstract class Personnage {
 		}
 		return false;
 	}
+	
+
+	//nous a ete utile au debut
+
 	//graviter
 //	private void seDeplacerGraviter() {
 //		if(this.seDeplacerBas()) {
@@ -148,7 +163,6 @@ public abstract class Personnage {
 	public String getNom() {
 		return this.nom;
 	}
-	
 	public IntegerProperty getpv() {
 		return this.pv;
 	}
